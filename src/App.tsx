@@ -1,5 +1,6 @@
 import { AiFillAudio } from "react-icons/ai";
 import { Button, message } from "antd";
+import RightSection from "./components/patient/RightSection";
 
 function App() {
   const [messageApi, contextHolder] = message.useMessage();
@@ -9,13 +10,7 @@ function App() {
   };
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <br />
-      <AiFillAudio />
-      {contextHolder}
-      <Button type="primary" onClick={info}>
-        Display normal message
-      </Button>
+      <RightSection/>
     </>
   );
 }
