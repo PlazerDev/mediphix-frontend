@@ -1,6 +1,8 @@
 import { AiFillAudio } from "react-icons/ai";
 import { Button, message } from "antd";
-import RightSection from "./components/patient/RightSection";
+import AppointmentCard from "./components/patient/home/AppointmentCard";
+import ProfileOverview from "./components/patient/home/ProfileOverview";
+import UpcomingAppointment from "./components/patient/home/UpcomingAppointment ";
 
 function App() {
   const [messageApi, contextHolder] = message.useMessage();
@@ -10,7 +12,9 @@ function App() {
   };
   return (
     <>
-      <RightSection/>
+      
+      <ProfileOverview/>
+
     </>
   );
 }
