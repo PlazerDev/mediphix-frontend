@@ -1,0 +1,9 @@
+
+.ant-segmented .ant-segmented-item {
+  padding: 2px 5px 5px 5px;
+}
+
+.custom-segmented .ant-segmented-item-selected {
+  background-color: var(--segment-item-active-bg, #FF7300);
+  color: #ffffff;
+}
