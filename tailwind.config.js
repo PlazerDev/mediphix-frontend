@@ -11,18 +11,7 @@ export default {
       fontFamily: {
         'cookie': ['Cookie', 'cursive'], // Adding Cookie font family
         
-      },
-      colors:{
-        'accent':'#FF7300',
-        'Text-A':"#151515",
-        'Text-B':'#363636',
-        'Text-C':'#868686',
-        'Text-D':'#DCDCDC',
-        'Background':'#E3E3E3',
-        "Card-Background":'#E3E3E3'
-      }
-      
-      
+      },    
     },
   },
   plugins: [],
