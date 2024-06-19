@@ -1,23 +1,13 @@
-import { AiFillAudio } from "react-icons/ai";
-import { Button, message } from "antd";
+import React from 'react'
+import MedicalLogin from './components/login/medical-center/MedicalLogin'
 
-function App() {
-  const [messageApi, contextHolder] = message.useMessage();
 
-  const info = () => {
-    messageApi.info("Hello, Ant Design!");
-  };
+const App = () => {
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <br />
-      <AiFillAudio />
-      {contextHolder}
-      <Button type="primary" onClick={info}>
-        Display normal message
-      </Button>
-    </>
-  );
+    <div>
+    <MedicalLogin />
+    </div>
+  )
 }
 
-export default App;
+export default App
