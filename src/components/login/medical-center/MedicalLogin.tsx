@@ -1,13 +1,43 @@
 import React from "react";
 import Assets from "./../../../assets/images/medicalcenterlogin/mediphix.png";
+import image1 from "./../../../assets/images/medicalcenterlogin/staff.png"
 import { Button, Flex } from 'antd';
+import { Segmented } from 'antd';
+import './../../../assets/css/login/custome__segment.css'
 
 
 
 function MedicalLogin() {
   return (
+    
     <div className=" bg-white flex ">
-      <div className="bg-[linear-gradient(211deg,_#FF8D30_0%,_#A74C00_100%)] w-1/2  h-screen  "></div>
+      <div className="bg-[linear-gradient(211deg,_#FF8D30_0%,_#A74C00_100%)] w-1/2  h-screen flex ">
+      {/* <div className="bg-[linear-gradient(211deg,_#FF8D30_0%,_#A74C00_100%)] w-1/2 h-screen bg-cover bg-no-repeat"> */}
+      <div className="bg-login-background1 w-1/2 h-screen bg-cover bg-no-repeat  ">
+         <div className='bg-[#FFE7D3] border-solid  rounded-[16px] w-[130%] h-[85%] left-[35%] top-[10%] bottom-[10%] relative flex flex-col ' >
+           <div className='h-[50%] flex flex-col text-center '>
+             <div className="flex-1 h-1/4 sm:h-auto  text-[48px] font-cookie mt-4">
+                    Hello there ✌
+                </div>
+                <div className="flex-1 h-1/2 sm:h-auto  text-[31px]">
+                    Which of the following <br /> describes you ?
+                </div>
+                <div className="flex-1 h-1/14 sm:h-auto mt-[20px] p-6  ">
+                    <Segmented options={['Patient', 'Medical Center']}
+                    style={{ backgroundColor:'#E3E3E3' ,fontSize:'20px', color: '(var(--Text-C))' }}     
+                     className=' custom-segmented ' />
+                </div>
+            </div>
+            <div className='w-full h-[60%] '>
+                <img src={image1} className='w-[100%] h-full object-fill rounded-b-[20px]'  />
+            </div>
+         
+           
+      </div>
+      </div>
+      </div>
+      
+
       <div className="absolute ml-[70%] p-35 ">
       <img src={Assets} className="" />
       </div> 
@@ -44,6 +74,7 @@ function MedicalLogin() {
       </div>
       </div>  
       </div>
+      
       
     
   );
