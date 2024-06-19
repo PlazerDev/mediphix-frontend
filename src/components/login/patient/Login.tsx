@@ -5,6 +5,7 @@ import 'typeface-cookie';
 import { Segmented } from 'antd';
 import './../../../assets/css/login/custome__segment.css'
 import Logo from './../../../assets/images/mediphix.jpg'
+import { Link } from 'react-router-dom';
 
 
 function Login() {
@@ -48,20 +49,27 @@ function Login() {
 
             <div>
                 <span className='font-semibold'>Mobile Number</span> <br />
-                <div className='flex rounded-[20px] w-full border border-gray-300  p-2 transition-colors duration-300 hover:border-[#FF7300] '>
+                <div className='flex rounded-[20px] w-full border border-gray-300  p-2 transition-colors duration-300 hover:border-[var(--accent)] '>
                     <p className='text-[#868686]'>+94</p>
                     <input type="text" className='rounded-[20px] focus:outline-none pl-2' />
                    
                 </div>
                 <div className='flex  mt-4'>
                     
-                    <input type="button " value='Send OTP' className=' text-[#fff] text-center  rounded-[20px] w-full border  p-2 transition-colors duration-300 bg-[#FF7300]  border-[#FF7300]' />
+                    <button className=' cursor-pointer text-[#fff] text-center  rounded-[20px] w-full border  p-2 transition-colors duration-300 bg-[var(--accent)]  border-[var(--accent)]' >Send OTP</button>
                    
                 </div>
             </div>
              
-            <div className='text-[12px]  text-[#868686] flex justify-center mt-2 '>
-              <p>New to Mediphix ? <span className='text-[#FF7300] font-semibold ' >Register Now</span></p>
+            <div className='text-[12px] text-[#868686] flex justify-center mt-2'>
+              <p>
+                New to Mediphix?{' '}
+                <span className='text-[var(--accent)] font-semibold'>
+                  <Link to='/Login' className='text-[var(--accent)]'>
+                    Register Now
+                  </Link>
+                </span>
+              </p>
             </div>
 
            
