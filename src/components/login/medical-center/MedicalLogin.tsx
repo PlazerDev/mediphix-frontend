@@ -1,6 +1,7 @@
 import React from "react";
 import Assets from "./../../../assets/images/medicalcenterlogin/mediphix.png";
 import image1 from "./../../../assets/images/medicalcenterlogin/staff.png"
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Button, Flex } from 'antd';
 import { Segmented } from 'antd';
 import './../../../assets/css/login/custome__segment.css'
