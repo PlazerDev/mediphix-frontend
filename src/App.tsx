@@ -1,11 +1,9 @@
-import { AiFillAudio } from "react-icons/ai";
-import { Button, message } from "antd";
-import LeftSection from "./components/patient/home/LeftSection";
+import InTheQueue from "./components/patient/home/InTheQueue";
 
 function App() {
   return (
     <>
-      <LeftSection />
+      <InTheQueue />
     </>
   );
 }
