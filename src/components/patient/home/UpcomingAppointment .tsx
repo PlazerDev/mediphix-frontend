@@ -1,21 +1,24 @@
 import React from "react";
+import AppointmentCard from "./AppointmentCard";
 
 const UpcomingAppointment = () => {
   return (
-    <>
-      <div>
+    <div className="bg-[#fff] rounded-[16px] flex justify-between h-1/2">
+      <div className="p-8 flex justify-between">
         <div>
-          <div>
-            <h1 className="font-Roboto font-[700] text-[25px] text-[#151515]">
+          <div className="flex justify-between mb-4">
+            <p className="font-Roboto font-[700] text-1xl text-[#151515]">
               Upcoming Appointment
-            </h1>
+            </p>
+            <p className="font-Roboto font-[700] text-1xl text-[#FF7300] text-left mt-1 mb-1">
+              View More
+            </p>
           </div>
-          <div>
-            <p className="font-Roboto font-[700] text-[20px] text-[#FF7300] text-right">View More</p>
-          </div>
+          <AppointmentCard />
+          <AppointmentCard />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
