@@ -22,7 +22,7 @@ function MedicalLogin() {
                 <div className="flex-1 h-1/2 sm:h-auto  text-[31px]">
                     Which of the following <br /> describes you ?
                 </div>
-                <div className="flex-1 h-1/14 sm:h-auto mt-[20px] p-6  ">
+                <div className="flex-1 h-1/14 sm:h-auto mt-[20px] p-10  ">
                     <Segmented options={['Patient', 'Medical Center']}
                     style={{ backgroundColor:'#E3E3E3' ,fontSize:'20px', color: '(var(--Text-C))' }}     
                      className=' custom-segmented ' />
@@ -46,34 +46,32 @@ function MedicalLogin() {
       <div className="mt-[5%]">
       <p className="text-4xl">Welcome back to MediPhix! Please enter your credentials to continue.</p>
       </div>
+
       <div className="mt-[5%] ">
-        <p className="text-3xl font-bold text-left">Email</p>     
+      <p className="text-3xl font-bold text-left">Email</p>     
       </div>
-      <div className="border-2 mt-[3%] rounded-full border-orange-500 max-w-2xl h-[8%] text-left p-5">
-      <p className="justify-items-center pl-10 text-2xl ">Sajini</p>
-      </div>
+      <input type="text" className="justify-items-center pl-10 text-2xl border-2 mt-[3%] rounded-full border-orange-500 max-w-2xl h-[8%] text-left p-5 focus:ring-orange-500 focus:outline-none focus:ring-2" placeholder="Sajini" style={{ width:'100%'}}  />
+
+
       <div className="mt-[5%]">
       <p className="text-3xl font-bold text-left">Password</p>  
       </div>
-      <div className="border-2 mt-[3%] rounded-full border-orange-500 max-w-2xl h-[8%] text-left p-5">
-      <p className="justify-items-center pl-10 text-2xl text-gray-500 " >Enter your password</p>
-      <p className="justify-items-center pl-10 text-2xl font-bold text-orange-500 p-7 text-right ">Forget Password?</p>
-      <div >  
-      <Button style={{ backgroundColor: 'orange', borderColor: ' border-orange-500',borderRadius: '50px',fontSize: '24px',height: '80px' ,width:'110%',marginLeft: '-5%',marginTop: '20px',fontWeight: 'bold' ,color:"white"}} block>
-      Login
-    </Button>
+      <input type="password" className="justify-items-center pl-10 text-2xl border-2 mt-[3%] rounded-full border-orange-500 max-w-2xl h-[8%] text-left p-5 focus:ring-orange-500 focus:outline-none focus:ring-2" placeholder="Enter your password" style={{ width:'100%'}} />
+      <p className="justify-items-center text-2xl font-bold text-orange-500 p-7 text-right pr-[40%] ">Forget Password?</p>
+      <Button style={{ backgroundColor: 'orange', borderColor: ' border-orange-500',borderRadius: '50px',fontSize: '24px',height: '80px' ,width:'63%',marginLeft: '-1%',marginTop: '20px',fontWeight: 'bold' ,color:"white"}} block>
+       Login
+      </Button>
      <div className="mt-[5%]">
-      <p className="text-gray-500 pl-[25%]  h-[8%] text-2xl ">New to Mediphix ? {" "}
+      <p className="text-gray-500 pl-[15%]  h-[8%] text-2xl ">New to Mediphix ? {" "}
       <span className="text-orange-500 font-bold">Register Now</span>
       </p>
+      <p className="text-gray-500 pl-[18%] mt-[5%]">©2024 Mediphix All Right Reserved.</p>
      </div>
-     <div className="mt-[5%] text-center">
-      <p className="text-gray-500">©2024 Mediphix All Right Reserved.</p>
      </div>
-      </div>
-      </div>
-      </div>  
-      </div>
+    </div>
+    
+        
+      
       
       
     
