@@ -1,0 +1,27 @@
+.custom-segmented {
+    background-color: #E3E3E3;
+    border-radius: 100px;
+    padding: 4px;
+    font-family: Roboto;
+    margin: 18px;
+  }
+  
+  .custom-segmented .ant-segmented-item {
+    color:#000000;
+    padding: 5px;
+    border-radius: 100px;
+  }
+  
+  .custom-segmented .ant-segmented-item-selected {
+    background-color: #FF7300;
+    color: white;
+  }
+  
+  .custom-button {
+    padding: 10px;
+    margin: 1px;
+  }
+
+  .custom-button:hover{
+    border-color: #FF7300;
+  }
