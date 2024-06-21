@@ -12,6 +12,7 @@
     --text-c: #868686;
     --text-d: #DCDCDC;
     --background: #E3E3E3;
-    --card-background: #E3E3E3;
+    --card-background: #ffff;
     font-family: 'Roboto', sans-serif;
+    background-color: var(--background);
   }
