@@ -14,7 +14,7 @@ import { Button } from "antd";
 const PatientNavigation = () => {
   return (
     <>
-      <div className="flex justify-between">
+      <div className="flex justify-between bg-white h-[85px]">
         <div>
           <img className="w-24 h-24 ml-5" src={logo} alt="logo" />
         </div>
