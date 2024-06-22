@@ -23,5 +23,5 @@
   }
 
   .custom-button:hover{
-    border-color: #FF7300;
+    border-color: #FF7300 !important;
   }
