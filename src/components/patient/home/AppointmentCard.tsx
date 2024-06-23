@@ -13,6 +13,7 @@ const AppointmentCard = () => {
           <p className="font-[400]">Dr. B.KARUNARATNE</p>
           <p className="font-[400]">Aloka Clinic & Laboratory</p>
           <p className="font-[400]">Aloka Clinic & Laboratory 2</p>
+          <p className="font-[400]">Aloka Clinic & Laboratory 3</p>
         </div>
       </div>
     </>
