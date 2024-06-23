@@ -1,32 +1,34 @@
 
 
-import InTheQueue from "./components/patient/home/InTheQueue";
-
-import { AiFillAudio } from "react-icons/ai";
-import { Button, message } from "antd";
-import AppointmentCard from "./components/patient/home/AppointmentCard";
-import ProfileOverview from "./components/patient/home/ProfileOverview";
-import UpcomingAppointment from "./components/patient/home/UpcomingAppointment ";
-import RightSection from "./components/patient/home/RightSection";
-import LeftSection from "./components/patient/home/LeftSection";
-
-
+import Login from './components/login/patient/Login'
+import LoginOtp from './components/login/patient/LoginOtp'
+import { BrowserRouter as Router ,Route , Routes } from 'react-router-dom'
+import Home from './components/Home'
+import MedicalLogin from './components/login/medical-center/MedicalLogin'
+import PatientNavigation from "./components/patient/home/PatientNavigation"
+import AppointmentSection from './components/patient/appointment/AppointmentSection'
 
 function App() {
   return (
-    <>
+    <div>
+        <Router>
+          <Routes>
 
-     
+            <Route path='/' element={<Home/>}/ >
+            <Route path='/Login' element={<Login/>}/ >
+            <Route path='/LoginOTP' element={  <LoginOtp/>}/>
+            <Route path='/MedicalOfficialLogin' element={  <MedicalLogin/>}/> 
+            <Route path='/home' element={  <PatientNavigation/>}/>
+            <Route path='/appoinments' element={  <AppointmentSection/>}/>
 
-      <div className="flex h-screen bg-[#E3E3E3]">
-        
-        <LeftSection />
-        <RightSection />
-      </div>
+           
+      
+          </Routes>
 
+        </Router>
+    </div>
+  )
 
-    </>
-  );
 }
 
-export default App;
+export default App
