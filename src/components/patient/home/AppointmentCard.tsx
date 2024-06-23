@@ -7,12 +7,13 @@ const AppointmentCard = () => {
           <p>17</p>
         </div>
         <div className="text-[#363636]">
+
           <p className="text-base font-semibold">
             05.00 PM - 06.00 PM | Number 07
           </p>
           <p className="text-sm">Dr. B.KARUNARATNE</p>
           <p className="text-sm">Aloka Clinic & Laboratory</p>
-        </div>
+       </div>
       </div>
     </>
   );
