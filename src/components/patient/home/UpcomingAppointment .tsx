@@ -1,24 +1,23 @@
 import AppointmentCard from "./AppointmentCard";
 
-const UpcomingAppointment = () => {
+const NoUpcomingAppointment = () => {
   return (
-    <div className="bg-[#fff] rounded-[16px] flex justify-between h-1/2">
-      <div className="p-8 flex justify-between">
+    <div className="bg-[#fff] rounded-[16px] h-1/2 p-4">
+      <div className=" flex justify-between">
         <div>
-          <div className="flex justify-between mb-4">
-            <p className="font-Roboto font-[700] text-1xl text-[#151515]">
-              Upcoming Appointment
-            </p>
-            <p className="font-Roboto font-[700] text-1xl text-[#FF7300] text-left mt-1 mb-1">
-              View More
-            </p>
-          </div>
-          <AppointmentCard />
-          <AppointmentCard />
+          <h1 className="text-lg font-bold">Upcoming Appointment</h1>
         </div>
+
+        <div className="mt-1">
+          <p className="text-[#FF7300] text-sm font-semibold">View More</p>
+        </div>
+      </div>
+      <div className="flex flex-col items-center justify-center bg-contain">
+        <AppointmentCard />
+        <AppointmentCard />
       </div>
     </div>
   );
 };
 
-export default UpcomingAppointment;
+export default NoUpcomingAppointment;

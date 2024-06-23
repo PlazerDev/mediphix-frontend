@@ -1,13 +1,11 @@
-import React from "react";
-import UpcomingAppointment from "./UpcomingAppointment ";
 import ProfileOverview from "./ProfileOverview";
-import NoUpcomingAppointment from "./NoUpcomingAppointment";
+import UpcomingAppointment from "./UpcomingAppointment ";
 
 const RightSection = () => {
   return (
-    <div className="w-1/3 flex flex-col gap-4 p-8">
-        <NoUpcomingAppointment/>
-        <ProfileOverview />
+    <div className="w-1/3 flex flex-col gap-4 mx-4 flex-grow">
+      <UpcomingAppointment />
+      <ProfileOverview />
     </div>
   );
 };

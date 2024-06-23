@@ -27,3 +27,6 @@
 .custom-steps .ant-steps-item-wait .ant-steps-item-tail::after {
   background-color: #868686  !important; 
 }
+.custom-divider {
+  margin: 20px 0  !important;
+}
