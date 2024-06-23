@@ -10,13 +10,15 @@ import RightSection from "./components/patient/home/RightSection";
 import LeftSection from "./components/patient/home/LeftSection";
 
 
+
 function App() {
   return (
     <>
 
-      <InTheQueue />
+     
 
       <div className="flex h-screen bg-[#E3E3E3]">
+        
         <LeftSection />
         <RightSection />
       </div>
