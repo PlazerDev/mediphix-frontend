@@ -1,5 +1,21 @@
+
+import InTheQueue from "./InTheQueue";
+
+const LeftSection = () => {
+  return (
+    <>
+      <div className="w-2/3 bg-[#E3E3E3]">
+        <div className="flex justify-center ml-4 p-8 bg-[#ffffff] rounded-[16px]">
+          <InTheQueue/>
+        </div>
+      </div>
+    </>
+  );
+};
+
 function LeftSection() {
   return <div className="w-2/3 bg-blue-100">LeftSection</div>;
 }
+
 
 export default LeftSection;
