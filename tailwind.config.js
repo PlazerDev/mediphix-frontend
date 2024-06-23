@@ -11,7 +11,8 @@ export default {
       fontFamily: {
         'cookie': ['Cookie', 'cursive'], // Adding Cookie font family
         
-      },    
+      },
+          
     },
   },
   plugins: [],
