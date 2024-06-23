@@ -3,15 +3,15 @@ import ManageAppoinmentsImg from '../../../assets/images/patient/appoinment/mana
 import  wdgetBG from '../../../assets/images/patient/appoinment/widgetsBg.png'
 import Footer from "../../Footer"
 
-function AppointmentSection() {
+function PreviousAppointments() {
   return (
     <div>
       <PatientNavigation/>
 
 
       <div className=" ml-4 mb-4 ">
-        <p className="text-[var(--text-a) font-medium text-xl">Appointments</p>
-        <p className=" text-[var(--text-b)] text-xs " >Appointments</p>
+        <p className="text-[var(--text-a) font-medium text-xl">Previous Appointments</p>
+        <p className=" text-[var(--text-b)] text-xs " >Previous Appointments</p>
       </div>
 
       <div className="flex items-center justify-center ">
@@ -88,10 +88,7 @@ function AppointmentSection() {
       <Footer/>
 
     </div>
-
-
-    
   )
 }
 
-export default AppointmentSection
+export default PreviousAppointments
