@@ -1,4 +1,5 @@
 
+
 import InTheQueue from "./components/patient/home/InTheQueue";
 
 import { AiFillAudio } from "react-icons/ai";
@@ -22,6 +23,7 @@ function App() {
         <LeftSection />
         <RightSection />
       </div>
+
 
     </>
   );
