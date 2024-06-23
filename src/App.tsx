@@ -6,6 +6,7 @@ import Home from './components/Home'
 import MedicalLogin from './components/login/medical-center/MedicalLogin'
 import PatientNavigation from "./components/patient/home/PatientNavigation"
 import AppointmentSection from './components/patient/appointment/AppointmentSection'
+import PreviousAppointments from './components/patient/appointment/PreviousAppointments'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path='/MedicalOfficialLogin' element={  <MedicalLogin/>}/> 
             <Route path='/home' element={  <PatientNavigation/>}/>
             <Route path='/appoinments' element={  <AppointmentSection/>}/>
+            <Route path='/previousappoinments' element={  <PreviousAppointments/>}/>
 
            
       
