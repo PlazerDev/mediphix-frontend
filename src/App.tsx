@@ -1,5 +1,10 @@
 import { AiFillAudio } from "react-icons/ai";
 import { Button, message } from "antd";
+import AppointmentCard from "./components/patient/home/AppointmentCard";
+import ProfileOverview from "./components/patient/home/ProfileOverview";
+import UpcomingAppointment from "./components/patient/home/UpcomingAppointment ";
+import RightSection from "./components/patient/home/RightSection";
+import LeftSection from "./components/patient/home/LeftSection";
 
 function App() {
   const [messageApi, contextHolder] = message.useMessage();
@@ -9,13 +14,10 @@ function App() {
   };
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <br />
-      <AiFillAudio />
-      {contextHolder}
-      <Button type="primary" onClick={info}>
-        Display normal message
-      </Button>
+      <div className="flex h-screen bg-[#E3E3E3]">
+        <LeftSection />
+        <RightSection />
+      </div>
     </>
   );
 }
