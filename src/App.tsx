@@ -1,23 +1,33 @@
-import { AiFillAudio } from "react-icons/ai";
-import { Button, message } from "antd";
+
+import Login from './components/login/patient/Login'
+import LoginOtp from './components/login/patient/LoginOtp'
+import { BrowserRouter as Router ,Route , Routes } from 'react-router-dom'
+import Home from './components/Home'
+import MedicalLogin from './components/login/medical-center/MedicalLogin'
+import PatientNavigation from "./components/patient/home/PatientNavigation"
+import AppointmentSection from './components/patient/appointment/AppointmentSection'
 
 function App() {
-  const [messageApi, contextHolder] = message.useMessage();
-
-  const info = () => {
-    messageApi.info("Hello, Ant Design!");
-  };
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <br />
-      <AiFillAudio />
-      {contextHolder}
-      <Button type="primary" onClick={info}>
-        Display normal message
-      </Button>
-    </>
-  );
+    <div>
+        <Router>
+          <Routes>
+
+            <Route path='/' element={<Home/>}/ >
+            <Route path='/Login' element={<Login/>}/ >
+            <Route path='/LoginOTP' element={  <LoginOtp/>}/>
+            <Route path='/MedicalOfficialLogin' element={  <MedicalLogin/>}/> 
+            <Route path='/home' element={  <PatientNavigation/>}/>
+            <Route path='/appoinments' element={  <AppointmentSection/>}/>
+
+           
+      
+          </Routes>
+
+        </Router>
+    </div>
+  )
+
 }
 
-export default App;
+export default App
