@@ -1,4 +1,4 @@
-import PatientNavigation from "../home/PatientNavigation"
+import PatientNavigation from "../navigation/PatientNavigation"
 import ManageAppoinmentsImg from '../../../assets/images/patient/appoinment/manageAppoinments.png'
 import  wdgetBG from '../../../assets/images/patient/appoinment/widgetsBg.png'
 import Footer from "../../Footer"
