@@ -75,11 +75,11 @@ const PreviousAppointments = () => {
           </div>
 
            <div>
-             <p className='text-xl font-bold ml-[-150%] mt-10'>Previous Appointment</p>
+             <p className='text-xl font-bold ml-[-80%] mt-10'>Previous Appointment</p>
            </div>
 
           <div>
-          <Breadcrumb className='ml-[-150%]'
+          <Breadcrumb className='ml-[-80%]'
     items={[
       {
         title: 'Appointments',
@@ -93,18 +93,27 @@ const PreviousAppointments = () => {
   />
          </div>
 
-        <div className='flex ml-[-150%] mt-5'>
+        <div className='flex ml-[-80%] mt-5'>
         <Space direction="vertical" size={15}>
         <RangePicker />
         </Space>
         
-       <input type="text"  className='border-2 border-gray-300 rounded-lg ml-[10%] '/>
-
-
-       
-    
+        <select className='border-2 border-gray-300 rounded-lg ml-[5%] '>
+        <option value="option1">Doctor Name</option>
+        </select>
+        <input type="text" placeholder='Type Here' className='rounded-lg focus:outline-none placeholder:text-[var(--text-c)] ml-[0.1%] w-[40%] pl-5 ' />
+        <button className='bg-[#FF7300] text-white rounded-lg ml-[0.1%] w-[10%] h-[40px] pl-10 ml-4 pl-[0.5%]'>Search</button> 
         </div>
        
+       <div>
+       <p>hhh</p>
+
+
+
+
+
+       </div>
+      
     
 
         </div>
