@@ -10,9 +10,11 @@ import RecordBook from "./components/patient/recordbook/RecordBook";
 import PatientAppointmentTable from "./components/login/patient/PatientAppointmentTable";
 import PreviousAppointments from "./components/patient/appointment/PreviousAppointments";
 
+
 function App() {
   return (
     <div>
+
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -33,6 +35,7 @@ function App() {
           />
         </Routes>
       </Router>
+
     </div>
   );
 }
