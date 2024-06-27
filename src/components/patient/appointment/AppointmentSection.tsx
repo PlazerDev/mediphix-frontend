@@ -1,4 +1,4 @@
-import PatientNavigation from "../navigation/PatientNavigation"
+// import PatientNavigation from "../navigation/PatientNavigation"
 import ManageAppoinmentsImg from '../../../assets/images/patient/appoinment/manageAppoinments.png'
 import  wdgetBG from '../../../assets/images/patient/appoinment/widgetsBg.png'
 import Footer from "../../Footer"
@@ -6,7 +6,7 @@ import Footer from "../../Footer"
 function AppointmentSection() {
   return (
     <div>
-      <PatientNavigation/>
+      {/* <PatientNavigation/> */}
 
 
       <div className=" ml-4 mb-4 ">
@@ -27,7 +27,7 @@ function AppointmentSection() {
 
             <div className="flex flex-row gap-4 text-white">
               
-              <div className="flex-1 w-[1/3] bg-[var(--text-b)] flex  bg-contain bg-right justify-center p-5 rounded-[16px]"
+              <button className="flex-1 w-[1/3] bg-[var(--text-b)] flex  bg-contain bg-right justify-center p-5 rounded-[16px]"
                   style={{
                     backgroundImage:`url(${wdgetBG})`,                  
 
@@ -44,9 +44,9 @@ function AppointmentSection() {
                     Upcoming Appointments
                   </p>
                 </div>
-              </div>
+              </button>
               
-              <div className="flex-1 w-[1/3]  bg-[var(--accent)] flex items-center bg-contain bg-right justify-center p-5 rounded-[16px]"
+              <button className="flex-1 w-[1/3]  bg-[var(--accent)] flex items-center bg-contain bg-right justify-center p-5 rounded-[16px]"
                   style={{
                     backgroundImage:`url(${wdgetBG})`,                  
 
@@ -62,8 +62,9 @@ function AppointmentSection() {
                     Create an Appointment
                   </p>
                 </div>
-              </div>
-              <div className="flex-1 w-[1/3] bg-[var(--text-b)] flex items-center bg-right bg-contain justify-center p-5 rounded-[16px]"
+              </button>
+
+              <button className="flex-1 w-[1/3] bg-[var(--text-b)] flex items-center bg-right bg-contain justify-center p-5 rounded-[16px]"
                   style={{
                     backgroundImage:`url(${wdgetBG})`,                  
 
@@ -79,7 +80,7 @@ function AppointmentSection() {
                     Previous Appointments
                   </p>
                 </div>
-              </div>
+              </button>
                 
             </div>
         </div>
