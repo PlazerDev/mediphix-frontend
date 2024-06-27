@@ -1,4 +1,5 @@
 
+
 import LoginOtp from './components/login/patient/LoginOtp'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from './components/Home'
@@ -15,9 +16,11 @@ import PatientNavigation from './components/patient/navigation/PatientNavigation
 import { useState } from 'react'
 
 
+
 function App() {
  
   return (
+
 
     <div>
       <Router>
@@ -37,13 +40,12 @@ function App() {
               <Route path='/previousappoinments' element={<PreviousAppointments />} />
       
 
+
         </Routes>
       </Router>
 
     </div>
-  )
-
+  );
 }
 
-
-export default App
+export default App;
