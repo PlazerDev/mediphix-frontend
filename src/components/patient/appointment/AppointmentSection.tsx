@@ -2,10 +2,24 @@
 import ManageAppoinmentsImg from '../../../assets/images/patient/appoinment/manageAppoinments.png'
 import  wdgetBG from '../../../assets/images/patient/appoinment/widgetsBg.png'
 import Footer from "../../Footer"
+import "../../../assets/css/page_loading_animation.css"
+import { useState,useEffect } from 'react'
+
 
 function AppointmentSection() {
+
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoaded(true);
+    }, 100); 
+
+    return () => clearTimeout(timer);
+  }, []);
+  
   return (
-    <div>
+    <div className={`h-screen flex flex-col ${loaded ? 'fade-in' : ''}`}>
       {/* <PatientNavigation/> */}
 
 
@@ -96,3 +110,5 @@ function AppointmentSection() {
 }
 
 export default AppointmentSection
+
+
