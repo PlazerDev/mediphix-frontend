@@ -27,7 +27,7 @@ const PatientNavigation = () => {
   const segmentMap: Record<string, string> = {
     '/patient/home': 'Home',
     '/patient/appointment': 'Appointment',
-    '/recordbook': 'Record Book',
+    '/patient/recordbook': 'Record Book',
   };
 
   const handleSegmentChange = (value: string) => {
@@ -39,7 +39,7 @@ const PatientNavigation = () => {
         navigate('/patient/appointment');
         break;
       case 'Record Book':
-        navigate('/recordbook');
+        navigate('/patient/recordbook');
         break;
       default:
         navigate('/patient/home');
