@@ -14,7 +14,7 @@ import LoginAuth from './components/login/LoginAuth'
 // import NavigationRouter from './components/patient/navigation/NavigationRouter'
 import PatientNavigation from './components/patient/navigation/PatientNavigation'
 import { useState } from 'react'
-
+import RecordBook from './components/patient/recordbook/RecordBook'
 
 
 function App() {
@@ -38,6 +38,7 @@ function App() {
               <Route path='/patient/appointment' element={<AppointmentSection />} />
               <Route path='/patient/home' element={<PatientHome />} />
               <Route path='/previousappoinments' element={<PreviousAppointments />} />
+              <Route path='/patient/recordbook' element={<RecordBook />} />
       
 
 
