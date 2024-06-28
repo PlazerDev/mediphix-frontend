@@ -12,8 +12,8 @@ import {
 import { Button } from "antd";
 import { DatePicker, Space } from 'antd';
 import { Breadcrumb } from 'antd';
-import { Table } from "antd";
 const { RangePicker } = DatePicker;
+import { Table } from "antd";
 const dataSource = [
   {
     key: '1',
@@ -76,10 +76,9 @@ const columns = [
 ];
 
 
-
-const PreviousAppointments = () => {
-  return (
-    
+const UpComingAppointment = () => {
+    return (
+      <div>
         <div className="flex justify-between bg-white h-[85px]">
         <div>
           <img className="w-24 h-24 ml-5" src={Logo} alt="logo" />
@@ -133,7 +132,7 @@ const PreviousAppointments = () => {
           </div>
 
            <div>
-             <p className='text-xl font-bold ml-[-65%] mt-10'>Previous Appointments</p>
+             <p className='text-xl font-bold ml-[-65%] mt-10'>Upcoming Appointments</p>
            </div>
 
           <div>
@@ -143,7 +142,7 @@ const PreviousAppointments = () => {
         title: 'Appointments',
       },
       {
-        title: <a href="">Previous Appointments</a>,
+        title: <a href="">Upcoming Appointments</a>,
       },
       
       
@@ -163,17 +162,19 @@ const PreviousAppointments = () => {
         <button className='bg-[#FF7300] text-white rounded-lg ml-[0.1%] w-[10%] h-[40px] pl-10 ml-4 pl-[0.5%]'>Search</button> 
         </div>
        
+       
        <div className='ml-[-67%] pt-7'>
        <Table dataSource={dataSource} columns={columns} />
        </div>
+
       
-        
+      
+    
 
         </div>
         </div>
-
-        
+    </div>
   )
 }
 
-export default PreviousAppointments
+export default UpComingAppointment
