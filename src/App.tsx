@@ -1,13 +1,13 @@
-import Login from './components/login/patient/Login'
-import LoginOtp from './components/login/patient/LoginOtp'
-import { BrowserRouter as Router ,Route , Routes } from 'react-router-dom'
-import Home from './components/Home'
-import MedicalLogin from './components/login/medical-center/MedicalLogin'
-import AppointmentSection from './components/patient/appointment/AppointmentSection'
-import PreviousAppointments from './components/patient/appointment/PreviousAppointments'
+import Login from "./components/login/patient/Login";
+import LoginOtp from "./components/login/patient/LoginOtp";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./components/Home";
+import MedicalLogin from "./components/login/medical-center/MedicalLogin";
+import AppointmentSection from "./components/patient/appointment/AppointmentSection";
+import PreviousAppointments from "./components/patient/appointment/PreviousAppointments";
+import PatientNavigation from "./components/patient/navigation/PatientNavigation";
+import PreviousAppointmentDetails from "./components/patient/appointment/PreviousAppointmentDetails";
 import UpComingAppointment from './components/patient/appointment/UpComingAppointment'
-
-
 
 function App() {
   return (
@@ -30,9 +30,8 @@ function App() {
         </Router>
 
     </div>
-  )
-
+  );
 }
 
 
-export default App
+export default App;
