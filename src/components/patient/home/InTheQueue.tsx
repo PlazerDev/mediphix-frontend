@@ -3,7 +3,7 @@ import type { StepsProps } from "antd";
 import { Popover, Steps } from "antd";
 import { Divider } from "antd";
 import "./InTheQueue.css";
-import WithDoctor from "./WithDoctor";
+import QueueDetails from "./QueueDetails";
 
 const customDot: StepsProps["progressDot"] = (dot, { status, index }) => (
   <Popover
@@ -22,10 +22,8 @@ const InTheQueue = () => {
     <>
       <div className="w-full rounded-[16px] ">
         <div className="flex justify-between mb-6">
-          <h3 className="text-lg">
-            <b>Ongoing Appointment</b>
-          </h3>
-          <p className="text-[#FF7300] text-sm font-semibold">View More</p>
+          <h3 className="text-lg font-bold">Ongoing Appointment</h3>
+          <p className="text-[#FF7300] text-sm font-semibold mt-1">View More</p>
         </div>
         <div className="flex justify-center">
           <div className="w-5/6 ">
@@ -52,10 +50,10 @@ const InTheQueue = () => {
           </div>
         </div>
 
-        <Divider />
+        <Divider className="custom-divider " />
 
-        <div className=" h-[150px] max-h-[150px]">
-          <WithDoctor />
+        <div className=" flex justify-center h-[120px] max-h-[120px]">
+          <QueueDetails />
         </div>
         <div className="flex justify-center mt-3">
           <Token />
