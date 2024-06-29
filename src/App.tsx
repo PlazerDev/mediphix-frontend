@@ -11,6 +11,7 @@ import LoginAuth from './components/login/LoginAuth'
 import PatientNavigation from './components/patient/navigation/PatientNavigation'
 import { useState } from 'react'
 import RecordBook from './components/patient/recordbook/RecordBook'
+import UpComingAppointment from './components/patient/appointment/UpComingAppointment'
 
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
     <div>
       <Router>
 
-      {/* <PatientNavigation/> */}
+      /<PatientNavigation/> 
 
         <Routes>
          
@@ -31,8 +32,9 @@ function App() {
               <Route path='/MedicalOfficialLogin' element={<MedicalLogin />} />
               <Route path='/patient/appointment' element={<AppointmentSection />} />
               <Route path='/patient/home' element={<PatientHome />} />
-              <Route path='/previousappoinments' element={<PreviousAppointments />} />
+              <Route path='/PreviousAppoinments' element={<PreviousAppointments />} />
               <Route path='/patient/recordbook' element={<RecordBook />} />
+              <Route path='/UpComingAppointments' element={<UpComingAppointment/>} />
       
 
 
