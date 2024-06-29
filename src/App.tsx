@@ -1,3 +1,5 @@
+
+
 import LoginOtp from './components/login/patient/LoginOtp'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from './components/Home'
@@ -6,7 +8,6 @@ import PatientHome from './components/patient/home/PatientHome'
 import AppointmentSection from './components/patient/appointment/AppointmentSection'
 import PreviousAppointments from './components/patient/appointment/PreviousAppointments'
 import LoginAuth from './components/login/LoginAuth'
-// import NavigationRouter from './components/patient/navigation/NavigationRouter'
 import PatientNavigation from './components/patient/navigation/PatientNavigation'
 import { useState } from 'react'
 import RecordBook from './components/patient/recordbook/RecordBook'
@@ -20,7 +21,7 @@ function App() {
     <div>
       <Router>
 
-      <PatientNavigation/>
+      {/* <PatientNavigation/> */}
 
         <Routes>
          
