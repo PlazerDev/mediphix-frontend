@@ -69,20 +69,13 @@ const columns = [
 const PreviousAppointments = () => {
   return (
     
-        <div className="flex justify-between bg-white h-[85px]">
         <div>
+        <div>
+        <p className='text-xl font-bold ml-[1%] mt-[3%]'>Previous Appointments</p>
         </div>
- 
+            
         <div>
-          <div>      
-          </div>
-
-           <div>
-             <p className='text-xl font-bold ml-[-63%] mt-[15%]'>Previous Appointments</p>
-           </div>
-
-          <div>
-          <Breadcrumb className='ml-[-63%]'
+          <Breadcrumb className='ml-[1%]'
     items={[
       {
         title: 'Appointments',
@@ -96,7 +89,7 @@ const PreviousAppointments = () => {
   />
          </div>
 
-        <div className='flex ml-[-63%] mt-5'>
+        <div className='flex ml-[1%] mt-10'>
         <Space direction="vertical" size={15}>
         <RangePicker />
         </Space>
@@ -108,14 +101,14 @@ const PreviousAppointments = () => {
         <button className='bg-[#FF7300] text-white rounded-lg ml-[0.1%] w-[10%] h-[40px] pl-10 ml-4 pl-[0.5%]'>Search</button> 
         </div>
        
-       <div className='ml-[-63%] pt-7'>
+       <div className='ml-[1%] pt-7'>
        <Table dataSource={dataSource} columns={columns} />
        </div>
       
         
 
         </div>
-        </div>
+        
 
         
   )
