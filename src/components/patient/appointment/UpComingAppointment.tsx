@@ -102,7 +102,7 @@ const UpComingAppointment = () => {
         </div>
        
        
-       <div className='ml-[1%] pt-7'>
+       <div className='ml-[1%] mr-[1%] pt-7'>
        <Table dataSource={dataSource} columns={columns} />
        </div>
 
