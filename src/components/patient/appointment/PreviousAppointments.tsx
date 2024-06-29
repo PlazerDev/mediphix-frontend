@@ -101,7 +101,7 @@ const PreviousAppointments = () => {
         <button className='bg-[#FF7300] text-white rounded-lg ml-[0.1%] w-[10%] h-[40px] pl-10 ml-4 pl-[0.5%]'>Search</button> 
         </div>
        
-       <div className='ml-[1%] pt-7'>
+       <div className='ml-[1%] mr-[1%] pt-7'>
        <Table dataSource={dataSource} columns={columns} />
        </div>
       
