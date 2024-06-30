@@ -4,6 +4,7 @@ import  wdgetBG from '../../../assets/images/patient/appoinment/widgetsBg.png'
 import Footer from "../../Footer"
 import "../../../assets/css/page_loading_animation.css"
 import { useState,useEffect } from 'react'
+import PatientNavigation from '../navigation/PatientNavigation'
 
 
 function AppointmentSection() {
@@ -20,7 +21,7 @@ function AppointmentSection() {
   
   return (
     <div className={`h-screen flex flex-col ${loaded ? 'fade-in' : ''}`}>
-      {/* <PatientNavigation/> */}
+      <PatientNavigation/>
 
 
       <div className=" ml-4 mb-4 ">
