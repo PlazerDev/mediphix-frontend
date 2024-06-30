@@ -1,22 +1,12 @@
-import React from "react";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
-import Logo from "./../../../assets/images/mediphix.jpg";
-import { Segmented } from "antd";
 import Footer from "./../../Footer";
-import {
-  BookOutlined,
-  HomeOutlined,
-  BellOutlined,
-  CalendarOutlined,
-  LogoutOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
-import { Button } from "antd";
 import { Breadcrumb } from "antd";
+import PatientNavigation from "../navigation/PatientNavigation";
 
 const PreviousAppointmentDetails = () => {
   return (
     <div>
+          <PatientNavigation />
       <div className="mt-2 ml-4">
         <p className="font-Roboto font-[700] text-xl text-[#151515]">
           Appointment - REF_1653

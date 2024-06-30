@@ -17,6 +17,9 @@ import SelectDoctor from './components/patient/appointment/SelectDoctor'
 import BookAppointment from './components/patient/appointment/BookAppointment'
 import TimeslotCard from './components/patient/appointment/TimeslotCard'
 import PreviousAppointmentDetails from './components/patient/appointment/PreviousAppointmentDetails'
+import MedicalCenterCard from './components/patient/appointment/MedicalCenterCard'
+
+
 
 function App() {
  
