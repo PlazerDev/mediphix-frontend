@@ -9,6 +9,7 @@ import LoginAuth from './components/login/LoginAuth'
 import RecordBook from './components/patient/recordbook/RecordBook'
 import UpComingAppointment from './components/patient/appointment/UpComingAppointment'
 import AppointmentTableDetails from './components/patient/appointment/AppointmentTableDetails'
+import SelectDoctor from './components/patient/appointment/SelectDoctor'
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
               <Route path='/patient/recordbook' element={<RecordBook />} />
               <Route path='/UpComingAppointment' element={<UpComingAppointment/>} />
               <Route path='/AppointmentTableDetails' element={<AppointmentTableDetails/>} />
+              <Route path='/SearchDoctor' element={<SelectDoctor/>} />
       
 
 
