@@ -1,4 +1,5 @@
 import React from "react";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 import Logo from "./../../../assets/images/mediphix.jpg";
 import { Segmented } from "antd";
 import {
@@ -15,60 +16,6 @@ import { Breadcrumb } from "antd";
 const PreviousAppointmentDetails = () => {
   return (
     <div>
-      <div className="flex justify-between bg-white h-[85px]">
-        <div>
-          <img className="w-24 h-24 ml-5" src={Logo} alt="logo" />
-        </div>
-        <div>
-          <Segmented<string>
-            className="custom-segmented"
-            options={[
-              { label: "Home", value: "Home", icon: <HomeOutlined /> },
-              {
-                label: "Appointment",
-                value: "Appointment",
-                icon: <CalendarOutlined />,
-              },
-              {
-                label: "Record Book",
-                value: "Record Book",
-                icon: <BookOutlined />,
-              },
-            ]}
-            onChange={(value) => {
-              console.log(value); // string
-            }}
-          />
-        </div>
-
-        <div>
-          <div className="flex  m-5  bg-[#E3E3E3] rounded-full">
-            <Button
-              className="custom-button"
-              type="default"
-              size="large"
-              shape="circle"
-              icon={<BellOutlined style={{ color: "#FF7300" }} />}
-            />
-
-            <Button
-              className="custom-button"
-              type="default"
-              size="large"
-              shape="circle"
-              icon={<SettingOutlined style={{ color: "#FF7300" }} />}
-            />
-
-            <Button
-              className="custom-button"
-              type="default"
-              size="large"
-              shape="circle"
-              icon={<LogoutOutlined style={{ color: "#FF7300" }} />}
-            />
-          </div>
-        </div>
-      </div>
       <div className="mt-4 ml-4">
         <p className="font-Roboto font-[700] text-xl text-[#151515]">
           Appointment - REF_1653
@@ -91,40 +38,93 @@ const PreviousAppointmentDetails = () => {
       </div>
       <div className="ml-4 mr-4 p-8 bg-[#ffffff] rounded-[16px] ">
         <div className="flex w-full justify-between">
-          <div>
+          <div className="ml-4">
             <p className="text-[#868686]">Reference Number</p>
             <p>REF_1653</p>
             <p className="text-[#868686]">Queue Number</p>
             <p>07</p>
           </div>
           <div>
-            <p>Date</p>
+            <p className="text-[#868686]">Date</p>
             <p>2024/June/13</p>
-            <p>Status</p>
-            <p>Ended</p>
+            <p className="text-[#868686]">Status</p>
+            <p className="text-[#FF7300]">Ended</p>
+            <div className="flex bg-[#FF7300] rounded-[8px] align-middle p-2 text-[#FFFFFF] w-fit ">
+                {" "}
+                <MdOutlineRemoveRedEye className="text-lg mr-1" />
+                <p className="text-sm ">View Record Book Entry</p>
+              </div>
           </div>
           <div>
-            <p>Time Slot</p>
+            <p className="text-[#868686]">Time Slot</p>
             <p>03.00 PM - 04.00 PM</p>
           </div>
         </div>
+        <div>
         <hr className="my-4" />
+        <h3 className="text-lg mb-3 font-semibold">Payment Details</h3>
+        <div className="flex w-full ">
+          <div className="w-96 mr-60">
+            <p className="text-[#868686]">Payment Date</p>
+            <p>2024/June/15</p>
+          </div>
+          <div>
+            <p className="text-[#868686]">Payment Time</p>
+            <p>03.00 PM - 04.00 PM</p>
+          </div>
+          </div>
+        </div>
+
+        <div>
+        <hr className="my-4" />
+        <h3 className="text-lg mb-3 font-semibold">Medical Center Details</h3>
         <div className="flex w-full justify-between">
           <div>
-            <p className="text-[#868686]">Reference Number</p>
-            <p>REF_1653</p>
-            <p>Queue Number</p>
-            <p>07</p>
+            <p className="text-[#868686]">Medical Center Name</p>
+            <p className="text-[#FF7300]">Aloka Medical Center</p>
           </div>
           <div>
-            <p>Date</p>
-            <p>2024/June/13</p>
-            <p>Status</p>
-            <p>Ended</p>
+            <p className="text-[#868686]">Contact Number</p>
+            <p>011-4600600</p>
           </div>
           <div>
-            <p>Time Slot</p>
-            <p>03.00 PM - 04.00 PM</p>
+            <p className="text-[#868686]">Location</p>
+            <p>No: 10/A, Queens Rd, Colombo 7</p>
+          </div>
+          </div>
+        </div>
+
+        <div>
+        <hr className="my-4" />
+        <h3 className="text-lg mb-3 font-semibold">Doctor Details</h3>
+        <div className="flex w-full justify-between">
+          <div>
+            <p className="text-[#868686]">Doctor's Name</p>
+            <p className="text-[#FF7300]">Dr. C.M.K Jayawardanar</p>
+          </div>
+          <div>
+            <p className="text-[#868686]">Category</p>
+            <p>OPD Doctor</p>
+          </div>
+          </div>
+        </div>
+
+        <div>
+        <hr className="my-4" />
+        <h3 className="text-lg mb-3 font-semibold">Session Details</h3>
+        <div className="flex w-full justify-between">
+          <div>
+            <p className="text-[#868686]">Started date & time</p>
+            <p className="text-[#FF7300]">2024/June/15 - 03.42 PM</p>
+          </div>
+          <div>
+            <p className="text-[#868686]">End date & time</p>
+            <p>2024/June/15 - 03.51 PM</p>
+          </div>
+          <div>
+            <p className="text-[#868686]">Session Duration</p>
+            <p>09 Minutes</p>
+          </div>
           </div>
         </div>
       </div>
