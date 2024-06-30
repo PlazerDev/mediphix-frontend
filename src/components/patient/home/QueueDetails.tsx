@@ -3,16 +3,16 @@ import image from "./../../../assets/images/patient/home/queue_details.png";
 const QueueDetails = () => {
   return (
     <>
-      <div className="flex h-full justify-center items-center m-3">
+      <div className="flex h-full justify-center items-center">
         <div className="">
-          <img className=" w-[233px] h-[142px]" src={image} />
+          <img className=" w-[203px] h-[112px] mr-10" src={image} />
         </div>
         <div className="flex flex-col max-w-[400px]">
-          <p className="text-xl mb-3.5 font-semibold">
+          <p className="text-lg mb-1 font-semibold">
             You are currently in the queue. Please <br />
             wait for your turn.
           </p>
-          <div className="grid grid-cols-3 gap-1">
+          <div className="grid grid-cols-3 gap-x-1">
             <div>
               <p className="text-[12px] ">Current Queue Number</p>
             </div>
@@ -22,7 +22,7 @@ const QueueDetails = () => {
             <div>
               <p className="text-[12px]">Hall Reference</p>
             </div>
-            <div>
+            <div className="">
               <p className="text-sm text-[#FFFFFF] bg-[#363636] h-8 w-8 p-1 text-center rounded-lg">
                 03
               </p>
