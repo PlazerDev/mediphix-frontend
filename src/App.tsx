@@ -18,6 +18,7 @@ import BookAppointment from './components/patient/appointment/BookAppointment'
 import TimeslotCard from './components/patient/appointment/TimeslotCard'
 import PreviousAppointmentDetails from './components/patient/appointment/PreviousAppointmentDetails'
 import MedicalCenterCard from './components/patient/appointment/MedicalCenterCard'
+import MedicalCenterDetailsCard from './components/patient/appointment/MedicalCenterDetailsCard'
 
 
 
@@ -49,6 +50,7 @@ function App() {
               <Route path='/TimeslotCard' element={<TimeslotCard/>} />
               <Route path='/patient/PreviousAppointmentDetails' element={<PreviousAppointmentDetails />} />
 
+              <Route path='/patient/appoinment/medicalcenterdetailscard' element={<MedicalCenterDetailsCard/>} />
         </Routes>
       </Router>
 
