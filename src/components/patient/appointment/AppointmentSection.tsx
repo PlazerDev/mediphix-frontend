@@ -1,11 +1,26 @@
-import PatientNavigation from "../home/PatientNavigation"
+// import PatientNavigation from "../navigation/PatientNavigation"
 import ManageAppoinmentsImg from '../../../assets/images/patient/appoinment/manageAppoinments.png'
 import  wdgetBG from '../../../assets/images/patient/appoinment/widgetsBg.png'
 import Footer from "../../Footer"
+import "../../../assets/css/page_loading_animation.css"
+import { useState,useEffect } from 'react'
+import PatientNavigation from '../navigation/PatientNavigation'
+
 
 function AppointmentSection() {
+
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoaded(true);
+    }, 100); 
+
+    return () => clearTimeout(timer);
+  }, []);
+  
   return (
-    <div>
+    <div className={`h-screen flex flex-col ${loaded ? 'fade-in' : ''}`}>
       <PatientNavigation/>
 
 
@@ -25,13 +40,12 @@ function AppointmentSection() {
                 <img src={ManageAppoinmentsImg}  className="h-[220px]" alt="" />
             </div>
 
-            <div className="flex flex-row gap-6 text-white">
+            <div className="flex flex-row gap-4 text-white">
               
-              <div className="flex-1 w-[1/3] bg-[var(--text-b)] flex items-center justify-center p-5 rounded-[16px]"
+              <button className="flex-1 w-[1/3] bg-[var(--text-b)] flex  bg-contain bg-right justify-center p-5 rounded-[16px]"
                   style={{
-                    backgroundImage:`url(${wdgetBG})`,
-                    // backgroundSize: "cover",
-                    backgroundPosition: "50%",
+                    backgroundImage:`url(${wdgetBG})`,                  
+
                     backgroundRepeat: "no-repeat",
                     backgroundBlendMode: "luminosity",
           
@@ -45,13 +59,12 @@ function AppointmentSection() {
                     Upcoming Appointments
                   </p>
                 </div>
-              </div>
+              </button>
               
-              <div className="flex-1 w-[1/3] bg-[var(--accent)] flex items-center justify-center p-5 rounded-[16px]"
+              <button className="flex-1 w-[1/3]  bg-[var(--accent)] flex items-center bg-contain bg-right justify-center p-5 rounded-[16px]"
                   style={{
-                    backgroundImage:`url(${wdgetBG})`,
-                    // backgroundSize: "cover",
-                    backgroundPosition: "50%",
+                    backgroundImage:`url(${wdgetBG})`,                  
+
                     backgroundRepeat: "no-repeat",
                     backgroundBlendMode: "luminosity",
                   }}>
@@ -64,12 +77,12 @@ function AppointmentSection() {
                     Create an Appointment
                   </p>
                 </div>
-              </div>
-              <div className="flex-1 w-[1/3] bg-[var(--text-b)] flex items-center justify-center p-5 rounded-[16px]"
+              </button>
+
+              <button className="flex-1 w-[1/3] bg-[var(--text-b)] flex items-center bg-right bg-contain justify-center p-5 rounded-[16px]"
                   style={{
-                    backgroundImage:`url(${wdgetBG})`,
-                    // backgroundSize: "cover",
-                    backgroundPosition: "50%",
+                    backgroundImage:`url(${wdgetBG})`,                  
+
                     backgroundRepeat: "no-repeat",
                     backgroundBlendMode: "luminosity",
                   }}>
@@ -82,7 +95,7 @@ function AppointmentSection() {
                     Previous Appointments
                   </p>
                 </div>
-              </div>
+              </button>
                 
             </div>
         </div>
@@ -98,3 +111,5 @@ function AppointmentSection() {
 }
 
 export default AppointmentSection
+
+
