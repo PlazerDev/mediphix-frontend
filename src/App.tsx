@@ -17,6 +17,7 @@ import AppointmentTableDetails from './components/patient/appointment/Appointmen
 import SelectDoctor from './components/patient/appointment/SelectDoctor'
 import MedicalCenterCard from './components/patient/appointment/MedicalCenterCard'
 import MedicalCenterDetailsCard from './components/patient/appointment/MedicalCenterDetailsCard'
+import AppointmentSuccessful from './components/patient/appointment/AppointmentSuccessful'
 
 
 
@@ -47,6 +48,7 @@ function App() {
               <Route path='/SearchDoctor' element={<SelectDoctor/>} />
               <Route path='/patient/appoinment/medicalcentercard' element={<MedicalCenterCard/>} />
               <Route path='/patient/appoinment/medicalcenterdetailscard' element={<MedicalCenterDetailsCard/>} />
+              <Route path='/patient/appoinment/appointmentsuccessful' element={<AppointmentSuccessful/>} />
         </Routes>
       </Router>
 
