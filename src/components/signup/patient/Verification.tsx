@@ -1,4 +1,4 @@
-import FormButtonSet from "./FormButtonSet"
+
 
 function Verification() {
   return (
@@ -49,7 +49,7 @@ function Verification() {
             <div className='text-xsm '>
               <p className='text-[var(--text-c)]  text-[15px] mt-2'>Didn’t receive the code ? <span className='text-[var(--accent)] font-medium cursor-pointer'>Resend</span></p>
             </div>
-                <FormButtonSet nxt={"Complete"}/>
+                
             
           </div>
     </div>

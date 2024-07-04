@@ -44,9 +44,7 @@ function UserDetailsForm() {
                         <p className='ml-2'>Email </p>
                         <input type="text" className='border-2 w-full h-12 rounded-[25px] p-2 focus:outline-[var(--accent)]' placeholder='Enter Your Email' />
                     </div>
-                    <div className='mt-2 text-right w-full'>
-                        <button className='p-2 border-2 w-[200px] bg-[var(--accent)] rounded-[20px]'>Continue</button>
-                    </div>
+                    
                 </div>
             </form>
         </div>
