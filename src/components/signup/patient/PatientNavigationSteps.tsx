@@ -7,10 +7,26 @@ import MobileNumberForm from './MobileNumberForm';
 import Verification from './Verification';
 import FormButtonSet from './FormButtonSet';
 
+
 const PatientNavigationSteps: React.FC<{ step: number; titlename: string; }> = (props) => {
 
-    const [currentStep, setCurrentStep] = useState(props.step);
+    const [currentStep, setCurrentStep] = useState(1);
+    const [formData, setFormData] = useState({
+        fname: '',
+        lname: '',
+        dob: '',
+        nationality: '',
+        nic: '',
+        email: '',
+        addres: '',
+        mobile:'',
+    });
 
+   
+   const addMobile = (e) => {
+         setFormData((prevData) => ({ ...prevData, mobile: e.target.value }));
+
+    }
     const handleBackClick = () => {
         if (currentStep > 1) {
             setCurrentStep(currentStep - 1);
@@ -20,8 +36,22 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; }> = (
     const handleNextClick = () => {
         if (currentStep < 3) {
             setCurrentStep(currentStep + 1);
+            setFormData((prevData) => ({ ...prevData, ...formData }));
         }
     };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+      };
+    
+      const handleClick = () => {
+        
+      };
+   
 
     let status1: "process" | "finish" | "wait" | "error" | undefined, status2: "process" | "finish" | "wait" | "error" | undefined, status3: "process" | "finish" | "wait" | "error" | undefined;
 
@@ -47,15 +77,23 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; }> = (
     const renderComponent = () => {
         switch (currentStep) {
             case 1:
-                return <UserDetailsForm />;
+                return <UserDetailsForm formData={formData} handleChange={handleChange} handleClick={handleClick}  />;
             case 2:
-                return <MobileNumberForm />;
+                return <MobileNumberForm formData={formData} handleChange={addMobile} handleClick={handleClick}  />;
             case 3:
-                return <Verification />;
+                return <Verification formData={formData} handleChange={handleChange} handleClick={handleClick} />;
             default:
                 return null;
         }
     };
+    const nxt =()=>{
+        if(currentStep==3){
+            return "Submit"
+        }
+        else{
+            return "Continue"
+        }
+    }
 
     return (
         <ConfigProvider
@@ -99,8 +137,10 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; }> = (
                         {renderComponent()}
                     </div>
 
+                   
                     <FormButtonSet
-                        nxt="Continue"
+                        
+                        nxt={nxt()}
                         onBackClick={handleBackClick}
                         onNextClick={handleNextClick}
                     />

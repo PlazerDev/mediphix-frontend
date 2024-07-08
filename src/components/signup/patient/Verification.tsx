@@ -1,38 +1,38 @@
 
 
-function Verification() {
+function Verification(props) {
   return (
     <div className='w-full'>
       <p className='text-[var(--text-c)]'>Here is a preview of the details you have been entered.</p>
       <div className='flex flex-row gap-6 p-5 ml-3 mt-3 mb-5 border-2 rounded-[10px] gap-x-18 flex-shrink-0 gap-y-8  flex-wrap border-dotted-[var(--text-c)]'>
         <div className='w-[180px]'>
             <p className='text-[var(--text-c)]  text-sm'>First Name</p>
-            <p>Data</p>
+            <p>{props.formData.fname}</p>
         </div>
         <div className='w-[180px]'>
             <p className='text-[var(--text-c)]  text-sm'>Last Name</p>
-            <p>Data</p>
+            <p>{props.formData.lname}</p>
         </div>
         <div className='w-[180px]'>
             <p className='text-[var(--text-c)]  text-sm'>Mobile Number</p>
-            <p>Data</p>
+            <p>{props.formData.mobile}</p>
         </div>
         <div className='w-[180px]'>
             <p className='text-[var(--text-c)]  text-sm'>Email</p>
-            <p>Data</p>
+            <p>{props.formData.email}</p>
         </div>
         <div className='w-[180px]'>
             <p className='text-[var(--text-c)]  text-sm'>Date Of Birth</p>
-            <p>Data</p>
+            <p>{props.formData.dob}</p>
         </div>
         <div className='w-[180px]'>
             <p className='text-[var(--text-c)]  text-sm'>Natianolity</p>
-            <p>Data</p>
+            <p>{props.formData.nationality}</p>
         </div>
       </div>
 
       <div>
-            <p className='text-[var(--text-c)]'>Enter the OTP code sent to the <span className='font-semibold text-black'>0713072404</span></p> 
+            <p className='text-[var(--text-c)]'>Enter the OTP code sent to the <span className='font-semibold text-black'> {props.formData.mobile}</span></p> 
             {/* <div className='flex rounded-[20px] w-full border border-gray-300  p-2 transition-colors duration-300 hover:border-[var(--accent)] '>
                     <p className='text-[#868686]'>+94</p>
                     <input type="text" className='rounded-[20px] focus:outline-none pl-2' />
