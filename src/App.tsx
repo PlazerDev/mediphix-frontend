@@ -20,6 +20,7 @@ import PreviousAppointmentDetails from './components/patient/appointment/Previou
 import MedicalCenterCard from './components/patient/appointment/MedicalCenterCard'
 import MedicalCenterDetailsCard from './components/patient/appointment/MedicalCenterDetailsCard'
 import AppointmentSuccessful from './components/patient/appointment/AppointmentSuccessful'
+import BookingFailed from './components/patient/appointment/BookingFailed'
 
 
 
@@ -53,6 +54,7 @@ function App() {
 
               <Route path='/patient/appoinment/medicalcenterdetailscard' element={<MedicalCenterDetailsCard/>} />
               <Route path='/patient/appoinment/appointmentsuccessful' element={<AppointmentSuccessful/>} />
+              <Route path='/patient/appoinment/bookingfailed' element={<BookingFailed/>} />
         </Routes>
       </Router>
 
