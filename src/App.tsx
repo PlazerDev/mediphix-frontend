@@ -1,3 +1,4 @@
+
 import LoginOtp from "./components/login/patient/LoginOtp";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
@@ -22,14 +23,7 @@ import BookingFailed from './components/patient/appointment/BookingFailed'
 
 import { FaRegAddressBook } from "react-icons/fa";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
-
-
-import UpComingAppointment from "./components/patient/appointment/UpComingAppointment";
-import AppointmentTableDetails from "./components/patient/appointment/AppointmentTableDetails";
-import SelectDoctor from "./components/patient/appointment/SelectDoctor";
-import MedicalCenterCard from "./components/patient/appointment/MedicalCenterCard";
 import RecordBookList from "./components/patient/recordbook/RecordBookList";
-import RecordBookDetails from "./components/patient/recordbook/RecordBookDetails";
 
 function App() {
 
