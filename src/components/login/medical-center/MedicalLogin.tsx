@@ -26,7 +26,7 @@ function Login() {
                 <span className='font-semibold'>Email</span> <br />
                 <div className='mb-2 flex rounded-[20px] w-full border border-gray-300  p-2 transition-colors duration-300 hover:border-[var(--accent)] '>
                     
-                  
+                  <input type="text" placeholder='Enter Your Email' className='rounded-[20px] focus:outline-none pl-2  w-full placeholder:text-[var(--text-c)]' />
                    
                 </div>
 
