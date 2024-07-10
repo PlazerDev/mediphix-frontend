@@ -2,8 +2,7 @@
 import Footer from '../Footer'
 import wdgetBG from './../../assets/images/signup/widgetsBg.png'
 import PatientNavigationSteps from './patient/PatientNavigationSteps';
-
-function SignupBg(props: { stepnumber: number; titlename: string; }) {
+function SignupBg(props: { stepnumber: number; titlename: string; role:string }) {
  
 
   return (
@@ -13,7 +12,7 @@ function SignupBg(props: { stepnumber: number; titlename: string; }) {
       backgroundRepeat: "no-repeat",
       backgroundBlendMode: "luminosity",
     }}>
-      <PatientNavigationSteps step={props.stepnumber} titlename={props.titlename}  />
+      <PatientNavigationSteps step={props.stepnumber} titlename={props.titlename} role={props.role} />
    
       <Footer/>
     </div>
