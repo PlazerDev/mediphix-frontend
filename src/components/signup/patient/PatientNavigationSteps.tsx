@@ -226,7 +226,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
 
 
                     <FormButtonSet
-
+                        backDisplay={false}
                         nxt={nxt()}
                         onBackClick={handleBackClick}
                         onNextClick={handleNextClick}
