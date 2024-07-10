@@ -16,6 +16,7 @@ import UpComingAppointment from './components/patient/appointment/UpComingAppoin
 import AppointmentTableDetails from './components/patient/appointment/AppointmentTableDetails'
 import SelectDoctor from './components/patient/appointment/SelectDoctor'
 import MedicalCenterCard from './components/patient/appointment/MedicalCenterCard'
+import RecordBookList from './components/patient/recordbook/RecordBookList'
 
 
 
@@ -40,6 +41,7 @@ function App() {
               <Route path='/patient/home' element={<PatientHome />} />
               <Route path='/PreviousAppoinments' element={<PreviousAppointments />} />
               <Route path='/patient/recordbook' element={<RecordBook />} />
+              <Route path="/patient/recordbooklist" element={<RecordBookList />} />
               <Route path='/patient/PreviousAppointmentDetails' element={<PreviousAppointmentDetails />} />
               <Route path='/UpComingAppointment' element={<UpComingAppointment/>} />
               <Route path='/AppointmentTableDetails' element={<AppointmentTableDetails/>} />
