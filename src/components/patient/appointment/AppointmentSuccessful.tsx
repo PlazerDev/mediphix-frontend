@@ -40,18 +40,26 @@ const AppointmentSuccessful = () => {
         </div>
         <div className="text-center">
           <p className="mt-4">
-          Your appointment has been successfully booked. You will receive a confirmation SMS with the details shortly to your mobile number.
+            Your appointment has been successfully booked. You will receive a
+            confirmation SMS with the details shortly to your mobile number.
           </p>
-          <p>
-          Thank you for choosing our services.
-          </p>
+          <p>Thank you for choosing our services.</p>
         </div>
-        <div>
-          
+        <div className="flex justify-center items-center mt-4 mr-4">
+          <div className="flex justify-center items-center mt-4 mr-4">
+            <div className="bg-[#FFFFFF] text-[black] border-2 border-black rounded-md p-2 w-40 flex justify-center items-center">
+              <p className="font-Roboto font-[700] text-sm">HOME</p>
+            </div>
+          </div>
+          <div className="flex justify-center items-center mt-4 mr-4">
+            <div className="bg-[#FF7300] text-[#FFFFFF] rounded-md p-2 w-50 flex items-center">
+              <p className="mx-2">View More Details</p>
+            </div>
+          </div>
         </div>
       </div>
       <div>
-      <Footer/>
+        <Footer />
       </div>
     </>
   );
