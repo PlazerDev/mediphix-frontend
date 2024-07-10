@@ -7,26 +7,65 @@ import MobileNumberForm from './MobileNumberForm';
 import Verification from './Verification';
 import FormButtonSet from './FormButtonSet';
 
+import DoctorDetailsForm from '../doctor/DoctorDetailsForm';
+import EmailandDocumetsFrom from '../EmailandDocumetsFrom';
 
-const PatientNavigationSteps: React.FC<{ step: number; titlename: string; }> = (props) => {
+
+const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role:string }> = (props) => {
 
     const [currentStep, setCurrentStep] = useState(1);
     const [formData, setFormData] = useState({
         fname: '',
         lname: '',
+        mobile:'',
         dob: '',
+        email: '',
         nationality: '',
         nic: '',
-        email: '',
         addres: '',
-        mobile:'',
+       
     });
 
-   
+    const [doctorData,setDoctorData] =useState({
+        name:'',
+        slmc:'',
+        education:'',
+        mobile:'',
+        email:'',
+        nic:'',
+        specialization :'',
+      
+        password:'',
+        idfront:'',
+        idback:'',
+    });
+
+    const[medicalCenterData,setMedicalCenterData]=useState({
+       
+        
+        password:'',
+        licenefront:'',
+        liceneback:'',
+
+    });
+    const[labData,setLabData]=useState({
+        name:'',
+        email:'',
+        mobile:'',
+        district:'',
+        address:'',
+        
+        password:'',
+        licenefront:'',
+        liceneback:'',
+
+    });
+
    const addMobile = (e) => {
          setFormData((prevData) => ({ ...prevData, mobile: e.target.value }));
 
     }
+
     const handleBackClick = () => {
         if (currentStep > 1) {
             setCurrentStep(currentStep - 1);
@@ -52,6 +91,67 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; }> = (
         
       };
    
+      // meken thami component handle wenne
+      const renderComponent = () => {
+          if(props.role=="patient"){
+            const verificationTitles: string[]=['First Name','Last Name','Mobile Number','Date of Birth','Email','Nationality','NIC','Address'];
+            const verificationData: string[]=['fname','lname','mobile','dob','email','nationality','nic','address']
+            switch (currentStep) {
+                case 1:
+                    return <UserDetailsForm formData={formData} handleChange={handleChange} handleClick={handleClick}  />;
+                case 2:
+                    return <MobileNumberForm formData={formData} handleChange={addMobile} handleClick={handleClick}  />;
+                case 3:
+                    return <Verification formData={formData} role='patient' handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles}  Vdata={verificationData} />;
+                default:
+                    return null;
+            }
+          }
+          else if(props.role=="doctor"){
+            const verificationTitles: string[]=['Name with Initials','SLMC Reg No','Education','Mobile Number','Email','NIC','Specialization']
+            const verificationData: string[]=['name','slmc','education','mobile','email','nic','specialization']
+            switch (currentStep) {
+                case 1:
+                    return <DoctorDetailsForm formData={doctorData} handleChange={handleChange} handleClick={handleClick}  />;
+                case 2:
+                    return <EmailandDocumetsFrom formData={doctorData} handleChange={addMobile} handleClick={handleClick}  />;
+                case 3:
+                    return <Verification formData={doctorData} handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} />;
+                default:
+                    return null;
+            }
+          }
+          else if(props.role=="medicalcenter"){
+            const verificationTitles: string[]=['Name','Email','Mobile','District','Address']
+            const verificationData: string[]=['name','email','mobile','district','address']
+            switch (currentStep) {
+                case 1:
+                    return <UserDetailsForm formData={medicalCenterData} handleChange={handleChange} handleClick={handleClick}  />;
+                case 2:
+                    return <MobileNumberForm formData={medicalCenterData} handleChange={addMobile} handleClick={handleClick}  />;
+                case 3:
+                    return <Verification formData={medicalCenterData} handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData}/>;
+                default:
+                    return null;
+            }
+          }
+          else if(props.role=="lab"){
+            const verificationTitles: string[]=['Name','Email','Mobile','District','Address']
+            const verificationData: string[]=['name','email','mobile','district','address']
+            switch (currentStep) {
+                case 1:
+                    return <UserDetailsForm formData={labData} handleChange={handleChange} handleClick={handleClick}  />;
+                case 2:
+                    return <MobileNumberForm formData={labData} handleChange={addMobile} handleClick={handleClick}  />;
+                case 3:
+                    return <Verification formData={labData} handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} />;
+                default:
+                    return null;
+            }
+          }
+          
+      };
+
 
     let status1: "process" | "finish" | "wait" | "error" | undefined, status2: "process" | "finish" | "wait" | "error" | undefined, status3: "process" | "finish" | "wait" | "error" | undefined;
 
@@ -73,19 +173,6 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; }> = (
             status1 = status2 = status3 = "wait";
     }
 
-    // Render component based on the current step
-    const renderComponent = () => {
-        switch (currentStep) {
-            case 1:
-                return <UserDetailsForm formData={formData} handleChange={handleChange} handleClick={handleClick}  />;
-            case 2:
-                return <MobileNumberForm formData={formData} handleChange={addMobile} handleClick={handleClick}  />;
-            case 3:
-                return <Verification formData={formData} handleChange={handleChange} handleClick={handleClick} />;
-            default:
-                return null;
-        }
-    };
     const nxt =()=>{
         if(currentStep==3){
             return "Submit"
