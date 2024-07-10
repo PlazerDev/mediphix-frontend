@@ -59,9 +59,7 @@ const AppointmentSuccessful = () => {
         </div>
       </div>
       <div>
-
         <Footer />
-
       </div>
     </>
   );
