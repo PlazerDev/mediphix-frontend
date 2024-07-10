@@ -37,7 +37,13 @@ const BookingFailed = () => {
           </p>
           <p>medical center for further assistance.</p>
         </div>
+        <div className="flex justify-center items-center mt-4 mr-4">
+          <div className="bg-[#FF7300] text-[#FFFFFF] rounded-md p-2 w-fit flex items-center">
+            <p className="mx-2">Appointments</p>
+          </div>
+        </div>
       </div>
+
       <Footer />
     </>
   );
