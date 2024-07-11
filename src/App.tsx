@@ -40,13 +40,15 @@ function App() {
         <Routes>
 
 
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<SelectCheckbox />} />
           {/* <Route path='/' element={<Navpage step={1} titlename={'Mobile'} />} /> */}
           <Route path='/Login' element={<LoginAuth />} />
           <Route path='/LoginOTP' element={<LoginOtp />} />
 
           <Route path='/MedicalOfficialLogin' element={<MedicalLogin />} />
-          <Route path='/patient/appointment' element={<AppointmentSection />} />
+          <Route path='/patient/appointment' element={<AppointmentSection name={'Visal'} title={'Manage your appointments here'}
+            buttontitles={['Upcomming Appoinments', 'Create an Appointment', 'Previous Appointments']} 
+            buttonimages={['FaRegAddressBook', 'MdOutlineCreateNewFolder', 'FaRegAddressBook']} />} />
           <Route path='/patient/home' element={<PatientHome />} />
           <Route path='/PreviousAppoinments' element={<PreviousAppointments />} />
           <Route path='/patient/recordbook' element={<RecordBook />} />
@@ -55,15 +57,18 @@ function App() {
           <Route path='/AppointmentTableDetails' element={<AppointmentTableDetails />} />
           <Route path='/SearchDoctor' element={<SelectDoctor />} />
           <Route path='/patient/appoinment/medicalcentercard' element={<MedicalCenterCard />} />
-          <Route path='/patient/appoinment/medicalcenterdetailscard' element={<MedicalCenterDetailsCard/>} />
-          <Route path='/patient/appoinment/appointmentsuccessful' element={<AppointmentSuccessful/>} />
+          <Route path='/patient/appoinment/medicalcenterdetailscard' element={<MedicalCenterDetailsCard />} />
+          <Route path='/patient/appoinment/appointmentsuccessful' element={<AppointmentSuccessful />} />
 
           <Route path='/signup' element={<SignupLanding />} />
-          <Route path='/signup/patient' element={<SignupBg titlename='Mobile Number' stepnumber={1} role={"patient"}/>} />
-          <Route path='/signup/doctor' element={<SignupBg titlename='Email & Documets' stepnumber={1} role={"doctor"}/>} />
-          <Route path='/signup/patient' element={<SignupBg titlename='Mobile Number' stepnumber={1} role={"patient"}/>} />
-          <Route path='/signup/medicalcenter' element={<SignupBg titlename='Email & Documets' stepnumber={1} role={"medicalcenter"}/>} />
-          
+          <Route path="/signup">
+            <Route path="medicalofficials" element={<SelectCheckbox />} />
+            <Route path="patient" element={<SignupBg titlename="Mobile Number" stepnumber={1} role="patient" />} />
+            <Route path="doctor" element={<SignupBg titlename="Email & Documents" stepnumber={1} role="doctor" />} />
+            <Route path="medicalcenter" element={<SignupBg titlename="Email & Documents" stepnumber={1} role="medicalcenter" />} />
+            <Route path="laboratary" element={<SignupBg titlename="Email & Documents" stepnumber={1} role="lab" />} />
+          </Route>
+
 
 
         </Routes>
