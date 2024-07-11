@@ -12,11 +12,13 @@ import DoctorDetailsForm from '../doctor/DoctorDetailsForm';
 import EmailandDocumetsFrom from '../EmailandDocumetsFrom';
 
 import MedicalCenterDetailsForm from '../medical-officials/MedicalCenterDetailsForm';
+import { useNavigate } from 'react-router-dom';
 
 
 const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: string }> = (props) => {
 
     const [currentStep, setCurrentStep] = useState(1);
+    const navigate =useNavigate();
     const initialFormData = {
         fname: '',
         lname: '',
@@ -49,6 +51,9 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
     const handleBackClick = () => {
         if (currentStep > 1) {
             setCurrentStep(currentStep - 1);
+        }
+        else{
+            navigate('/signup/medicalofficials')
         }
     };
 
