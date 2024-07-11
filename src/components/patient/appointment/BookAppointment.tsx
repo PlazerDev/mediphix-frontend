@@ -66,11 +66,12 @@ const BookAppointment = () => {
             <div className="flex gap-4 mt-3">
               <div>
                 <p className="text-[#868686] text-sm ">Doctor’s Name</p>
-                <a style={{ color: 'orange' }}><u>Dr. C.M.K Jayawardana</u></a>
+                <a style={{ color: 'orange-500' }}><u>Dr. C.M.K Jayawardana</u></a>
               </div>
               <div className="flex flex-col ml-10 justify-center ">
                 <p className="text-[#868686] text-sm">Medical Center’s Name</p>
-                <a style={{ color: 'orange' }}><u>Nawaloka Hospital</u></a>
+                <a style={{ color: '#F97316' }}><u>Nawaloka Hospital</u></a>
+
               </div>   
             </div>
             <div>
