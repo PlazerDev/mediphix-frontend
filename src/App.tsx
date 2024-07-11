@@ -24,6 +24,9 @@ import SelectCheckbox from './components/signup/SelectCheckbox'
 import MedicalCenterDetailsCard from './components/patient/appointment/MedicalCenterDetailsCard'
 import AppointmentSuccessful from './components/patient/appointment/AppointmentSuccessful'
 
+import { FaRegAddressBook } from "react-icons/fa";
+import { MdOutlineCreateNewFolder } from "react-icons/md";
+
 
 
 
@@ -46,10 +49,18 @@ function App() {
           <Route path='/LoginOTP' element={<LoginOtp />} />
 
           <Route path='/MedicalOfficialLogin' element={<MedicalLogin />} />
-          <Route path='/patient/appointment' element={<AppointmentSection name={'Visal'} title={'Manage your appointments here'}
-            buttontitles={['Upcomming Appoinments', 'Create an Appointment', 'Previous Appointments']} 
-            buttonimages={['FaRegAddressBook', 'MdOutlineCreateNewFolder', 'FaRegAddressBook']} />} />
-          <Route path='/patient/home' element={<PatientHome />} />
+          <Route
+            path='/patient/appointment'
+            element={
+              <AppointmentSection
+                name={'Visal'}
+                title={'Manage your appointments here'}
+                buttontitles={['Upcomming Appointments', 'Create an Appointment', 'Previous Appointments']}
+                buttonimages={[FaRegAddressBook, MdOutlineCreateNewFolder, FaRegAddressBook]}
+                navigations={['/patient/appointment/UpComingAppointment','/patient/appointment/CreateAppoinmnets','/patient/appointment/PreviousAppoinments']}
+              />
+            }
+          />
           <Route path='/PreviousAppoinments' element={<PreviousAppointments />} />
           <Route path='/patient/recordbook' element={<RecordBook />} />
           <Route path='/patient/PreviousAppointmentDetails' element={<PreviousAppointmentDetails />} />
