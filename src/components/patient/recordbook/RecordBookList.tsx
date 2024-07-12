@@ -5,6 +5,8 @@ import Footer from "../../Footer";
 import { DatePicker, Space, Breadcrumb, Select } from "antd";
 const { RangePicker } = DatePicker;
 import "./RecordBookList.css";
+import { useState } from "react";
+import RecordBookDetails from "./RecordBookDetails";
 
 // interface Doctor {
 //   id: string;
@@ -110,6 +112,12 @@ const RecordBookList = () => {
   //   label: doctor.name,
   // }));
 
+  const [viewDetails, setViewDetails] = useState(false);
+
+  const handleRowClick = () => {
+    setViewDetails(true);
+  };
+
   return (
     <>
       <PatientNavigation />
@@ -124,44 +132,52 @@ const RecordBookList = () => {
             },
           ]}
         />
-
-        <div className="flex mb-6">
-          <div>
-            <Space direction="vertical" size={15} className="custom-rangepicker">
-              <RangePicker style={{ height: "50px" }} />
-            </Space>
-          </div>
-          <div className="flex ml-8 w-full">
-            <Select
-              showSearch
-              placeholder="Doctor Name"
-              optionFilterProp="label"
-              // onChange={handleDoctorChange}
-              onSearch={(value: string) => console.log("search:", value)}
-              // options={doctorOptions}
-              style={{ width: "224px", height: "50px" }}
-              className="custom-select"
-            />
-            <div className="flex w-full">
-              <input
-                type="text"
-                placeholder="Type Here"
-                className="focus:outline-none placeholder:text-[var(--text-c)] h-[50px] px-6 w-5/6"
-                // value={searchTerm}
-                // onChange={handleSearchTermChange}
-              />
-              <button
-                className="bg-[#FF7300] text-white  p-3 w-56 rounded-r-lg"
-                // onClick={handleSearch}
+        {!viewDetails && (
+          <div className="flex mb-6">
+            <div>
+              <Space
+                direction="vertical"
+                size={15}
+                className="custom-rangepicker"
               >
-                Search
-              </button>
+                <RangePicker style={{ height: "50px" }} />
+              </Space>
+            </div>
+            <div className="flex ml-8 w-full">
+              <Select
+                showSearch
+                placeholder="Doctor Name"
+                optionFilterProp="label"
+                // onChange={handleDoctorChange}
+                onSearch={(value: string) => console.log("search:", value)}
+                // options={doctorOptions}
+                style={{ width: "224px", height: "50px" }}
+                className="custom-select"
+              />
+              <div className="flex w-full">
+                <input
+                  type="text"
+                  placeholder="Type Here"
+                  className="focus:outline-none placeholder:text-[var(--text-c)] h-[50px] px-6 w-5/6"
+                  // value={searchTerm}
+                  // onChange={handleSearchTermChange}
+                />
+                <button
+                  className="bg-[#FF7300] text-white  p-3 w-56 rounded-r-lg"
+                  // onClick={handleSearch}
+                >
+                  Search
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-
+        )}
         <div>
-          <RecordBookListTable data={data} />
+          {viewDetails ? (
+            <RecordBookDetails />
+          ) : (
+            <RecordBookListTable data={data} onRowClick={handleRowClick} />
+          )}
         </div>
       </div>
 

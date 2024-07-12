@@ -1,6 +1,7 @@
 import { Table } from "antd";
 import type { TableProps } from "antd";
 import { FaCheckCircle } from "react-icons/fa";
+import "../../../assets/css/table.css";
 
 interface DataType {
   key: string;
@@ -63,7 +64,9 @@ const columns: TableProps<DataType>["columns"] = [
       return (
         <span style={{ color, display: "flex", alignItems: "center" }}>
           {icon}
-          <span style={{ marginLeft: icon ? 4 : 0 }}>{toPascalCase(status)}</span>
+          <span style={{ marginLeft: icon ? 4 : 0 }}>
+            {toPascalCase(status)}
+          </span>
         </span>
       );
     },
@@ -73,14 +76,31 @@ const columns: TableProps<DataType>["columns"] = [
 const toPascalCase = (str: string) => {
   return str
     .toLowerCase()
-    .replace(/(\w)(\w*)/g, (_, firstChar, rest) => firstChar.toUpperCase() + rest.toLowerCase());
+    .replace(
+      /(\w)(\w*)/g,
+      (_, firstChar, rest) => firstChar.toUpperCase() + rest.toLowerCase()
+    );
 };
 
-
-const RecordBookListTable = ({ data }: { data: DataType[] }) => {
+const RecordBookListTable = ({
+  data,
+  onRowClick,
+}: {
+  data: DataType[];
+  onRowClick: () => void;
+}) => {
   return (
     <>
-      <Table columns={columns} dataSource={data} />
+      <Table
+        columns={columns}
+        dataSource={data}
+        pagination={{
+          className: "custom-pagination", // Apply custom pagination styles
+        }}
+        onRow={() => ({
+          onClick: () => onRowClick(),
+        })}
+      />
     </>
   );
 };

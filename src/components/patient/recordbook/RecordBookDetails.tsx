@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Divider } from "antd";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
-import "./RecordBook.css";
 
 const RecordBookDetails = () => {
   const [data, setData] = useState({
