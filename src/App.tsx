@@ -24,6 +24,7 @@ import BookingFailed from './components/patient/appointment/BookingFailed'
 import { FaRegAddressBook } from "react-icons/fa";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 import RecordBookList from "./components/patient/recordbook/RecordBookList";
+import AppointmentTable from './components/patient/appointment/AppointmentTable'
 
 function App() {
 
@@ -56,11 +57,10 @@ function App() {
               />
             }
           />
-          <Route path='/PreviousAppoinments' element={<PreviousAppointments />} />
+          <Route path='/PreviousAppoinmentsDetails' element={<PreviousAppointmentDetails/>} />
            <Route path="/patient/recordbooklist" element={<RecordBookList />} />
-          <Route path='/patient/PreviousAppointmentDetails' element={<PreviousAppointmentDetails />} />
-          <Route path='/UpComingAppointment' element={<UpComingAppointment />} />
-          <Route path='/AppointmentTableDetails' element={<AppointmentTableDetails />} />
+          <Route path='/patient/appointment/PreviousAppoinments' element={<AppointmentTable/>} />
+          <Route path='/patient/appointment/UpComingAppointment' element={<AppointmentTable/>} />
           <Route path='/SearchDoctor' element={<SelectDoctor />} />
           <Route path='/patient/appoinment/medicalcentercard' element={<MedicalCenterCard />} />
           <Route path='/patient/appoinment/medicalcenterdetailscard' element={<MedicalCenterDetailsCard />} />
@@ -74,7 +74,6 @@ function App() {
             <Route path="medicalcenter" element={<SignupBg titlename="Email & Documents" stepnumber={1} role="medicalcenter" />} />
             <Route path="laboratary" element={<SignupBg titlename="Email & Documents" stepnumber={1} role="lab" />} />
           </Route>
-
 
         </Routes>
 
