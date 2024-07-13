@@ -4,6 +4,7 @@ const { RangePicker } = DatePicker;
 import { DatePicker, Space } from "antd";
 import { TimePicker } from "antd";
 import { Select } from "antd";
+import PreviousSessionTableDetails from './PreviousSessionTableDetails'
 
 const onChange = (value: string) => {
   console.log(`selected ${value}`);
@@ -79,6 +80,9 @@ const PreviousSession = () => {
           style={{ height: "50px", width: "300px" }}
           options={[]}
         />
+      </div>
+      <div>
+      <PreviousSessionTableDetails />
       </div>
 
   
