@@ -1,0 +1,17 @@
+ /* CustomPagination.css */
+ .custom-pagination .ant-pagination-item {
+    border-color: #FFFFFF; /* Change the border color */
+  }
+  
+  .custom-pagination .ant-pagination-item a {
+    color: #363636; /* Change the font color */
+  }
+  
+  .custom-pagination .ant-pagination-item-active {
+    border-color: #FFFFFF; /* Change the active page border color */
+  }
+  
+  .custom-pagination .ant-pagination-item-active a {
+    color: #363636; /* Change the active page font color */
+    background-color: #FFFFFF; /* Change the active page background color */
+  }

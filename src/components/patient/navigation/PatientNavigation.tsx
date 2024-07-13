@@ -29,6 +29,7 @@ const PatientNavigation = () => {
     '/patient/appointment': 'Appointment',
     '/patient/recordbook': 'Record Book',
   };
+  
 
   const handleSegmentChange = (value: string) => {
     switch (value) {
@@ -42,13 +43,18 @@ const PatientNavigation = () => {
         navigate('/patient/recordbook');
         break;
       default:
-        navigate('/patient/home');
+        navigate('/404');
         break;
     }
   };
 
   // Set the current segment based on location
-  const currentSegment = segmentMap[location.pathname] || 'Home';
+ 
+  const pathSegments = location.pathname.split('/').filter(Boolean);
+  const firstTwoSegments = `/${pathSegments.slice(0, 2).join('/')}`;
+  const currentSegment = segmentMap[firstTwoSegments]  ;
+
+  
 
 
   
@@ -62,7 +68,6 @@ const PatientNavigation = () => {
         <div>
           <Segmented<string>
             value={currentSegment}
-            defaultValue="Home"
             className="custom-segmented"
             
             onChange={handleSegmentChange}
