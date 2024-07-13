@@ -27,6 +27,7 @@ import SelectCheckbox from './components/signup/SelectCheckbox'
 
 import MedicalCenterDetailsCard from './components/patient/appointment/MedicalCenterDetailsCard'
 import AppointmentSuccessful from './components/patient/appointment/AppointmentSuccessful'
+import BookingFailed from './components/patient/appointment/BookingFailed'
 
 import { FaRegAddressBook } from "react-icons/fa";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
@@ -51,6 +52,7 @@ function App() {
         {/* <PatientNavigation/> */}
 
         <Routes>
+
           <Route path='/' element={<SelectCheckbox />} />
           {/* <Route path='/' element={<Navpage step={1} titlename={'Mobile'} />} /> */}
           <Route path='/Login' element={<LoginAuth />} />
@@ -78,7 +80,7 @@ function App() {
           <Route path='/patient/appoinment/medicalcentercard' element={<MedicalCenterCard />} />
           <Route path='/patient/appoinment/medicalcenterdetailscard' element={<MedicalCenterDetailsCard />} />
           <Route path='/patient/appoinment/appointmentsuccessful' element={<AppointmentSuccessful />} />
-
+          <Route path='/patient/appoinment/bookingfailed' element={<BookingFailed/>} />
           <Route path='/signup' element={<SignupLanding />} />
           <Route path="/signup">
             <Route path="medicalofficials" element={<SelectCheckbox />} />
@@ -87,6 +89,7 @@ function App() {
             <Route path="medicalcenter" element={<SignupBg titlename="Email & Documents" stepnumber={1} role="medicalcenter" />} />
             <Route path="laboratary" element={<SignupBg titlename="Email & Documents" stepnumber={1} role="lab" />} />
           </Route>
+
 
         </Routes>
 
