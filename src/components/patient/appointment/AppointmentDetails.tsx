@@ -4,14 +4,14 @@ import { Breadcrumb } from "antd";
 import PatientNavigation from "../navigation/PatientNavigation";
 import { useState } from "react";
 
-const PreviousAppointmentDetails = () => {
+const AppointmentDetails = () => {
   const [appointmentDetails, setAppointmentDetails] = useState({
     referenceNumber: "REF_1653",
     queueNumber: "07",
     date: "2024/June/13",
     status: "Ended",
     timeSlot: "03.00 PM - 04.00 PM",
-    paymentDetails: {
+    paymentDetails: { 
       paymentDate: "2024/June/15",
       paymentTime: "03.00 PM - 04.00 PM",
     },
@@ -156,4 +156,4 @@ const PreviousAppointmentDetails = () => {
   );
 };
 
-export default PreviousAppointmentDetails;
+export default AppointmentDetails;

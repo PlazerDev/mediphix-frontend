@@ -25,6 +25,8 @@ import { FaRegAddressBook } from "react-icons/fa";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
 import RecordBookList from "./components/patient/recordbook/RecordBookList";
 import AppointmentTable from './components/patient/appointment/AppointmentTable'
+import SelectDoctor from "./components/patient/appointment/SelectDoctor";
+import MedicalCenterCard from "./components/patient/appointment/MedicalCenterCard";
 
 function App() {
 
