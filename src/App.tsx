@@ -31,6 +31,7 @@ import SelectDoctor from "./components/patient/appointment/SelectDoctor";
 import MedicalCenterCard from "./components/patient/appointment/MedicalCenterCard";
 import RecordBookList from "./components/patient/recordbook/RecordBookList";
 import RecordBookDetails from "./components/patient/recordbook/RecordBookDetails";
+import DoctorHome from "./components/doctor/home/DoctorHome";
 
 function App() {
 
@@ -74,6 +75,9 @@ function App() {
           <Route path='/patient/appoinment/appointmentsuccessful' element={<AppointmentSuccessful />} />
           <Route path='/patient/appoinment/bookingfailed' element={<BookingFailed/>} />
           <Route path='/signup' element={<SignupLanding />} />
+
+          <Route path='/doctor/home' element={<DoctorHome />} />
+
           <Route path="/signup">
             <Route path="medicalofficials" element={<SelectCheckbox />} />
             <Route path="patient" element={<SignupBg titlename="Mobile Number" stepnumber={1} role="patient" />} />

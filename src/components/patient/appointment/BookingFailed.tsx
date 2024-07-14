@@ -1,4 +1,3 @@
-import React from "react";
 import Footer from "./../../Footer";
 import PatientNavigation from "../navigation/PatientNavigation";
 import BookingFailedImage from "./../../../assets/images/patient/appoinment/BookingFailed.png";
