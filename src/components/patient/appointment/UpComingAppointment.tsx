@@ -49,7 +49,7 @@ const UpComingAppointment = () => {
        
       
        <div className='mt-[-2%]'>
-         <AppointmentTableDetails/>
+         {/* <AppointmentTableDetails/> */}
        </div>
        </div>
       
