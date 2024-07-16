@@ -20,12 +20,15 @@ import MedicalCenterCard from './components/patient/appointment/MedicalCenterCar
 import SignupBg from './components/signup/SignupBg'
 import SignupLanding from './components/signup/SignupLanding'
 import SelectCheckbox from './components/signup/SelectCheckbox'
+import RegistrationComplete from './components/signup/RegistrationComplete'
 
 import MedicalCenterDetailsCard from './components/patient/appointment/MedicalCenterDetailsCard'
 import AppointmentSuccessful from './components/patient/appointment/AppointmentSuccessful'
 
 import { FaRegAddressBook } from "react-icons/fa";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
+
+import InTheQueue from './components/patient/home/InTheQueue'
 
 
 
@@ -43,7 +46,7 @@ function App() {
         <Routes>
 
 
-          <Route path='/' element={<SelectCheckbox />} />
+          <Route path='/' element={<RegistrationComplete />} />
           {/* <Route path='/' element={<Navpage step={1} titlename={'Mobile'} />} /> */}
           <Route path='/Login' element={<LoginAuth />} />
           <Route path='/LoginOTP' element={<LoginOtp />} />

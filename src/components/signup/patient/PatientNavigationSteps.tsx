@@ -13,12 +13,16 @@ import EmailandDocumetsFrom from '../EmailandDocumetsFrom';
 
 import MedicalCenterDetailsForm from '../medical-officials/MedicalCenterDetailsForm';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 
 
 const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: string }> = (props) => {
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const [currentStep, setCurrentStep] = useState(1);
-    const navigate =useNavigate();
+    const navigate = useNavigate();
     const initialFormData = {
         fname: '',
         lname: '',
@@ -52,22 +56,67 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
         if (currentStep > 1) {
             setCurrentStep(currentStep - 1);
         }
-        else{
+        else {
             navigate('/signup/medicalofficials')
         }
     };
 
-    const handleNextClick = () => {
 
+
+    const handleNextClick = async () => {
         if (currentStep < 3) {
             setCurrentStep(currentStep + 1);
 
-            setFormData((prevData) => ({ ...prevData, ...formData }))
+            // Update the formData state with the current formData values
+            setFormData((prevData) => ({ ...prevData, ...formData }));
+        } else if (currentStep === 3) {
+            if (props.role === 'patient') {
+                setLoading(true);
+                setError(null);
+                try {
 
+                    const dataTest: string = `{
+    "fname": "John",
+    "lname": "Doe",
+    "mobile": "1234567890",
+    "dob": "1990-01-01",
+    "email": "john.doe@example.com",
+    "nationality": "American",
+    "nic": "987654321V",
+    "address": "123 Main St, Anytown, USA",
+    "name": "John Doe",
+    "slmc": "SLMC123456",
+    "education": "MBBS, University of Anytown",
+    "specialization": "Cardiology",
+    "password": "securepassword123",
+    "idfront": "base64encodedstringforidfront",
+    "idback": "base64encodedstringforidback",
+    "district": "Anytown District",
+    "licenefront": "base64encodedstringforlicenefront",
+    "liceneback": "base64encodedstringforliceneback"
+}
+`;
+
+                    // Make the POST request to the API endpoint for patient signup
+                    await axios.post('http://localhost:9090/signup', dataTest, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                    // Handle success (e.g., navigate to a success page or show a success message)
+                } catch (error) {
+                    console.error('Error signing up patient:', error);
+                    setError('Error signing up patient. Please try again.' as any);
+                } finally {
+                    setLoading(false);
+                }
+            }
         }
     };
 
-    const handleChange = (e:any) => {
+
+
+    const handleChange = (e: any) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
@@ -75,22 +124,22 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
         }));
     };
 
-    const handleSpecializationChange = (value:any) => {
+    const handleSpecializationChange = (value: any) => {
         setFormData((prevData) => ({
             ...prevData,
             specialization: value,
         }));
     };
 
-    const handleUploads=(e) => {
-        const {name , value}=e.target;
+    const handleUploads = (e) => {
+        const { name, value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
 
     }
-   
+
 
     const handleClick = () => {
 
