@@ -2,8 +2,33 @@ import Token from "./Token";
 import type { StepsProps } from "antd";
 import { Popover, Steps } from "antd";
 import { Divider } from "antd";
-import "./InTheQueue.css";
+import "../../../assets/css/steps.css";
 import QueueDetails from "./QueueDetails";
+import WithDoctor from "./WithDoctor";
+import AppointmentDetails from "./AppointmentDetails";
+
+interface AppointmentProps {
+  date: string;
+  time: string;
+  doctor: string;
+  category: string;
+  queueNo: string;
+  referenceNo: string;
+  medicalCenter: string;
+  phoneNo: string;
+}
+
+interface QueueDetailsProps {
+    currentNo: number;
+    yourNo: number;
+    hallReference: string;
+  }
+
+interface OngoingProps {
+  status: number;
+  appointmentDetails: AppointmentProps;
+  queueDetails: QueueDetailsProps;
+}
 
 const customDot: StepsProps["progressDot"] = (dot, { status, index }) => (
   <Popover
@@ -16,8 +41,11 @@ const customDot: StepsProps["progressDot"] = (dot, { status, index }) => (
     {dot}
   </Popover>
 );
-
-const InTheQueue = () => {
+const OngoingAppointment = ({
+  status,
+  appointmentDetails,
+  queueDetails,
+}: OngoingProps) => {
   return (
     <>
       <div className="w-full rounded-[16px] ">
@@ -30,7 +58,7 @@ const InTheQueue = () => {
             {" "}
             <Steps
               className="custom-steps"
-              current={1}
+              current={status}
               progressDot={customDot}
               items={[
                 {
@@ -53,14 +81,16 @@ const InTheQueue = () => {
         <Divider className="custom-divider " />
 
         <div className=" flex justify-center h-[120px] max-h-[120px]">
-          <QueueDetails />
+          {status === 0 && <AppointmentDetails {...appointmentDetails} />}
+          {status === 1 && <QueueDetails {...queueDetails} />}
+          {status === 2 && <WithDoctor />}
         </div>
         <div className="flex justify-center mt-3">
-          <Token />
+          <Token {...appointmentDetails} />
         </div>
       </div>
     </>
   );
 };
 
-export default InTheQueue;
+export default OngoingAppointment;
