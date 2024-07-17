@@ -1,11 +1,24 @@
 import AppointmentCard from "./AppointmentCard";
 
-const NoUpcomingAppointment = () => {
+interface UpcomingAppointment {
+  date: string;
+  time: string;
+  number: string;
+  doctor: string;
+  location: string; 
+}
+
+interface UpcomingAppointmentProps {
+  upcomingAppointments: UpcomingAppointment[];
+}
+const UpcomingAppointment = ({upcomingAppointments}:UpcomingAppointmentProps) => {
+  
+
   return (
     <div className="bg-[#fff] rounded-[16px] h-1/2 p-4">
       <div className=" flex justify-between">
         <div>
-          <h1 className="text-lg font-bold">Upcoming Appointment</h1>
+          <h1 className="text-lg font-bold">Upcoming Appointments</h1>
         </div>
 
         <div className="mt-1">
@@ -13,11 +26,12 @@ const NoUpcomingAppointment = () => {
         </div>
       </div>
       <div className="flex flex-col items-center justify-center bg-contain">
-        <AppointmentCard />
-        <AppointmentCard />
+        {upcomingAppointments.map((appointment, index) => (
+          <AppointmentCard key={index} {...appointment} />
+        ))}
       </div>
     </div>
   );
 };
 
-export default NoUpcomingAppointment;
+export default UpcomingAppointment;
