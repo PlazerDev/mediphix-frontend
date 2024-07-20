@@ -3,15 +3,17 @@ import Footer from "./../../Footer";
 import { Breadcrumb } from "antd";
 import PatientNavigation from "../navigation/PatientNavigation";
 import { useState } from "react";
+import { LuAlertTriangle } from "react-icons/lu";
 
-const PreviousAppointmentDetails = () => {
+const AppointmentDetails = () => {
+
   const [appointmentDetails, setAppointmentDetails] = useState({
     referenceNumber: "REF_1653",
     queueNumber: "07",
     date: "2024/June/13",
-    status: "Ended",
+    status: "Active",
     timeSlot: "03.00 PM - 04.00 PM",
-    paymentDetails: {
+    paymentDetails: { 
       paymentDate: "2024/June/15",
       paymentTime: "03.00 PM - 04.00 PM",
     },
@@ -70,12 +72,31 @@ const PreviousAppointmentDetails = () => {
                 <p className="text-[#868686] text-sm">Status</p>
                 <p className="text-[#FF7300]">{appointmentDetails.status}</p>
               </div>
-              <div className="flex bg-[#FF7300] rounded-[8px] align-middle px-4 py-2 text-[#FFFFFF] w-fit ">
+              {/* <div className="flex bg-[#FF7300] rounded-[8px] align-middle px-4 py-2 text-[#FFFFFF] w-fit ">
                 <div className="flex my-1">
                   <MdOutlineRemoveRedEye className="text-lg mr-1" />
                   <p className="text-sm ">View Record Book Entry</p>
                 </div>
+              </div> */}
+              <div
+                className={`flex rounded-[8px] align-middle px-4 py-2 text-[#FFFFFF] w-fit ${
+                  appointmentDetails.status === "Active" ? "bg-[#FF462D]" : "bg-[#FF7300]"
+                }`}
+              >
+                <div className="flex my-1">
+                  {appointmentDetails.status === "Active" ? (
+                    <LuAlertTriangle className="text-lg mr-1" />
+                  ) : (
+                    <MdOutlineRemoveRedEye className="text-lg mr-1" />
+                  )}
+                  <p className="text-sm">
+                    {appointmentDetails.status === "Active"
+                      ? "Cancel Appointment"
+                      : "View Record Book Entry"}
+                  </p>
+                </div>
               </div>
+              
             </div>
           </div>
           <div>
@@ -156,4 +177,4 @@ const PreviousAppointmentDetails = () => {
   );
 };
 
-export default PreviousAppointmentDetails;
+export default AppointmentDetails;
