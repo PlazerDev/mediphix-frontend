@@ -1,4 +1,5 @@
 import Footer from "./../../Footer";
+import DoctorTimeSlots from "./DoctorTimeSlots";
 import NoOngoingSession from "./NoOngoingSession";
 import OngoingSessionData from "./OngoingSessionData";
 
@@ -24,6 +25,8 @@ const DoctorHome = () => {
               <p className="text-[#FF7300] text-sm font-semibold">View More</p>
             </div>
           </div>
+          <DoctorTimeSlots />
+          <DoctorTimeSlots />
         </div>
       </div>
 
