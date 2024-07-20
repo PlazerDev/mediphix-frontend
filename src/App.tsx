@@ -27,8 +27,7 @@ import SelectDoctor from "./components/patient/appointment/SelectDoctor";
 import MedicalCenterCard from "./components/patient/appointment/MedicalCenterCard";
 import AppointmentDetails from "./components/patient/appointment/AppointmentDetails";
 import UpComingAppointment from "./components/patient/home/UpcomingAppointment ";
-import MedicalCenterRoutes from "./routes/MedicalCenterStaffRoutes";
-import MedicalCenterStaffHomePage from "./pages/medical-center-staff/MedicalCenterStaffHomePage";
+
 import MedicalCenterStaffRoutes from "./routes/MedicalCenterStaffRoutes";
 
 function App() {

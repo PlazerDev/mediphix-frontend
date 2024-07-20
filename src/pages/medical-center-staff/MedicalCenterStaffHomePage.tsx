@@ -1,5 +1,11 @@
+import MCSNavBar from "../../components/medical-center-staff/MCSNavBar";
+
 function MedicalCenterStaffHomePage() {
-  return <div>HomePage - Medical Center Staff</div>;
+  return (
+    <div>
+      <MCSNavBar />
+    </div>
+  );
 }
 
 export default MedicalCenterStaffHomePage;
