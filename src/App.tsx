@@ -60,7 +60,7 @@ function App() {
               <Route path='/patient/appoinment/appointmentsuccessful' element={<AppointmentSuccessful/>} />
               <Route path='/patient/appoinment/bookingfailed' element={<BookingFailed/>} />
               <Route path='/doctor/session/previoussession' element={<PreviousSession />} />
-              <Route path='/doctor/session/previoussessiontabledetails' element={<PreviousSessionTableDetails/>} />
+              <Route path='/doctor/session/previoussessiontabledetails' element={<PreviousSessionTableDetails data={[]} onRowClick={() => {}} />} />
               <Route path='/doctor/session/sessiondetails' element={<SessionDetails/>} />
 
         {/* <PatientNavigation/> */}

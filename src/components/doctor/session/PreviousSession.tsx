@@ -81,9 +81,10 @@ const PreviousSession = () => {
           options={[]}
         />
       </div>
-      <div>
-      <PreviousSessionTableDetails />
+      <div style={{ marginLeft: '16px', marginRight:'16px' }}>
+      <PreviousSessionTableDetails data={[]} onRowClick={() => {}} />
       </div>
+
 
   
   <div>
