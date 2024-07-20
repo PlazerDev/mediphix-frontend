@@ -38,6 +38,7 @@ const PatientNavigationPage: React.FC<{ step: number; titlename: string; }> = (p
             setCurrentStep(currentStep + 1);
             setFormData((prevData) => ({ ...prevData, ...formData }));
         }
+        
     };
 
     const handleChange = (e) => {
@@ -142,8 +143,8 @@ const PatientNavigationPage: React.FC<{ step: number; titlename: string; }> = (p
                         
                         nxt={nxt()}
                         onBackClick={handleBackClick}
-                        onNextClick={handleNextClick}
-                    />
+                        onNextClick={handleNextClick} 
+                        backDisplay={false}                    />
                 </div>
             </div>
         </ConfigProvider>
