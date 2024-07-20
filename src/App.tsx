@@ -1,3 +1,4 @@
+
 import LoginOtp from "./components/login/patient/LoginOtp";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
@@ -28,7 +29,9 @@ import MedicalCenterCard from "./components/patient/appointment/MedicalCenterCar
 import AppointmentDetails from "./components/patient/appointment/AppointmentDetails";
 import UpComingAppointment from "./components/patient/home/UpcomingAppointment ";
 
+
 import MedicalCenterStaffRoutes from "./routes/MedicalCenterStaffRoutes";
+
 
 function App() {
   return (
@@ -37,7 +40,12 @@ function App() {
         {/* <PatientNavigation/> */}
 
         <Routes>
-          <Route path="/" element={<SelectCheckbox />} />
+
+
+
+          <Route path='/' element={<RegistrationComplete />} />
+
+
           {/* <Route path='/' element={<Navpage step={1} titlename={'Mobile'} />} /> */}
           <Route path="/Login" element={<LoginAuth />} />
           <Route path="/LoginOTP" element={<LoginOtp />} />

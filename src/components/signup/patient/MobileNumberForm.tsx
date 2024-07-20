@@ -9,6 +9,7 @@ function MobileNumberForm(props) {
 
             <div className='mt-10'>
                 <span>Mobile Number: <span className='text-red-500'>*</span></span>
+                <p className="ml-2 text-xs text-red-500 w-full italic" >{props.validationErrors.mobile}</p>
                 <form onSubmit={(e)=>{e.preventDefault}}>
                     <div className='flex rounded-[20px] w-[50%] border bg-white border-gray-300 p-2 transition-colors duration-300 hover:border-[var(--accent)]'>
                         <p className='text-[#868686]'>+94</p>
