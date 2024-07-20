@@ -43,7 +43,7 @@ const PreviousAppointments = () => {
         </div>
        
        <div className='mt-[-2%]'>
-       <AppointmentTableDetails/>
+       {/* <AppointmentTableDetails/> */}
        </div>
       
         

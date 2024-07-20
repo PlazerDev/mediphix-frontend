@@ -1,0 +1,51 @@
+.custom-select .ant-select-selector {
+  border-radius: 12px 0px 0px 12px !important;
+  border-right: 2px solid var(--text-d, #FF7300) !important;
+}
+
+.custom-rangepicker .ant-picker {
+  border-radius: 12px 12px 12px 12px !important;
+  border-right: 2px solid var(--text-d, #dcdcdc) !important;
+}
+
+/* Override Ant Design primary color */
+:root {
+  --ant-primary-color: #FF7300;
+  --ant-primary-color-hover: #ff7300;
+  --ant-primary-color-active: #ff7300;
+  --ant-primary-color-outline: rgba(255, 115, 0);
+  --ant-primary-1: #FF7300;
+  --ant-primary-2: #FF7300;
+  --ant-primary-3: #FF7300;
+  --ant-primary-4: #FF7300;
+  --ant-primary-5: #FF7300;
+  --ant-primary-6: #ff7300;
+  --ant-primary-7: #FF7300;
+  --ant-primary-8: #FF7300;
+  --ant-primary-9: #FF7300;
+  --ant-primary-10: #FF7300;
+}
+
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled),
+.ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background-color: var(--ant-primary-1) !important;
+}
+
+.ant-select-item-option-content,
+.ant-picker:hover,
+.ant-picker-focused {
+  color: var(--ant-primary-6) !important;
+  border-color: var(--ant-primary-color) !important;
+}
+
+.custom-select .ant-select-selector:hover,
+.custom-select .ant-select-selector:focus,
+.custom-select .ant-select-focused .ant-select-selector {
+  border-color: #FF7300 !important;
+}
+
+.custom-rangepicker .ant-picker:hover,
+.custom-rangepicker .ant-picker:focus,
+.custom-rangepicker .ant-picker-focused {
+  border-color: #FF7300 !important;
+}
