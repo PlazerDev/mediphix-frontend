@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import { ConfigProvider, Steps } from 'antd';
@@ -20,10 +21,13 @@ import axios from 'axios';
 const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: string }> = (props) => {
 
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState(null); //this is handle axios erros
+    const [errors, setErrors] = useState({}); //this is for form validation erros
     const [currentStep, setCurrentStep] = useState(1);
     const navigate = useNavigate();
-    const initialFormData = {
+    let currentData: any;
+    const validationErrors: any = {};
+    const patientData = {
         fname: '',
         lname: '',
         mobile: '',
@@ -31,23 +35,34 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
         email: '',
         nationality: '',
         nic: '',
-        address: '',
+        address: ''
+    };
+    const doctorData = {
         name: '',
         slmc: '',
+        nic: '',
         education: '',
+        mobile: '',
         specialization: '',
+        email: '',
         password: '',
+        confirmpass: '',
         idfront: '',
         idback: '',
-        district: '',
-        licenefront: '',
-        liceneback: '',
     };
-    const [formData, setFormData] = useState({ initialFormData });
+    if (props.role == 'patient') {
+
+        currentData = patientData;
+    }
+    else if (props.role == 'doctor') {
+        currentData = doctorData;
+    }
+
+    const [formData, setFormData] = useState(currentData);
 
 
     const addMobile = (e) => {
-        setFormData((prevData) => ({ ...prevData, mobile: e.target.value }));
+        setFormData((prevData: any) => ({ ...prevData, mobile: e.target.value }));
     }
 
 
@@ -61,44 +76,103 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
         }
     };
 
+    const checkFormValidations = (role: any) => {
+
+        if (role === 'patient') {
+
+            if (currentStep == 1) {
+                if (!formData.fname.trim()) {
+                    validationErrors.fname = "First Name is Requred";
+                }
+                if (!formData.lname.trim()) {
+                    validationErrors.lname = "Last Name is Requred";
+                }
+                if (!formData.dob.trim()) {
+                    validationErrors.dob = "Date of Birth is Requred";
+                }
+                if (! /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(formData.email)) {
+                    validationErrors.dob = "Email is invalid";
+                }
+            }
+
+            else if (currentStep == 2) {
+                if (!formData.mobile.trim()) {
+                    validationErrors.dob = "Mobile Number is Requred";
+                }
+            }
+
+        }
+
+        else if (role === 'doctor') {
+            if (currentStep == 1) {
+                if (!formData.name.trim()) {
+                    validationErrors.name = "Name is Requred";
+                }
+                if (!formData.slmc.trim()) {
+                    validationErrors.slmc = "SLMC is Requred";
+                }
+                if (!formData.nic.trim()) {
+                    validationErrors.nic = "NIC is Requred";
+                }
+                if (!formData.education.trim()) {
+                    validationErrors.education = "Education is Requred";
+                }
+                if (!formData.mobile.trim()) {
+                    validationErrors.mobile = "Mobile is Requred";
+                }
+                if (!formData.specialization.trim()) {
+                    validationErrors.specialization = "Specialization is Requred";
+                }
+
+            }
+            else if (currentStep == 2) {
+                if (! /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(formData.email)) {
+                    validationErrors.dob = "Email is invalid";
+                } else if (!formData.email.trim()) {
+                    validationErrors.email = "Email is Requred";
+                }
+
+                if (!formData.password.trim()) {
+                    validationErrors.password = "Password is Requred";
+                } else if (formData.password.length < 7) {
+                    validationErrors.password = "Password Should be at least 8 Charatcetrs"
+                }
+
+                if (formData.password !== formData.confirmpass) {
+                    validationErrors.password = "Password Not match"
+                }
+
+
+            }
+        }
+    };
+
 
 
     const handleNextClick = async () => {
+
+        checkFormValidations(props.role);
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+
+
         if (currentStep < 3) {
             setCurrentStep(currentStep + 1);
 
             // Update the formData state with the current formData values
-            setFormData((prevData) => ({ ...prevData, ...formData }));
+            setFormData((prevData: any) => ({ ...prevData, ...formData }));
         } else if (currentStep === 3) {
             if (props.role === 'patient') {
                 setLoading(true);
                 setError(null);
                 try {
 
-                    const dataTest: string = `{
-    "fname": "John",
-    "lname": "Doe",
-    "mobile": "1234567890",
-    "dob": "1990-01-01",
-    "email": "john.doe@example.com",
-    "nationality": "American",
-    "nic": "987654321V",
-    "address": "123 Main St, Anytown, USA",
-    "name": "John Doe",
-    "slmc": "SLMC123456",
-    "education": "MBBS, University of Anytown",
-    "specialization": "Cardiology",
-    "password": "securepassword123",
-    "idfront": "base64encodedstringforidfront",
-    "idback": "base64encodedstringforidback",
-    "district": "Anytown District",
-    "licenefront": "base64encodedstringforlicenefront",
-    "liceneback": "base64encodedstringforliceneback"
-}
-`;
+                    // console.log(JSON.stringify(formData))
 
                     // Make the POST request to the API endpoint for patient signup
-                    await axios.post('http://localhost:9090/signup', dataTest, {
+                    await axios.post('http://localhost:9090/signup', formData, {
                         headers: {
                             'Content-Type': 'application/json',
                         },
@@ -118,14 +192,14 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({
+        setFormData((prevData: any) => ({
             ...prevData,
             [name]: value,
         }));
     };
 
     const handleSpecializationChange = (value: any) => {
-        setFormData((prevData) => ({
+        setFormData((prevData: any) => ({
             ...prevData,
             specialization: value,
         }));
@@ -152,9 +226,9 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
             const verificationData: string[] = ['fname', 'lname', 'mobile', 'dob', 'email', 'nationality', 'nic', 'address']
             switch (currentStep) {
                 case 1:
-                    return <UserDetailsForm formData={formData} handleChange={handleChange} handleClick={handleClick()} />;
+                    return <UserDetailsForm formData={formData} handleChange={handleChange} handleClick={handleClick()} validationErrors={errors} />;
                 case 2:
-                    return <MobileNumberForm formData={formData} handleChange={addMobile} handleClick={handleClick} />;
+                    return <MobileNumberForm formData={formData} handleChange={addMobile} handleClick={handleClick} validationErrors={errors} />;
                 case 3:
                     return <Verification formData={formData} role='patient' handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} />;
                 default:

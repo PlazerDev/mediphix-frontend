@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 
-function UserDetailsForm(props) {
+function UserDetailsForm(props:any) {
     return (
         <div>
             <div className='text-left w-full mt-5'>
@@ -11,6 +12,7 @@ function UserDetailsForm(props) {
                 <div className='text-left w-[100%] mt-5 flex flex-row flex-wrap gap-x-[20%] gap-y-4'>
                     <div className='w-[40%] mb-0'>
                         <p className='ml-2'>First Name: <span className='text-red-600'>*</span></p>
+                        <p className="ml-2 text-xs text-red-500 w-full italic" >{props.validationErrors.fname}</p>
                         <input
                             type="text"
                             name="fname"
@@ -19,9 +21,11 @@ function UserDetailsForm(props) {
                             value={props.formData.fname}
                             onChange={props.handleChange}
                         />
+
                     </div>
                     <div className='w-[40%] mb-0'>
                         <p className='ml-2'>Last Name: <span className='text-red-600'>*</span></p>
+                        <p className="ml-2 text-xs text-red-500 w-full italic" >{props.validationErrors.lname}</p>
                         <input
                             type="text"
                             name="lname"
@@ -29,10 +33,12 @@ function UserDetailsForm(props) {
                             placeholder='Enter Your Last Name'
                             value={props.formData.lname}
                             onChange={props.handleChange}
+                            
                         />
                     </div>
                     <div className='w-[40%] mb-0'>
                         <p className='ml-2'>Date Of Birth: <span className='text-red-600'>*</span></p>
+                        <p className="ml-2 text-xs text-red-500 w-full italic" >{props.validationErrors.dob}</p>
                         <input
                             type="date"
                             name="dob"
