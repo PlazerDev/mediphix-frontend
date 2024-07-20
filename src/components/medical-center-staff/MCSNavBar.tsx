@@ -9,13 +9,17 @@ import logo from "./../../assets/images/mediphix_withoutPadding.jpg";
 function MCSNavBar() {
   return (
     <div>
-      {" "}
       <>
         <div className="flex justify-between bg-white h-[85px]">
+          {/* Image  */}
           <div>
-            <img className="w-24 h-24 ml-5" src={logo} alt="logo" />
+            <img
+              className="w-24 h-24 ml-5 object-contain"
+              src={logo}
+              alt="logo"
+            />
           </div>
-          <div></div>
+          {/* Notification Bell, Settings and Log out  */}
           <div>
             <div className="flex  m-5  bg-[#E3E3E3] rounded-full">
               <Button
