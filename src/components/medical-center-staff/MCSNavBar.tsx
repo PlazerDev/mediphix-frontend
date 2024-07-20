@@ -10,18 +10,14 @@ function MCSNavBar() {
   return (
     <div>
       <>
-        <div className="flex justify-between bg-white h-[85px]">
+        <div className="flex justify-between items-center bg-white h-[85px]">
           {/* Image  */}
           <div>
-            <img
-              className="w-24 h-24 ml-5 object-contain"
-              src={logo}
-              alt="logo"
-            />
+            <img className="w-24 ml-8 object-contain" src={logo} alt="logo" />
           </div>
           {/* Notification Bell, Settings and Log out  */}
           <div>
-            <div className="flex  m-5  bg-[#E3E3E3] rounded-full">
+            <div className="flex  my-5 mr-8 bg-[#E3E3E3] rounded-full">
               <Button
                 className="custom-button"
                 type="default"
