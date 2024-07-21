@@ -14,19 +14,23 @@ function MedicalCenterStaffHomePage() {
       <MCSNavBar />
       {/* Body */}
       <div className="flex-grow px-8">
-        <div className="flex items-center justify-between my-4">
+        <div className="flex md:flex-row md:items-center md:justify-between md:my-4 my-2 flex-col gap-2">
           <MCSGreeting />
           <MCSGreetingVerificationName />
         </div>
         {/* Main Body div */}
         <div className="px-8 bg-mediphix_card_background py-8 rounded-lg">
-          <div className="flex items-center justify-between">
-            <p className="text-2xl font-bold">
+          <div className="flex flex-col md:flex-row items-center md:items-center md:justify-between">
+            <p className="text-xl md:text-2xl font-bold">
               Hi, Vishwa! <br /> Manage your assigned clinic sessions here
             </p>
-            <img src={bodyImg} alt="body" className="w-2/12 object-contain" />
+            <img
+              src={bodyImg}
+              alt="body"
+              className="w-32 md:w-60 object-contain"
+            />
           </div>
-          <div className="flex justify-center gap-4 mt-2">
+          <div className="flex flex-col items-center md:flex-row justify-center gap-4 mt-2">
             <MCSCustomButton
               buttonTitle="Upcoming Appointments"
               isPrimary={false}
