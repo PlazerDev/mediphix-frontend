@@ -27,7 +27,7 @@ function MedicalCenterStaffHomePage() {
             <img
               src={bodyImg}
               alt="body"
-              className="w-32 md:w-60 object-contain"
+              className="w-32 my-2 md:my-0 md:w-60 object-contain"
             />
           </div>
           <div className="flex flex-col items-center md:flex-row justify-center gap-4 mt-2">
