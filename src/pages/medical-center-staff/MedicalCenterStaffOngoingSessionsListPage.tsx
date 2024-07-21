@@ -6,7 +6,7 @@ import swal from "sweetalert";
 
 function MedicalCenterStaffOnGoingSessionsListPage() {
   swal({
-    title: "Attention",
+    title: "Alert",
     text: "You have 2 ongoing clinic sessions",
     icon: "info",
     buttons: {

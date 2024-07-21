@@ -16,14 +16,31 @@
   background-color: var(--background);
 }
 
-/* Custom SweetAlert Button Styles */
-.swal-button {
-  background-color: var(--accent) !important;
-  font-size: 12px !important;
-  border: 1px solid var(--accent) !important;
-  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3) !important;
+/* Custom SweetAlert Styles */
+.swal-title {
+  @apply text-mediphix_text_b font-bold text-2xl;
 }
 
-.swal-button:hover {
-  background-color: #fc8829 !important;
+.swal-text {
+  @apply text-mediphix_text_b text-base;
+}
+
+.swal-button {
+  @apply rounded-lg;
+}
+
+.swal-button--confirm {
+  @apply bg-mediphix_accent;
+}
+
+.swal-button--confirm:hover {
+  background-color: #ff9036 !important;
+}
+
+.swal-modal {
+  @apply rounded-lg md:w-96 w-80;
+}
+
+.swal-icon {
+  @apply md:w-20 md:h-20;
 }
