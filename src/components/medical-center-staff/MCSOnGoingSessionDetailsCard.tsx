@@ -8,6 +8,7 @@ interface Props {
   date: string;
   hallNumber: string;
   status: string;
+  sessionId: string;
 }
 
 function MCSOnGoingSessionDetailsCard({
@@ -18,9 +19,10 @@ function MCSOnGoingSessionDetailsCard({
   date,
   hallNumber,
   status,
+  sessionId,
 }: Props) {
   return (
-    <Link to="#">
+    <Link to={"/medicalCenterStaff/onGoingSessions/" + sessionId}>
       <div className="bg-mediphix_card_background my-4 rounded-lg p-8 hover:shadow-md">
         <p className="font-bold">Clinic Session Details</p>
         <div className="my-2 flex md:flex-row flex-col">

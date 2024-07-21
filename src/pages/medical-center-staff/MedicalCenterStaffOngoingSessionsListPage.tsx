@@ -46,6 +46,7 @@ function MedicalCenterStaffOnGoingSessionsListPage() {
               date="2024/June/13"
               hallNumber="HALL - A"
               status="Started"
+              sessionId="125ASDSAd"
             />
             <MCSOnGoingSessionDetailsCard
               doctorImg={doctorImg}
@@ -55,6 +56,7 @@ function MedicalCenterStaffOnGoingSessionsListPage() {
               date="2024/June/13"
               hallNumber="HALL - A"
               status="Started"
+              sessionId="125ASDSAd"
             />
             <Pagination defaultCurrent={1} total={20} className="text-end" />
           </>
