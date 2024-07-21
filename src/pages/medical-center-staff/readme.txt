@@ -10,3 +10,15 @@
       </div>
     </div>
   );
+
+
+    swal({
+    title: "Alert",
+    text: "You have 2 ongoing clinic sessions",
+    icon: "info",
+    buttons: {
+      confirm: {
+        text: "OK",
+      },
+    },
+  });
