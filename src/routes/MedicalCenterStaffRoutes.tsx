@@ -13,6 +13,11 @@ function MedicalCenterStaffRoutes() {
           colorInfo: "#ff7300",
           borderRadius: 8,
         },
+        components: {
+          Pagination: {
+            itemActiveBg: "",
+          },
+        },
       }}
     >
       <Routes>
