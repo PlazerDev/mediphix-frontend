@@ -5,8 +5,19 @@ import MCSDateTimeTitle from "../../components/medical-center-staff/MCSDateTimeT
 import MCSOnGoingSessionDetailsCard from "../../components/medical-center-staff/MCSOnGoingSessionDetailsCard";
 import { Divider, Pagination } from "antd";
 import doctorImg from "./../../assets/images/patient/appoinment/doctorImage.jpeg";
+import swal from "sweetalert";
 
 function MedicalCenterStaffOnGoingSessionsListPage() {
+  swal({
+    title: "Alert",
+    text: "You have 2 ongoing clinic sessions",
+    icon: "info",
+    buttons: {
+      confirm: {
+        text: "OK",
+      },
+    },
+  });
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navigation Bar  */}
