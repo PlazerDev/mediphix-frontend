@@ -11,9 +11,8 @@ import RecordBook from "./components/patient/recordbook/RecordBook";
 import PatientNavigation from "./components/patient/navigation/PatientNavigation";
 import PreviousAppointmentDetails from "./components/patient/appointment/PreviousAppointmentDetails";
 
-import SignupBg from "./components/signup/SignupBg";
-import SignupLanding from "./components/signup/SignupLanding";
-import SelectCheckbox from "./components/signup/SelectCheckbox";
+
+import SignupRoutes from "./routes/SignupRoutes";
 
 import MedicalCenterDetailsCard from "./components/patient/appointment/MedicalCenterDetailsCard";
 import AppointmentSuccessful from "./components/patient/appointment/AppointmentSuccessful";
@@ -114,50 +113,12 @@ function App() {
             path="/patient/appoinment/bookingfailed"
             element={<BookingFailed />}
           />
-          <Route path="/signup" element={<SignupLanding />} />
-          <Route path="/signup">
-            <Route path="medicalofficials" element={<SelectCheckbox />} />
-            <Route
-              path="patient"
-              element={
-                <SignupBg
-                  titlename="Mobile Number"
-                  stepnumber={1}
-                  role="patient"
-                />
-              }
-            />
-            <Route
-              path="doctor"
-              element={
-                <SignupBg
-                  titlename="Email & Documents"
-                  stepnumber={1}
-                  role="doctor"
-                />
-              }
-            />
-            <Route
-              path="medicalcenter"
-              element={
-                <SignupBg
-                  titlename="Email & Documents"
-                  stepnumber={1}
-                  role="medicalcenter"
-                />
-              }
-            />
-            <Route
-              path="laboratary"
-              element={
-                <SignupBg
-                  titlename="Email & Documents"
-                  stepnumber={1}
-                  role="lab"
-                />
-              }
-            />
-          </Route>
+          
+          {/* Signup Section Routes  */}
+          <Route
+            path="/signup/*"
+            element={<SignupRoutes />}
+          />
 
           {/* Medical Center Staff Routes  */}
           <Route
