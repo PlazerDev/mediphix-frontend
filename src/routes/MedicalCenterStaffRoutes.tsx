@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import MedicalCenterStaffHomePage from "../pages/medical-center-staff/MedicalCenterStaffHomePage";
 import { ConfigProvider } from "antd";
+import MedicalCenterStaffOnGoingSessionsListPage from "../pages/medical-center-staff/MedicalCenterStaffOngoingSessionsListPage";
 
 function MedicalCenterStaffRoutes() {
   return (
@@ -16,6 +17,10 @@ function MedicalCenterStaffRoutes() {
     >
       <Routes>
         <Route path="/" element={<MedicalCenterStaffHomePage />} />
+        <Route
+          path="/onGoingSessions"
+          element={<MedicalCenterStaffOnGoingSessionsListPage />}
+        />
       </Routes>
     </ConfigProvider>
   );

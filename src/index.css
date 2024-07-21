@@ -15,3 +15,32 @@
   font-family: "Roboto", sans-serif;
   background-color: var(--background);
 }
+
+/* Custom SweetAlert Styles */
+.swal-title {
+  @apply text-mediphix_text_b font-bold text-2xl;
+}
+
+.swal-text {
+  @apply text-mediphix_text_b text-base;
+}
+
+.swal-button {
+  @apply rounded-lg;
+}
+
+.swal-button--confirm {
+  @apply bg-mediphix_accent;
+}
+
+.swal-button--confirm:hover {
+  background-color: #ff9036 !important;
+}
+
+.swal-modal {
+  @apply rounded-lg md:w-96 w-80;
+}
+
+.swal-icon {
+  @apply md:w-20 md:h-20;
+}
