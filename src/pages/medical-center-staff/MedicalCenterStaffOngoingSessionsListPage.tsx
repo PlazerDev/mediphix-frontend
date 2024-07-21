@@ -6,18 +6,24 @@ import MCSOnGoingSessionDetailsCard from "../../components/medical-center-staff/
 import { Divider, Pagination } from "antd";
 import doctorImg from "./../../assets/images/patient/appoinment/doctorImage.jpeg";
 import swal from "sweetalert";
+import MCSEmptyCard from "../../components/medical-center-staff/MCSEmptyCard";
 
 function MedicalCenterStaffOnGoingSessionsListPage() {
-  swal({
-    title: "Alert",
-    text: "You have 2 ongoing clinic sessions",
-    icon: "info",
-    buttons: {
-      confirm: {
-        text: "OK",
+  var noOfSessions: number = 2;
+
+  if (noOfSessions > 0) {
+    swal({
+      title: "Alert",
+      text: "You have" + noOfSessions + " ongoing clinic sessions",
+      icon: "info",
+      buttons: {
+        confirm: {
+          text: "OK",
+        },
       },
-    },
-  });
+    });
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navigation Bar  */}
@@ -26,28 +32,33 @@ function MedicalCenterStaffOnGoingSessionsListPage() {
       <div className="flex-grow px-8">
         <MCSMainGreeting />
         {/* Main Body div from here*/}
-        <Divider>
-          <MCSDateTimeTitle />
-        </Divider>
-        <MCSOnGoingSessionDetailsCard
-          doctorImg={doctorImg}
-          doctorName="Dr. Nishanth Perera"
-          doctorEducation="MBBS (COL) specialized in cardiology"
-          timeFrame="06.00 AM - 08.00 AM"
-          date="2024/June/13"
-          hallNumber="HALL - A"
-          status="Started"
-        />
-        <MCSOnGoingSessionDetailsCard
-          doctorImg={doctorImg}
-          doctorName="Dr. Nishanth Perera"
-          doctorEducation="MBBS (COL) specialized in cardiology"
-          timeFrame="06.00 AM - 08.00 AM"
-          date="2024/June/13"
-          hallNumber="HALL - A"
-          status="Started"
-        />
-        <Pagination defaultCurrent={1} total={20} className="text-end" />
+        {noOfSessions === 0 && <MCSEmptyCard />}
+        {noOfSessions > 0 && (
+          <>
+            <Divider>
+              <MCSDateTimeTitle />
+            </Divider>
+            <MCSOnGoingSessionDetailsCard
+              doctorImg={doctorImg}
+              doctorName="Dr. Nishanth Perera"
+              doctorEducation="MBBS (COL) specialized in cardiology"
+              timeFrame="06.00 AM - 08.00 AM"
+              date="2024/June/13"
+              hallNumber="HALL - A"
+              status="Started"
+            />
+            <MCSOnGoingSessionDetailsCard
+              doctorImg={doctorImg}
+              doctorName="Dr. Nishanth Perera"
+              doctorEducation="MBBS (COL) specialized in cardiology"
+              timeFrame="06.00 AM - 08.00 AM"
+              date="2024/June/13"
+              hallNumber="HALL - A"
+              status="Started"
+            />
+            <Pagination defaultCurrent={1} total={20} className="text-end" />
+          </>
+        )}
       </div>
       {/* Footer */}
       <Footer />
