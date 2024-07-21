@@ -19,7 +19,7 @@ function MCSCustomButton({
     <div
       className={
         buttonBgColorStyle +
-        " hover:cursor-pointer w-2/12 h-32 flex flex-col relative justify-center items-center rounded-lg"
+        " hover:cursor-pointer w-full md:w-2/12 h-32 flex flex-col relative justify-center items-center rounded-lg"
       }
     >
       <img
@@ -27,9 +27,11 @@ function MCSCustomButton({
         alt="bgImg"
         className="h-full absolute right-0 mix-blend-luminosity opacity-25"
       />
-      <div className="z-10 flex flex-col items-center gap-4">
+      <div className="z-10 flex flex-col justify-center items-center gap-4">
         <ButtonIcon className="text-4xl text-mediphix_text_d" />
-        <p className="text-mediphix_card_background font-bold">{buttonTitle}</p>
+        <p className="text-mediphix_card_background font-bold text-center">
+          {buttonTitle}
+        </p>
       </div>
     </div>
   );
