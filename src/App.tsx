@@ -37,7 +37,13 @@ function App() {
         {/* <PatientNavigation/> */}
 
         <Routes>
-          {/* <Route path='/' element={<RegistrationComplete />} /> */}
+
+
+
+
+          <Route path='/' element={<Home />} />
+
+
 
           {/* <Route path='/' element={<Navpage step={1} titlename={'Mobile'} />} /> */}
           <Route path="/Login" element={<LoginAuth />} />
