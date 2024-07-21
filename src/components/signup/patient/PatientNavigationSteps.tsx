@@ -97,7 +97,10 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
 
             else if (currentStep == 2) {
                 if (!formData.mobile.trim()) {
-                    validationErrors.dob = "Mobile Number is Requred";
+                    validationErrors.mobile = "Mobile Number is Requred";
+                }
+                else if(formData.mobile.length !== 9){
+                    validationErrors.mobile = "Invalid Fromat";
                 }
             }
 

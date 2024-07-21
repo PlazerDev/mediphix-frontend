@@ -1,4 +1,3 @@
-
 import LoginOtp from "./components/login/patient/LoginOtp";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
@@ -29,6 +28,7 @@ import MedicalCenterCard from "./components/patient/appointment/MedicalCenterCar
 import AppointmentDetails from "./components/patient/appointment/AppointmentDetails";
 import UpComingAppointment from "./components/patient/home/UpcomingAppointment ";
 
+import MedicalCenterStaffRoutes from "./routes/MedicalCenterStaffRoutes";
 
 function App() {
   return (
@@ -40,7 +40,9 @@ function App() {
 
 
 
-          <Route path='/' element={<RegistrationComplete />} />
+
+          <Route path='/' element={<Home />} />
+
 
 
           {/* <Route path='/' element={<Navpage step={1} titlename={'Mobile'} />} /> */}
@@ -76,19 +78,17 @@ function App() {
             path="/PreviousAppoinmentsDetails"
             element={<PreviousAppointmentDetails />}
           />
-          <Route
-            path="/patienthome"
-            element={<PatientHome />}
-          />
+          <Route path="/patienthome" element={<PatientHome />} />
           <Route
             path="/patient/appoinmentdetails"
             element={<AppointmentDetails />}
           />
           <Route path="/patient/recordbooklist" element={<RecordBookList />} />
-          <Route
+          {/* Commented this out because of props not being passed -- uncomment later */}
+          {/* <Route
             path="/patient/home/upcommingappointment"
             element={<UpComingAppointment />}
-          />
+          /> */}
           <Route
             path="/patient/appointment/PreviousAppoinments"
             element={<AppointmentTable />}
@@ -158,6 +158,12 @@ function App() {
               }
             />
           </Route>
+
+          {/* Medical Center Staff Routes  */}
+          <Route
+            path="/medicalCenterStaff/*"
+            element={<MedicalCenterStaffRoutes />}
+          />
         </Routes>
       </Router>
     </div>
