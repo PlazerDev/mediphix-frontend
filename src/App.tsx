@@ -1,15 +1,12 @@
 import LoginOtp from "./components/login/patient/LoginOtp";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./components/Home";
 import MedicalLogin from "./components/login/medical-center/MedicalLogin";
 import PatientHome from "./components/patient/home/PatientHome";
 
 import AppointmentSection from "./components/patient/appointment/AppointmentSection";
-import PreviousAppointments from "./components/patient/appointment/PreviousAppointments";
 import LoginAuth from "./components/login/LoginAuth";
-import RecordBook from "./components/patient/recordbook/RecordBook";
+
 import PatientNavigation from "./components/patient/navigation/PatientNavigation";
-import PreviousAppointmentDetails from "./components/patient/appointment/PreviousAppointmentDetails";
 
 
 import SignupRoutes from "./routes/SignupRoutes";
@@ -25,7 +22,9 @@ import AppointmentTable from "./components/patient/appointment/AppointmentTable"
 import SelectDoctor from "./components/patient/appointment/SelectDoctor";
 import MedicalCenterCard from "./components/patient/appointment/MedicalCenterCard";
 import AppointmentDetails from "./components/patient/appointment/AppointmentDetails";
-import UpComingAppointment from "./components/patient/home/UpcomingAppointment ";
+import DoctorDetails from "./components/patient/appointment/DoctorDetails";
+import CreateAppointment from "./components/patient/appointment/CreateAppointment";
+import DetailsBeforeAppointment from "./components/patient/appointment/DetailsBeforeAppointment";
 
 import MedicalCenterStaffRoutes from "./routes/MedicalCenterStaffRoutes";
 
@@ -67,21 +66,20 @@ function App() {
               />
             }
           />
-          <Route
-            path="/PreviousAppoinmentsDetails"
-            element={<PreviousAppointmentDetails />}
-          />
+        
           <Route path="/patienthome" element={<PatientHome />} />
+
           <Route
             path="/patient/appoinmentdetails"
             element={<AppointmentDetails />}
           />
+          <Route
+            path="/patient/appoinment/detailsbeforeappointment"
+            element={<DetailsBeforeAppointment />}
+          />
           <Route path="/patient/recordbooklist" element={<RecordBookList />} />
-          {/* Commented this out because of props not being passed -- uncomment later */}
-          {/* <Route
-            path="/patient/home/upcommingappointment"
-            element={<UpComingAppointment />}
-          /> */}
+          <!-- UpcomingAppointment component removed -->
+
           <Route
             path="/patient/appointment/PreviousAppoinments"
             element={<AppointmentTable />}
@@ -90,7 +88,16 @@ function App() {
             path="/patient/appointment/UpComingAppointment"
             element={<AppointmentTable />}
           />
+          <Route
+            path="/patient/appointment/CreateAppoinmnets"
+            element={<CreateAppointment/>}
+          />
           <Route path="/SearchDoctor" element={<SelectDoctor />} />
+          <Route path="/medicalcentercard" element={<MedicalCenterCard />} />
+          <Route
+            path="/medicalcenterdetailscard"
+            element={<MedicalCenterDetailsCard />}
+          />
           <Route
             path="/patient/appoinment/medicalcentercard"
             element={<MedicalCenterCard />}

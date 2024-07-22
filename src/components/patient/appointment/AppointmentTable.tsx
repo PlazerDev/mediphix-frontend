@@ -1,9 +1,46 @@
 import { useLocation } from "react-router-dom";
 import { DatePicker, Space, Breadcrumb } from "antd";
-import AppointmentTableDetails from "./AppointmentTableDetails";
 import PatientNavigation from "../navigation/PatientNavigation";
 const { RangePicker } = DatePicker;
+import TableComponent from "../../TableComponent";
 
+const columns = [
+  {
+    title: "Date",
+    dataIndex: "date",
+    key: "date",
+  },
+  {
+    title: "Time Slot",
+    dataIndex: "timeSlot",
+    key: "timeSlot",
+  },
+  {
+    title: "Ref Number",
+    dataIndex: "refNumber",
+    key: "refNumber",
+  },
+  {
+    title: "Doctor",
+    dataIndex: "doctor",
+    key: "doctor",
+  },
+  {
+    title: "Medical Center",
+    dataIndex: "medicalCenter",
+    key: "medicalCenter",
+  },
+  {
+    title: "Category",
+    dataIndex: "category",
+    key: "category",
+  },
+  {
+    title: "Queue Number",
+    dataIndex: "queueNumber",
+    key: "queueNumber",
+  },
+];
 
 const AppointmentTable = () => {
   const location = useLocation();
@@ -52,7 +89,9 @@ const AppointmentTable = () => {
       </div>
 
       <div className="mt-[-2%]">
-        <AppointmentTableDetails dataSource={appointments} />
+        <div className="ml-[1%] mr-[1%] pt-7">
+          <TableComponent dataSource={appointments} columns={columns} />
+        </div>
       </div>
     </div>
   );
