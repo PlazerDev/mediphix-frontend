@@ -27,6 +27,7 @@ import CreateAppointment from "./components/patient/appointment/CreateAppointmen
 import DetailsBeforeAppointment from "./components/patient/appointment/DetailsBeforeAppointment";
 
 import MedicalCenterStaffRoutes from "./routes/MedicalCenterStaffRoutes";
+import Home from "./components/Home";
 
 function App() {
   return (
@@ -78,7 +79,7 @@ function App() {
             element={<DetailsBeforeAppointment />}
           />
           <Route path="/patient/recordbooklist" element={<RecordBookList />} />
-          <!-- UpcomingAppointment component removed -->
+           {/* UpcomingAppointment component removed */}
 
           <Route
             path="/patient/appointment/PreviousAppoinments"
