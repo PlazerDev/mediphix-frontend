@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import MedicalCenterStaffHomePage from "../pages/medical-center-staff/MedicalCenterStaffHomePage";
 import { ConfigProvider } from "antd";
 import MedicalCenterStaffOnGoingSessionsListPage from "../pages/medical-center-staff/MedicalCenterStaffOngoingSessionsListPage";
+import MedicalCenterStaffOngoingSessionPage from "../pages/medical-center-staff/MedicalCenterStaffOngoingSessionPage";
 
 function MedicalCenterStaffRoutes() {
   return (
@@ -15,7 +16,7 @@ function MedicalCenterStaffRoutes() {
         },
         components: {
           Pagination: {
-            itemActiveBg: "",
+            itemActiveBg: "", // remove the default active bg color
           },
         },
       }}
@@ -25,6 +26,10 @@ function MedicalCenterStaffRoutes() {
         <Route
           path="/onGoingSessions"
           element={<MedicalCenterStaffOnGoingSessionsListPage />}
+        />
+        <Route
+          path="/onGoingSessions/:sessionId"
+          element={<MedicalCenterStaffOngoingSessionPage />}
         />
       </Routes>
     </ConfigProvider>
