@@ -1,7 +1,7 @@
 function MCSPatientDetailsCard() {
   return (
     <div className="bg-mediphix_card_background my-4 p-8 rounded-lg">
-      <p className="font-bold">Current Patient Details</p>
+      <p className="font-bold text-mediphix_accent">Current Patient Details</p>
       <div className="my-2 flex md:flex-row flex-col gap-2 md:gap-0">
         <div className="flex flex-1">
           <div className="flex-1">

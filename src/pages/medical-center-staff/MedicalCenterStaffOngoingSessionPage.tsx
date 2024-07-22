@@ -6,6 +6,7 @@ import { Divider } from "antd";
 import MCSDateTimeTitle from "../../components/medical-center-staff/MCSDateTimeTitle";
 import MCSTimeSlotCard from "../../components/medical-center-staff/MCSTimeSlotCard";
 import MCSPatientDetailsCard from "../../components/medical-center-staff/MCSPatientDetailsCard";
+import MCSNextPatientDetailsCard from "../../components/medical-center-staff/MCSNextPatientDetailsCard";
 
 function MedicalCenterStaffOngoingSessionPage() {
   const { sessionId } = useParams<{ sessionId: string }>();
@@ -26,6 +27,7 @@ function MedicalCenterStaffOngoingSessionPage() {
           status="In Progress"
         />
         <MCSPatientDetailsCard />
+        <MCSNextPatientDetailsCard />
       </div>
       {/* Footer */}
       <Footer />
