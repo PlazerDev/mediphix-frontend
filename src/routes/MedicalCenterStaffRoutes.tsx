@@ -3,7 +3,7 @@ import MedicalCenterStaffHomePage from "../pages/medical-center-staff/MedicalCen
 import { ConfigProvider } from "antd";
 import MedicalCenterStaffOnGoingSessionsListPage from "../pages/medical-center-staff/MedicalCenterStaffOngoingSessionsListPage";
 import MedicalCenterStaffOngoingSessionPage from "../pages/medical-center-staff/MedicalCenterStaffOngoingSessionPage";
-import MedicalCenterStaffStartNextTimeSlotPage from "../pages/medical-center-staff/MedicalCenterStaffStartNextTimeSlotPage";
+import MedicalCenterStaffStartNextSessionPage from "../pages/medical-center-staff/MedicalCenterStaffStartNextSessionPage";
 
 function MedicalCenterStaffRoutes() {
   return (
@@ -33,8 +33,8 @@ function MedicalCenterStaffRoutes() {
           element={<MedicalCenterStaffOngoingSessionPage />}
         />
         <Route
-          path="/onGoingSessions/:sessionId/startNextConfirm"
-          element={<MedicalCenterStaffStartNextTimeSlotPage />}
+          path="/onGoingSessions/:sessionId/startNextPatientConfirm"
+          element={<MedicalCenterStaffStartNextSessionPage />}
         />
       </Routes>
     </ConfigProvider>

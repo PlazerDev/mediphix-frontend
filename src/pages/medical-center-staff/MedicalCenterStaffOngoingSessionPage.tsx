@@ -31,13 +31,7 @@ function MedicalCenterStaffOngoingSessionPage() {
         <MCSNextPatientDetailsCard />
         <MCSQueueDetailsCard />
         <div className="flex justify-end mt-4">
-          <Link
-            to={
-              "/medicalCenterStaff/onGoingSessions/" +
-              sessionId +
-              "/startNextConfirm"
-            }
-          >
+          <Link to={"/medicalCenterStaff/onGoingSessions/" + sessionId + "/#"}>
             <Button type="primary">End Current Time Slot & Start Next</Button>
           </Link>
         </div>

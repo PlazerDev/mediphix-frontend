@@ -1,10 +1,10 @@
 import MCSMainGreeting from "../../components/medical-center-staff/MCSMainGreeting";
 import MCSNavBar from "../../components/medical-center-staff/MCSNavBar";
-import Footer from "./../../components/Footer";
+import Footer from "../../components/Footer";
 import doctorImg from "./../../assets/images/medical-center-staff/doctor_nurse.png";
 import { Button } from "antd";
 
-function MedicalCenterStaffStartNextTimeSlotPage() {
+function MedicalCenterStaffStartNextSessionPage() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navigation Bar  */}
@@ -55,4 +55,4 @@ function MedicalCenterStaffStartNextTimeSlotPage() {
   );
 }
 
-export default MedicalCenterStaffStartNextTimeSlotPage;
+export default MedicalCenterStaffStartNextSessionPage;

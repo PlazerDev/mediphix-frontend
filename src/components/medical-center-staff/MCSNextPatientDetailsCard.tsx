@@ -5,14 +5,17 @@ import {
   UpOutlined,
   UserDeleteOutlined,
   UserAddOutlined,
+  ClockCircleOutlined,
 } from "@ant-design/icons";
 import { Button, Divider } from "antd";
 import { useState } from "react";
 import MCSSelectedSessionBtn from "./MCSSelectedSessionBtn";
 import MCSScanQRBtn from "./MCSScanQRBtn";
+import { Link } from "react-router-dom";
 
 function MCSNextPatientDetailsCard() {
   const [isDown, setIsDown] = useState(true);
+  const isStartNextAvailable = false;
 
   return (
     <div className="bg-mediphix_card_background my-4 p-8 rounded-lg">
@@ -43,6 +46,23 @@ function MCSNextPatientDetailsCard() {
       </div>
       {!isDown && (
         <div className="flex flex-col md:flex-row gap-2">
+          {isStartNextAvailable && (
+            <Link
+              to={
+                "/medicalCenterStaff/onGoingSessions/asdasd/startNextPatientConfirm"
+              }
+            >
+              <Button
+                icon={<ClockCircleOutlined />}
+                className="w-full"
+                type="primary"
+                danger={true}
+              >
+                Start the Session
+              </Button>
+            </Link>
+          )}
+
           <MCSScanQRBtn />
           <div className="flex flex-col md:flex-row gap-2 justify-center md:ml-4 mt-4 md:mt-0">
             <MCSSelectedSessionBtn
