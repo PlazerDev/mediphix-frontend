@@ -7,6 +7,7 @@ import MCSDateTimeTitle from "../../components/medical-center-staff/MCSDateTimeT
 import MCSTimeSlotCard from "../../components/medical-center-staff/MCSTimeSlotCard";
 import MCSPatientDetailsCard from "../../components/medical-center-staff/MCSPatientDetailsCard";
 import MCSNextPatientDetailsCard from "../../components/medical-center-staff/MCSNextPatientDetailsCard";
+import MCSQueueDetailsCard from "../../components/medical-center-staff/MCSQueueDetailsCard";
 
 function MedicalCenterStaffOngoingSessionPage() {
   const { sessionId } = useParams<{ sessionId: string }>();
@@ -28,6 +29,7 @@ function MedicalCenterStaffOngoingSessionPage() {
         />
         <MCSPatientDetailsCard />
         <MCSNextPatientDetailsCard />
+        <MCSQueueDetailsCard />
       </div>
       {/* Footer */}
       <Footer />
