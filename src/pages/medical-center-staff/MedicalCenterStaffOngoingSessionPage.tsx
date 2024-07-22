@@ -5,6 +5,7 @@ import Footer from "./../../components/Footer";
 import { Divider } from "antd";
 import MCSDateTimeTitle from "../../components/medical-center-staff/MCSDateTimeTitle";
 import MCSTimeSlotCard from "../../components/medical-center-staff/MCSTimeSlotCard";
+import MCSPatientDetailsCard from "../../components/medical-center-staff/MCSPatientDetailsCard";
 
 function MedicalCenterStaffOngoingSessionPage() {
   const { sessionId } = useParams<{ sessionId: string }>();
@@ -24,6 +25,7 @@ function MedicalCenterStaffOngoingSessionPage() {
           maxPatientSessions={8}
           status="In Progress"
         />
+        <MCSPatientDetailsCard />
       </div>
       {/* Footer */}
       <Footer />
