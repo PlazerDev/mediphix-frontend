@@ -4,6 +4,7 @@ import { ConfigProvider } from "antd";
 import MedicalCenterStaffOnGoingSessionsListPage from "../pages/medical-center-staff/MedicalCenterStaffOngoingSessionsListPage";
 import MedicalCenterStaffOngoingSessionPage from "../pages/medical-center-staff/MedicalCenterStaffOngoingSessionPage";
 import MedicalCenterStaffStartNextSessionPage from "../pages/medical-center-staff/MedicalCenterStaffStartNextSessionPage";
+import MedicalCenterStaffUpcomingSessionPage from "../pages/medical-center-staff/MedicalCenterStaffUpcomingSessionPage";
 
 function MedicalCenterStaffRoutes() {
   return (
@@ -35,6 +36,10 @@ function MedicalCenterStaffRoutes() {
         <Route
           path="/onGoingSessions/:sessionId/startNextPatientConfirm"
           element={<MedicalCenterStaffStartNextSessionPage />}
+        />
+        <Route
+          path="/upcomingSessions"
+          element={<MedicalCenterStaffUpcomingSessionPage />}
         />
       </Routes>
     </ConfigProvider>
