@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import MCSNavBar from "../../components/medical-center-staff/MCSNavBar";
 import MCSMainGreeting from "../../components/medical-center-staff/MCSMainGreeting";
 import Footer from "./../../components/Footer";
@@ -31,7 +31,15 @@ function MedicalCenterStaffOngoingSessionPage() {
         <MCSNextPatientDetailsCard />
         <MCSQueueDetailsCard />
         <div className="flex justify-end mt-4">
-          <Button type="primary">End Current Time Slot & Start Next</Button>
+          <Link
+            to={
+              "/medicalCenterStaff/onGoingSessions/" +
+              sessionId +
+              "/startNextConfirm"
+            }
+          >
+            <Button type="primary">End Current Time Slot & Start Next</Button>
+          </Link>
         </div>
       </div>
       {/* Footer */}
