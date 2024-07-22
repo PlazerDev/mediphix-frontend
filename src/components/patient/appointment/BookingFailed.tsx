@@ -1,6 +1,7 @@
 import Footer from "./../../Footer";
 import PatientNavigation from "../navigation/PatientNavigation";
 import BookingFailedImage from "./../../../assets/images/patient/appoinment/BookingFailed.png";
+import { Link } from "react-router-dom";
 
 const BookingFailed = () => {
   return (
@@ -37,9 +38,11 @@ const BookingFailed = () => {
           <p>medical center for further assistance.</p>
         </div>
         <div className="flex justify-center items-center mt-4 mr-4">
-          <div className="bg-[#FF7300] text-[#FFFFFF] rounded-md p-2 w-fit flex items-center">
-            <p className="mx-2">Appointments</p>
-          </div>
+          <Link to="/patient/appointment">
+            <div className="bg-[#FF7300] text-[#FFFFFF] rounded-md p-2 w-fit flex items-center cursor-pointer">
+              <p className="mx-2">Appointments</p>
+            </div>
+          </Link>
         </div>
       </div>
 
