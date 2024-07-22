@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import MCSNavBar from "../../components/medical-center-staff/MCSNavBar";
 import MCSMainGreeting from "../../components/medical-center-staff/MCSMainGreeting";
 import Footer from "./../../components/Footer";
-import { Divider } from "antd";
+import { Button, Divider } from "antd";
 import MCSDateTimeTitle from "../../components/medical-center-staff/MCSDateTimeTitle";
 import MCSTimeSlotCard from "../../components/medical-center-staff/MCSTimeSlotCard";
 import MCSPatientDetailsCard from "../../components/medical-center-staff/MCSPatientDetailsCard";
@@ -30,6 +30,9 @@ function MedicalCenterStaffOngoingSessionPage() {
         <MCSPatientDetailsCard />
         <MCSNextPatientDetailsCard />
         <MCSQueueDetailsCard />
+        <div className="flex justify-end mt-4">
+          <Button type="primary">End Current Time Slot & Start Next</Button>
+        </div>
       </div>
       {/* Footer */}
       <Footer />
