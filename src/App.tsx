@@ -2,21 +2,21 @@ import LoginOtp from "./components/login/patient/LoginOtp";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import MedicalLogin from "./components/login/medical-center/MedicalLogin";
-import PatientHome from "./components/patient/home/PatientHome";
 
-import AppointmentSection from "./components/patient/appointment/AppointmentSection";
-import PreviousAppointments from "./components/patient/appointment/PreviousAppointments";
+
+
+
 import LoginAuth from "./components/login/LoginAuth";
-import RecordBook from "./components/patient/recordbook/RecordBook";
-import PatientNavigation from "./components/patient/navigation/PatientNavigation";
+
+
 import PreviousAppointmentDetails from "./components/patient/appointment/PreviousAppointmentDetails";
 
 
 import SignupRoutes from "./routes/SignupRoutes";
 
-import MedicalCenterDetailsCard from "./components/patient/appointment/MedicalCenterDetailsCard";
-import AppointmentSuccessful from "./components/patient/appointment/AppointmentSuccessful";
-import BookingFailed from "./components/patient/appointment/BookingFailed";
+
+
+
 
 import { FaRegAddressBook } from "react-icons/fa";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
@@ -28,92 +28,65 @@ import AppointmentDetails from "./components/patient/appointment/AppointmentDeta
 import UpComingAppointment from "./components/patient/home/UpcomingAppointment ";
 
 import MedicalCenterStaffRoutes from "./routes/MedicalCenterStaffRoutes";
+import DoctorRoutes from "./routes/DoctorRoutes";
+import PatientRoutes from "./routes/PatientRoutes";
+import { HomeOutlined, CalendarOutlined, BookOutlined } from "@ant-design/icons";
+
+import Navigation from "./components/Navigation";
+
 
 function App() {
   return (
     <div>
+
       <Router>
-        {/* <PatientNavigation/> */}
 
         <Routes>
 
 
 
 
-          <Route path='/' element={<Home />} />
 
 
-
-          {/* <Route path='/' element={<Navpage step={1} titlename={'Mobile'} />} /> */}
+          <Route path="/" element={<Navigation
+          currentSegment="Home"
+            role="patient"
+            buttonNames={["Home", "Appoinmnet", "Record Book"]}
+            buttonImages={[<HomeOutlined />, <CalendarOutlined />, <BookOutlined />]} />} />
           <Route path="/Login" element={<LoginAuth />} />
           <Route path="/LoginOTP" element={<LoginOtp />} />
 
           <Route path="/MedicalOfficialLogin" element={<MedicalLogin />} />
-          <Route
-            path="/patient/appointment"
-            element={
-              <AppointmentSection
-                name={"Visal"}
-                title={"Manage your appointments here"}
-                buttontitles={[
-                  "Upcomming Appointments",
-                  "Create an Appointment",
-                  "Previous Appointments",
-                ]}
-                buttonimages={[
-                  FaRegAddressBook,
-                  MdOutlineCreateNewFolder,
-                  FaRegAddressBook,
-                ]}
-                navigations={[
-                  "/patient/appointment/UpComingAppointment",
-                  "/patient/appointment/CreateAppoinmnets",
-                  "/patient/appointment/PreviousAppoinments",
-                ]}
-              />
-            }
-          />
+
           <Route
             path="/PreviousAppoinmentsDetails"
             element={<PreviousAppointmentDetails />}
           />
-          <Route path="/patienthome" element={<PatientHome />} />
-          <Route
-            path="/patient/appoinmentdetails"
-            element={<AppointmentDetails />}
-          />
-          <Route path="/patient/recordbooklist" element={<RecordBookList />} />
+
+
+
           {/* Commented this out because of props not being passed -- uncomment later */}
           {/* <Route
             path="/patient/home/upcommingappointment"
             element={<UpComingAppointment />}
           /> */}
-          <Route
-            path="/patient/appointment/PreviousAppoinments"
-            element={<AppointmentTable />}
-          />
-          <Route
-            path="/patient/appointment/UpComingAppointment"
-            element={<AppointmentTable />}
-          />
+
           <Route path="/SearchDoctor" element={<SelectDoctor />} />
+
+
+
+
+          {/* patient Routes  */}
           <Route
-            path="/patient/appoinment/medicalcentercard"
-            element={<MedicalCenterCard />}
+            path="/patient/*"
+            element={<PatientRoutes />}
           />
+          {/* doctor Rotes  */}
           <Route
-            path="/patient/appoinment/medicalcenterdetailscard"
-            element={<MedicalCenterDetailsCard />}
+            path="/doctor/*"
+            element={<DoctorRoutes />}
           />
-          <Route
-            path="/patient/appoinment/appointmentsuccessful"
-            element={<AppointmentSuccessful />}
-          />
-          <Route
-            path="/patient/appoinment/bookingfailed"
-            element={<BookingFailed />}
-          />
-          
+
           {/* Signup Section Routes  */}
           <Route
             path="/signup/*"
