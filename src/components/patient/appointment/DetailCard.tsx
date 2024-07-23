@@ -66,11 +66,6 @@ const DetailCard = ({
                 alt="Center Logo"
               />
             )}
-            {/* <img
-                className="w-36 h-36 rounded-full object-cover"
-                src={profilepic}
-                alt="Profile Pic"
-              /> */}
           </div>
           <div className="w-full">
             <div className="flex gap-4 mb-2">

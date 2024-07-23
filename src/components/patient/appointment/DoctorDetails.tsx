@@ -32,7 +32,7 @@ const DoctorDetails = ({
             <div className="z-[500]">
               <img
                 src={doctorImage}
-                className="w-36 h-36 rounded-full object-cover absolute top-[130px] z-2"
+                className="w-36 h-36 rounded-full object-cover absolute top-[200px] z-2"
               />
             </div>
             <div className="mt-12 text-lg">
