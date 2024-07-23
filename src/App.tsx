@@ -29,6 +29,7 @@ import AppointmentTable from './components/patient/appointment/AppointmentTable'
 import MedicalCenterCard from "./components/patient/appointment/MedicalCenterCard";
 import AppointmentDetails from "./components/patient/appointment/AppointmentDetails";
 import { FaRegAddressBook } from 'react-icons/fa'
+import UpComingClinicSessionDetils from './components/doctor/session/UpComingClinicSessionDetail'
 
 
 
@@ -62,6 +63,7 @@ function App() {
               <Route path='/doctor/session/previoussession' element={<PreviousSession />} />
               <Route path='/doctor/session/previoussessiontabledetails' element={<PreviousSessionTableDetails data={[]} onRowClick={() => {}} />} />
               <Route path='/doctor/session/sessiondetails' element={<SessionDetails/>} />
+              <Route path='/doctor/session/upcomingclinicsessiondetails' element={<UpComingClinicSessionDetils/>}/>
 
         {/* <PatientNavigation/> */}
 
