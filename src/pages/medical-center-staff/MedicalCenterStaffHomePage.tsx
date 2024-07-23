@@ -28,8 +28,8 @@ function MedicalCenterStaffHomePage() {
           </div>
           <div className="flex flex-col items-center md:flex-row justify-center gap-4 mt-2">
             <MCSCustomButton
-              path="#"
-              buttonTitle="Upcoming Appointments"
+              path="/medicalCenterStaff/upcomingSessions"
+              buttonTitle="Upcoming Clinic Sessions"
               isPrimary={false}
               buttonIcon={FaCalendarDays}
             />
