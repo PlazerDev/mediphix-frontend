@@ -8,7 +8,6 @@ import LoginAuth from "./components/login/LoginAuth";
 
 import PatientNavigation from "./components/patient/navigation/PatientNavigation";
 
-
 import SignupRoutes from "./routes/SignupRoutes";
 
 import MedicalCenterDetailsCard from "./components/patient/appointment/MedicalCenterDetailsCard";
@@ -67,7 +66,16 @@ function App() {
               />
             }
           />
-        
+
+          {/* Removed components in patient appointment section
+          UpcommingAppointment
+          PreviousAppointments
+          SelectDoctor
+          MedicalCenterCard
+          MedicalCenterDetailsCard
+          DDNotselectDate
+           */}
+
           <Route path="/patienthome" element={<PatientHome />} />
 
           <Route
@@ -79,7 +87,7 @@ function App() {
             element={<DetailsBeforeAppointment />}
           />
           <Route path="/patient/recordbooklist" element={<RecordBookList />} />
-           {/* UpcomingAppointment component removed */}
+          {/* UpcomingAppointment component removed */}
 
           <Route
             path="/patient/appointment/PreviousAppoinments"
@@ -91,14 +99,13 @@ function App() {
           />
           <Route
             path="/patient/appointment/CreateAppoinmnets"
-            element={<CreateAppointment/>}
+            element={<CreateAppointment />}
           />
+          
+
+          {/* Removed 
           <Route path="/SearchDoctor" element={<SelectDoctor />} />
           <Route path="/medicalcentercard" element={<MedicalCenterCard />} />
-          <Route
-            path="/medicalcenterdetailscard"
-            element={<MedicalCenterDetailsCard />}
-          />
           <Route
             path="/patient/appoinment/medicalcentercard"
             element={<MedicalCenterCard />}
@@ -106,7 +113,7 @@ function App() {
           <Route
             path="/patient/appoinment/medicalcenterdetailscard"
             element={<MedicalCenterDetailsCard />}
-          />
+          /> */}
           <Route
             path="/patient/appoinment/appointmentsuccessful"
             element={<AppointmentSuccessful />}
@@ -115,12 +122,9 @@ function App() {
             path="/patient/appoinment/bookingfailed"
             element={<BookingFailed />}
           />
-          
+
           {/* Signup Section Routes  */}
-          <Route
-            path="/signup/*"
-            element={<SignupRoutes />}
-          />
+          <Route path="/signup/*" element={<SignupRoutes />} />
 
           {/* Medical Center Staff Routes  */}
           <Route

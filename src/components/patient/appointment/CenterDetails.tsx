@@ -28,7 +28,7 @@ const CenterDetails = ({ name, address, description, phoneNo }: Center) => {
               <div className="z-[500]">
                 <img
                   src={centerImage}
-                  className="w-36 h-36 rounded-[16px] object-scale-down absolute top-[130px] z-2"
+                  className="w-36 h-36 rounded-[16px] object-scale-down absolute top-[200px] z-2"
                 />
               </div>
               <div className="flex mt-12 text-lg">

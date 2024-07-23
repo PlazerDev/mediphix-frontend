@@ -15,6 +15,7 @@ interface Doctor {
   appointmentCategory: string[];
   description: string;
   centers: string[];
+  appointmentDates: string[];
 }
 
 interface Center {
@@ -57,20 +58,18 @@ const CreateAppointment = () => {
         "Medihelp Hospitals",
         "NineWhalesHospital",
       ],
-    },
-    {
-      name: "Nishantha Perera",
-      degree: "MBBS (COL)",
-      speciality: "Cardiology",
-      appointmentCategory: ["OPD", "Heart Health"],
-      description:
-        "With over 15 years of experience in cardiology, I am committed to providing exceptional care for patients with heart conditions. My approach emphasizes preventive cardiology, patient education, and personalized treatment plans to ensure optimal heart health.",
-      centers: [
-        "Nawaloka Hospital",
-        "Asiri Medical Hospital",
-        "Durdans Hospital",
-        "Lanka Hospitals",
-        "Colombo South Teaching Hospital",
+      appointmentDates: [
+        "2024-07-25",
+        "2024-07-30",
+        "2024-08-10",
+        "2024-08-15",
+        "2024-08-18",
+        "2024-08-20",
+        "2024-08-21",
+        "2024-08-25",
+        "2024-08-27",
+        "2024-08-28",
+        "2024-08-30",
       ],
     },
     {
@@ -86,6 +85,37 @@ const CreateAppointment = () => {
         "Durdans Hospital",
         "Lanka Hospitals",
         "Colombo South Teaching Hospital",
+      ],
+      appointmentDates: [
+        "2024-07-20",
+        "2024-07-15",
+        "2024-07-30",
+        "2024-08-10",
+        "2024-08-15",
+        "2024-08-20",
+      ],
+    },
+    {
+      name: "Nishantha Perera",
+      degree: "MBBS (COL)",
+      speciality: "Cardiology",
+      appointmentCategory: ["OPD", "Heart Health"],
+      description:
+        "With over 15 years of experience in cardiology, I am committed to providing exceptional care for patients with heart conditions. My approach emphasizes preventive cardiology, patient education, and personalized treatment plans to ensure optimal heart health.",
+      centers: [
+        "Nawaloka Hospital",
+        "Asiri Medical Hospital",
+        "Durdans Hospital",
+        "Lanka Hospitals",
+        "Colombo South Teaching Hospital",
+      ],
+      appointmentDates: [
+        "2024-07-20",
+        "2024-07-25",
+        "2024-07-30",
+        "2024-09-05",
+        "2024-09-10",
+        "2024-09-15",
       ],
     },
   ]);
@@ -215,7 +245,11 @@ const CreateAppointment = () => {
       </div>
       <div>
         {detailsList.map((list, index) => (
-          <div key={index} onClick={() => handleItemClick(list)}>
+          <div
+            key={index}
+            className="cursor-pointer"
+            onClick={() => handleItemClick(list)}
+          >
             <DetailCard
               detailType={detailType}
               name={list.name}
