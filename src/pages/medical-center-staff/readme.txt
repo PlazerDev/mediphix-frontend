@@ -10,3 +10,41 @@
       </div>
     </div>
   );
+
+
+    swal({
+    title: "Alert",
+    text: "You have 2 ongoing clinic sessions",
+    icon: "info",
+    buttons: {
+      confirm: {
+        text: "OK",
+      },
+    },
+  });
+
+
+
+  <p className="font-bold">Clinic Session Details</p>
+      <div className="my-2 flex md:flex-row flex-col">
+        <div className="flex flex-1">
+          <div className="flex-1">
+            <p className="text-mediphix_text_c text-sm">Time Frame</p>
+            <p>sdf</p>
+          </div>
+          <div className="flex-1">
+            <p className="text-mediphix_text_c text-sm">Date</p>
+            <p>sdf</p>
+          </div>
+        </div>
+        <div className="flex flex-1">
+          <div className="flex-1">
+            <p className="text-mediphix_text_c text-sm">Hall Number</p>
+            <p>sdf</p>
+          </div>
+          <div className="flex-1">
+            <p className="text-mediphix_text_c text-sm">Status</p>
+            <p className="text-mediphix_accent">sdf</p>
+          </div>
+        </div>
+      </div>

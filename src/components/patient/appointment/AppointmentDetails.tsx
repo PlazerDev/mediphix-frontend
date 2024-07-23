@@ -4,7 +4,6 @@ import { Breadcrumb } from "antd";
 import PatientNavigation from "../navigation/PatientNavigation";
 import { useState } from "react";
 import { LuAlertTriangle } from "react-icons/lu";
-
 const AppointmentDetails = () => {
 
   const [appointmentDetails, setAppointmentDetails] = useState({

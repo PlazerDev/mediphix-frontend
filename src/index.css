@@ -30,7 +30,7 @@
 }
 
 .swal-button--confirm {
-  @apply bg-mediphix_accent;
+  @apply bg-mediphix_accent focus:outline-none focus:ring-4 focus:ring-[#ffd7b9];
 }
 
 .swal-button--confirm:hover {

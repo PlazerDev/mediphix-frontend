@@ -1,6 +1,7 @@
 import Footer from "./../../Footer";
 import PatientNavigation from "../navigation/PatientNavigation";
 import BookingSuccessful from "./../../../assets/images/patient/appoinment/BookingSuccessful.png";
+import { Link } from "react-router-dom";
 
 const AppointmentSuccessful = () => {
   return (
@@ -47,14 +48,18 @@ const AppointmentSuccessful = () => {
         </div>
         <div className="flex justify-center items-center mt-4 mr-4">
           <div className="flex justify-center items-center mt-4 mr-4">
-            <div className="bg-[#FFFFFF] text-[black] border-2 border-black rounded-md p-2 w-40 flex justify-center items-center">
-              <p className="font-Roboto font-[700] text-sm">HOME</p>
-            </div>
+            <Link to="/patienthome">
+              <div className="bg-[#FFFFFF] text-[black] border-2 border-black rounded-md p-2 w-40 flex justify-center items-center">
+                <p className="font-Roboto font-[700] text-sm">HOME</p>
+              </div>
+            </Link>
           </div>
           <div className="flex justify-center items-center mt-4 mr-4">
-            <div className="bg-[#FF7300] text-[#FFFFFF] rounded-md p-2 w-50 flex items-center">
-              <p className="mx-2">View More Details</p>
-            </div>
+            <Link to="/patient/appoinmentdetails">
+              <div className="bg-[#FF7300] text-[#FFFFFF] rounded-md p-2 w-50 flex items-center">
+                <p className="mx-2">View More Details</p>
+              </div>
+            </Link>
           </div>
         </div>
       </div>
