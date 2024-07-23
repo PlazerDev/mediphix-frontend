@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import ManageAppoinmentsImg from "../../../assets/images/patient/appoinment/manageAppoinments.png";
 import wdgetBG from "../../../assets/images/patient/appoinment/widgetsBg.png";
@@ -6,6 +7,8 @@ import "../../../assets/css/page_loading_animation.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IconType } from "react-icons";
+
+import { HomeOutlined, CalendarOutlined, BookOutlined } from "@ant-design/icons";
 
 interface AppointmentSectionProps {
   name: string;
@@ -31,8 +34,9 @@ function AppointmentSection(props: AppointmentSectionProps) {
   
 
   return (
+
     <div className={`h-screen flex flex-col ${loaded ? "fade-in" : ""}`}>
-      {/* <PatientNavigation/> */}
+
       <div className="ml-4 mb-4">
         <p className="text-[var(--text-a)] font-medium text-xl">Appointments</p>
         <p className="text-[var(--text-b)] text-xs">Appointments</p>

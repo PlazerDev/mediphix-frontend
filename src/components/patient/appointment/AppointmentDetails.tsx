@@ -35,7 +35,7 @@ const AppointmentDetails = () => {
 
   return (
     <div>
-      <PatientNavigation />
+     
       <div className="mt-2 ml-4">
         <p className="font-Roboto font-[700] text-xl text-[#151515]">
           Appointment - {appointmentDetails.referenceNumber}
