@@ -48,3 +48,31 @@
           </div>
         </div>
       </div>
+
+
+
+
+       const cellRender: CalendarProps<Dayjs>["cellRender"] = (current, info) => {
+    const markedDates = ["2024-07-05", "2024-07-10"];
+    const formattedDate = current.format("YYYY-MM-DD");
+    const isMarked = markedDates.includes(formattedDate);
+
+    if (isMarked) {
+      return (
+        <div
+          style={{
+            backgroundColor: "#ff0000",
+            color: "white",
+            borderRadius: "50%",
+            width: "24px",
+            height: "24px",
+            lineHeight: "24px",
+            textAlign: "center",
+          }}
+        >
+          {current.date()}
+        </div>
+      );
+    }
+    return <div>{info.originNode}</div>;
+  };
