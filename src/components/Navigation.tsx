@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 
-import logo from "./../../../assets/images/patient/home/medifix_logo_patient.png";
+import logo from "./../assets/images/mediphix.jpg";
 import { ConfigProvider, Segmented } from "antd";
-import "./PatientNavigation.css";
+import "./patient/navigation/PatientNavigation.css";
 import {
   BookOutlined,
   HomeOutlined,
@@ -21,14 +21,14 @@ import { useState } from "react";
 
 
 
-interface PatientNavigationProps {
+interface NavigationProps {
   role: string;
   buttonNames: string[];
   buttonImages: React.ReactNode[];
 }
 
 
-const PatientNavigation = (props: PatientNavigationProps) => {
+const PatientNavigation = (props: NavigationProps) => {
 
 
   const navigate = useNavigate();
@@ -130,7 +130,7 @@ const PatientNavigation = (props: PatientNavigationProps) => {
 
               { label: props.buttonNames[0], value: props.buttonNames[0], icon: props.buttonImages[0] },
               { label: props.buttonNames[1], value: props.buttonNames[1], icon: props.buttonImages[1] },
-              { label: props.buttonNames[2], value: props.buttonNames[2], icon: props.buttonImages[2  ] },
+              { label: props.buttonNames[2], value: props.buttonNames[2], icon: props.buttonImages[2] },
             ]}
           />
 
