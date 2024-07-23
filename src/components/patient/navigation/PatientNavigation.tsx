@@ -1,66 +1,119 @@
-// import AppointmentCard from "../home/AppointmentCard";
-// import PatientHome from "../home/PatientHome";
-// import AppointmentSection from "../appointment/AppointmentSection";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 
 import logo from "./../../../assets/images/patient/home/medifix_logo_patient.png";
-import { Segmented } from "antd";
+import { ConfigProvider, Segmented } from "antd";
 import "./PatientNavigation.css";
-
 import {
   BookOutlined,
-  HomeOutlined, 
+  HomeOutlined,
   BellOutlined,
   CalendarOutlined,
   LogoutOutlined,
   SettingOutlined,
+  AppstoreOutlined,
+  HeartOutlined,
 } from "@ant-design/icons";
+
 import { Button } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
 
-const PatientNavigation = () => {
+
+
+interface PatientNavigationProps {
+  role: string;
+  buttonNames: string[];
+  buttonImages: React.ReactNode[];
+}
+
+
+const PatientNavigation = (props: PatientNavigationProps) => {
 
 
   const navigate = useNavigate();
   const location = useLocation();
+  const [currentSegment, setCurrentSegment] = useState<string | undefined>();
 
   // Map current location to segment
-  const segmentMap: Record<string, string> = {
+
+  const patientSegmentMap: Record<string, string> = {
     '/patient/home': 'Home',
     '/patient/appointment': 'Appointment',
     '/patient/recordbook': 'Record Book',
   };
-  
+  const doctorSegmentMap: Record<string, string> = {
+    '/doctor/home': 'Home',
+    '/doctor/sessions': 'Sessions',
+    '/doctor/medicalcenters': 'Medical Centers',
+  };
+
+  const segmentMap = props.role === "patient" ? patientSegmentMap : doctorSegmentMap;
+
 
   const handleSegmentChange = (value: string) => {
-    switch (value) {
-      case 'Home':
-        navigate('/patient/home');
-        break;
-      case 'Appointment':
-        navigate('/patient/appointment');
-        break;
-      case 'Record Book':
-        navigate('/patient/recordbook');
-        break;
-      default:
-        navigate('/404');
-        break;
+
+    if (props.role === "patient") {
+      switch (value) {
+        case 'Home':
+          setCurrentSegment('Home');
+          navigate('/patient/home');
+          break;
+        case 'Appointment':
+          setCurrentSegment('Appointment');
+          navigate('/patient/appointment');
+          break;
+        case 'Record Book':
+          setCurrentSegment('Record Book');
+          navigate('/patient/recordbook');
+          break;
+        default:
+          navigate('/404');
+          break;
+      }
+    }
+    else if (props.role === "doctor") {
+      switch (value) {
+        case 'Home':
+          navigate('/doctor/home');
+          break;
+        case 'Sessions':
+          navigate('/doctor/sessions');
+          break;
+        case 'Medical Centers':
+          navigate('/doctor/medicalcenters');
+          break;
+        
+      }
     }
   };
 
-  // Set the current segment based on location
- 
-  const pathSegments = location.pathname.split('/').filter(Boolean);
-  const firstTwoSegments = `/${pathSegments.slice(0, 2).join('/')}`;
-  const currentSegment = segmentMap[firstTwoSegments]  ;
+  // // Set the current segment based on location
 
+  // const pathSegments = location.pathname.split('/').filter(Boolean);
+  // const firstTwoSegments = `/${pathSegments.slice(0, 2).join('/')}`;
+  // const currentSegment = segmentMap[firstTwoSegments];
   
 
 
-  
+
+
+
+
 
   return (
-    <>
+
+    <ConfigProvider
+      theme={{
+        components: {
+          Segmented: {
+            /* here is your component tokens */
+            
+          },
+        },
+      }}
+    >
+
       <div className="flex justify-between bg-white h-[85px]">
         <div>
           <img className="w-24 h-24 ml-5" src={logo} alt="logo" />
@@ -68,23 +121,19 @@ const PatientNavigation = () => {
         <div>
           <Segmented<string>
             value={currentSegment}
+            size="middle"
             className="custom-segmented"
-            
+            defaultValue={currentSegment}
+            // style={{ width: '300px'}}
             onChange={handleSegmentChange}
             options={[
-              { label: "Home", value: "Home", icon: <HomeOutlined /> },
-              {
-                label: "Appointment",
-                value: "Appointment",
-                icon: <CalendarOutlined />,
-              },
-              {
-                label: "Record Book",
-                value: "Record Book",
-                icon: <BookOutlined />,
-              },
+
+              { label: props.buttonNames[0], value: props.buttonNames[0], icon: props.buttonImages[0] },
+              { label: props.buttonNames[1], value: props.buttonNames[1], icon: props.buttonImages[1] },
+              { label: props.buttonNames[2], value: props.buttonNames[2], icon: props.buttonImages[2  ] },
             ]}
           />
+
         </div>
         <div>
           <div className="flex  m-5  bg-[#E3E3E3] rounded-full">
@@ -115,7 +164,7 @@ const PatientNavigation = () => {
         </div>
       </div>
 
-    </>
+    </ConfigProvider>
   );
 };
 
