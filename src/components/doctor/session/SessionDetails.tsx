@@ -26,6 +26,19 @@ const SessionDetails = () => {
       sessionStart: "03.27 PM",
       sessionEnd: "03.41 PM",
     },
+    patientDetails:{
+      patientName:"Vishawa Sadaruwan",
+      Age:"25",
+      Sex:"Male",
+      Nationality:"Sri Lankan",
+    },
+    
+    labDetails:{
+      testType:"Blood Test",
+      testName:"Lipid Profile",
+      priorityLevel:"High",
+      labStatus:"Pending",
+    },
     symptoms: ["Chest pain", "Shortness of breath", "Fatigue"],
     diagnosis: {
       category: "Cardiology",
@@ -111,20 +124,42 @@ const SessionDetails = () => {
         <div className="bg-[#FFFFFF] rounded-[16px]  ml-1 mr-1 mt-2">
         <div>
         <h3 className="text-lg mb-3 ">Patient Details</h3>
-        </div>
-        </div>
-        
+        <div className="grid grid-cols-5 gap-y-2 gap-x-4">
         <div>
-          <h3 className="text-lg mb-3 font-semibold">Symptoms</h3>
-          <ul className="list-disc custom-disc-color">
+              <p className="text-sm text-[#868686]">Patient Name</p>
+              <p>{data.patientDetails.patientName}</p>
+         </div>
+         <div>
+              <p className="text-sm text-[#868686]">Age</p>
+              <p>{data.patientDetails.Age}</p>
+         </div>
+         <div>
+              <p className="text-sm text-[#868686]">Sex</p>
+              <p>{data.patientDetails.Sex}</p>
+         </div>
+         <div>
+              <p className="text-sm text-[#868686]">Nationality</p>
+              <p>{data.patientDetails.Nationality}</p>
+         </div>
+         <div className="flex bg-[#FF7300] rounded-[8px] align-middle p-2 text-[#FFFFFF]  w-[90%] h-10">
+                <MdOutlineRemoveRedEye className="text-lg mr-1" />
+                <p className="text-sm ">Investigate Record Book</p>
+          </div>     
+          <div className="mt-2">
+          <Divider/>
+          <h3 className="text-lg mb-3 ">Symptoms</h3>
+          <ul className="list-disc custom-disc-color ml-5">
             {data.symptoms.map((symptom, index) => (
               <li key={index}>{symptom}</li>
             ))}
           </ul>
         </div>
-        <Divider />
+        </div> 
+        </div>
+        </div>
+       <Divider />
         <div>
-          <h3 className="text-lg mb-3 font-semibold">Diagnosis</h3>
+          <h3 className="text-lg mb-3">Diagnosis</h3>
           <p className="text-sm text-[#868686]">Diagnosis Category</p>
           <p className="py-1 px-4 bg-[#DCDCDC] rounded-[8px] max-w-fit">
             {data.diagnosis.category}
@@ -134,7 +169,7 @@ const SessionDetails = () => {
         </div>
         <Divider />
         <div>
-          <h3 className="text-lg mb-3 font-semibold">Treatments</h3>
+          <h3 className="text-lg mb-3">Treatments</h3>
           <p className="text-sm text-[#868686]">Medications</p>
           <ul className="list-disc custom-disc-color">
             {data.treatments.medications.map((medication, index) => (
@@ -150,12 +185,41 @@ const SessionDetails = () => {
         </div>
         <Divider />
         <div>
-          <h3 className="text-lg mb-3 font-semibold">Special Note</h3>
+          <h3 className="text-lg mb-3 ">Special Note</h3>
           <p>{data.specialNote}</p>
         </div>
-      </div>
-    </div>
     
+      <Divider/>
+      <div className="mt-2">
+        <h3 className="text-lg mb-3 ">Lab Report Details</h3>
+        <div className="grid grid-cols-5 gap-y-2 gap-x-4">
+        <div>
+              <p className="text-sm text-[#868686]">Test Type</p>
+              <p>{data.labDetails.testType}</p>
+         </div>
+         <div>
+              <p className="text-sm text-[#868686]">Test Name</p>
+              <p>{data.labDetails.testName}</p>
+         </div>
+         <div>
+              <p className="text-sm text-[#868686]">Priority Level</p>
+              <p>{data.labDetails.priorityLevel}</p>
+         </div>
+         <div>
+              <p className="text-sm text-[#868686]">Status</p>
+              <p>{data.labDetails.labStatus}</p>
+         </div>
+         <div className="flex bg-[#FF7300] rounded-[8px] align-middle p-3 text-[#FFFFFF]  w-[80%] h-10">
+                <MdOutlineRemoveRedEye className="text-lg mr-1" />
+                <p className="text-sm ">View the report</p>
+          </div>     
+          
+
+    </div>
+    </div>
+   
+    </div>
+    </div>
   );
 };
     
