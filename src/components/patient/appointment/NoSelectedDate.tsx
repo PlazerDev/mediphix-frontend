@@ -1,5 +1,6 @@
 import image from "../../../assets/images/patient/appoinment/DDNotSelectDate.png";
-const DDNotSelectDate = () => {
+
+const NoSelectedDate = () => {
   return (
     <>
       <div className="mt-8 flex flex-col items-center">
@@ -18,4 +19,4 @@ const DDNotSelectDate = () => {
   );
 };
 
-export default DDNotSelectDate;
+export default NoSelectedDate;

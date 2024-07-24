@@ -1,6 +1,11 @@
 import image from "./../../../assets/images/patient/home/queue_details.png";
 
-const QueueDetails = () => {
+interface QueueDetailsProps {
+  currentNo: number;
+  yourNo: number;
+  hallReference: string;
+}
+const QueueDetails = ({currentNo, yourNo, hallReference}: QueueDetailsProps) => {
   return (
     <>
       <div className="flex h-full justify-center items-center">
@@ -24,17 +29,17 @@ const QueueDetails = () => {
             </div>
             <div className="">
               <p className="text-sm text-[#FFFFFF] bg-[#363636] h-8 w-8 p-1 text-center rounded-lg">
-                03
+                {currentNo}
               </p>
             </div>
             <div>
               <p className="text-sm ml-5 text-[#FFFFFF] bg-[#FF7300] h-8 w-8 p-1 text-center rounded-lg">
-                07
+                {yourNo}
               </p>
             </div>
             <div>
               <p className="text-sm text-[#FFFFFF] bg-[#363636] h-8 w-20 p-1 text-center rounded-lg">
-                HALL-A
+                {hallReference}
               </p>
             </div>
           </div>

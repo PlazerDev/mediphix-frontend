@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import { ConfigProvider, Steps } from 'antd';
@@ -12,12 +13,21 @@ import DoctorDetailsForm from '../doctor/DoctorDetailsForm';
 import EmailandDocumetsFrom from '../EmailandDocumetsFrom';
 
 import MedicalCenterDetailsForm from '../medical-officials/MedicalCenterDetailsForm';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 
 
 const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: string }> = (props) => {
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null); //this is handle axios erros
+    const [errors, setErrors] = useState({}); //this is for form validation erros
     const [currentStep, setCurrentStep] = useState(1);
-    const initialFormData = {
+    const navigate = useNavigate();
+    let currentData: any;
+    const validationErrors: any = {};
+    const patientData = {
         fname: '',
         lname: '',
         mobile: '',
@@ -25,23 +35,49 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
         email: '',
         nationality: '',
         nic: '',
-        address: '',
+        address: ''
+    };
+    const doctorData = {
         name: '',
         slmc: '',
+        nic: '',
         education: '',
+        mobile: '',
         specialization: '',
+        email: '',
         password: '',
+        confirmpass: '',
         idfront: '',
         idback: '',
-        district: '',
-        licenefront: '',
-        liceneback: '',
     };
-    const [formData, setFormData] = useState({ initialFormData });
+
+    const otherData={
+        name:'',
+        address:'',
+        district:'',
+        mobile:'',
+        email:'',
+        password: '',
+        confirmpass: '',
+        idfront: '',
+        idback: '',
+    }
+    if (props.role == 'patient') {
+
+        currentData = patientData;
+    }
+    else if (props.role == 'doctor') {
+        currentData = doctorData;
+    }
+    else if(props.role == 'laboratary' || props.role == 'medicalcenter'){
+        currentData=otherData;
+    }
+
+    const [formData, setFormData] = useState(currentData);
 
 
     const addMobile = (e) => {
-        setFormData((prevData) => ({ ...prevData, mobile: e.target.value }));
+        setFormData((prevData: any) => ({ ...prevData, mobile: e.target.value }));
     }
 
 
@@ -50,42 +86,157 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
         if (currentStep > 1) {
             setCurrentStep(currentStep - 1);
         }
+        else {
+            navigate('/signup/medicalofficials')
+        }
     };
 
-    const handleNextClick = () => {
+    const checkFormValidations = (role: any) => {
+
+        if (role === 'patient') {
+
+            if (currentStep == 1) {
+                if (!formData.fname.trim()) {
+                    validationErrors.fname = "First Name is Requred";
+                }
+                if (!formData.lname.trim()) {
+                    validationErrors.lname = "Last Name is Requred";
+                }
+                if (!formData.dob.trim()) {
+                    validationErrors.dob = "Date of Birth is Requred";
+                }
+                if (! /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(formData.email)) {
+                    validationErrors.dob = "Email is invalid";
+                }
+            }
+
+            else if (currentStep == 2) {
+                if (!formData.mobile.trim()) {
+                    validationErrors.mobile = "Mobile Number is Requred";
+                }
+                else if(formData.mobile.length !== 9){
+                    validationErrors.mobile = "Invalid Fromat";
+                }
+            }
+
+        }
+
+        else if (role === 'doctor') {
+            if (currentStep == 1) {
+                if (!formData.name.trim()) {
+                    validationErrors.name = "Name is Requred";
+                }
+                if (!formData.slmc.trim()) {
+                    validationErrors.slmc = "SLMC is Requred";
+                }
+                if (!formData.nic.trim()) {
+                    validationErrors.nic = "NIC is Requred";
+                }
+                if (!formData.education.trim()) {
+                    validationErrors.education = "Education is Requred";
+                }
+                if (!formData.mobile.trim()) {
+                    validationErrors.mobile = "Mobile is Requred";
+                }
+                if (!formData.specialization.trim()) {
+                    validationErrors.specialization = "Specialization is Requred";
+                }
+
+            }
+            else if (currentStep == 2) {
+                if (! /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(formData.email)) {
+                    validationErrors.dob = "Email is invalid";
+                } else if (!formData.email.trim()) {
+                    validationErrors.email = "Email is Requred";
+                }
+
+                if (!formData.password.trim()) {
+                    validationErrors.password = "Password is Requred";
+                } else if (formData.password.length < 7) {
+                    validationErrors.password = "Password Should be at least 8 Charatcetrs"
+                }
+
+                if (formData.password !== formData.confirmpass) {
+                    validationErrors.password = "Password Not match"
+                }
+
+
+            }
+        }
+    };
+
+
+
+    const handleNextClick = async () => {
+
+        // checkFormValidations(props.role);
+        // if (Object.keys(validationErrors).length > 0) {
+        //     setErrors(validationErrors);
+        //     return;
+        // }
+
 
         if (currentStep < 3) {
             setCurrentStep(currentStep + 1);
 
-            setFormData((prevData) => ({ ...prevData, ...formData }))
+            // Update the formData state with the current formData values
+            setFormData((prevData: any) => ({ ...prevData, ...formData }));
+        } else if (currentStep === 3) {
+            if (props.role === 'patient') {
+                setLoading(true);
+                setError(null);
+                try {
 
+                    // console.log(JSON.stringify(formData))
+
+                    // Make the POST request to the API endpoint for patient signup
+                    const response=await axios.post('http://localhost:9090/signup', formData, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                    // navigate('/signup/registrationcomplete');
+                    // console.log(response);
+                    response.status==200 ? navigate('/signup/registrationcomplete') :console.error('Error in patientSignup:', error);
+                    
+                    
+                    // Handle success (e.g., navigate to a success page or show a success message)
+                } catch (error) {
+                    console.error('Error signing up patient request:', error);
+                    setError('Error signing up patient. Please try again.' as any);
+                } finally {
+                    setLoading(false);
+                }
+            }
         }
     };
 
-    const handleChange = (e:any) => {
+
+
+    const handleChange = (e: any) => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({
+        setFormData((prevData: any) => ({
             ...prevData,
             [name]: value,
         }));
     };
 
-    const handleSpecializationChange = (value:any) => {
-        setFormData((prevData) => ({
+    const handleSpecializationChange = (value: any) => {
+        setFormData((prevData: any) => ({
             ...prevData,
             specialization: value,
         }));
     };
 
-    const handleUploads=(e) => {
-        const {name , value}=e.target;
+    const handleUploads = (e) => {
+        const { name, value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
 
     }
-   
+
 
     const handleClick = () => {
 
@@ -98,9 +249,9 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
             const verificationData: string[] = ['fname', 'lname', 'mobile', 'dob', 'email', 'nationality', 'nic', 'address']
             switch (currentStep) {
                 case 1:
-                    return <UserDetailsForm formData={formData} handleChange={handleChange} handleClick={handleClick()} />;
+                    return <UserDetailsForm formData={formData} handleChange={handleChange} handleClick={handleClick()} validationErrors={errors} />;
                 case 2:
-                    return <MobileNumberForm formData={formData} handleChange={addMobile} handleClick={handleClick} />;
+                    return <MobileNumberForm formData={formData} handleChange={addMobile} handleClick={handleClick} validationErrors={errors} />;
                 case 3:
                     return <Verification formData={formData} role='patient' handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} />;
                 default:
@@ -121,7 +272,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                     return null;
             }
         }
-        else if (props.role == "medicalcenter") {
+        else if (props.role === "medicalcenter") {
             const verificationTitles: string[] = ['Name', 'Email', 'Mobile', 'District', 'Address']
             const verificationData: string[] = ['name', 'email', 'mobile', 'district', 'address']
             switch (currentStep) {
@@ -135,7 +286,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                     return null;
             }
         }
-        else if (props.role == "lab") {
+        else if (props.role == "laboratary") {
             const verificationTitles: string[] = ['Name', 'Email', 'Mobile', 'District', 'Address']
             const verificationData: string[] = ['name', 'email', 'mobile', 'district', 'address']
             switch (currentStep) {
@@ -226,7 +377,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
 
 
                     <FormButtonSet
-
+                        backDisplay={false}
                         nxt={nxt()}
                         onBackClick={handleBackClick}
                         onNextClick={handleNextClick}
