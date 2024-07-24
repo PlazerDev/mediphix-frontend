@@ -1,12 +1,10 @@
 import Footer from "./../../Footer";
-import PatientNavigation from "../navigation/PatientNavigation";
 import BookingSuccessful from "./../../../assets/images/patient/appoinment/BookingSuccessful.png";
 import { Link } from "react-router-dom";
 
 const AppointmentSuccessful = () => {
   return (
     <>
-      <PatientNavigation />
       <div className="mt-2 ml-4">
         <p className="font-Roboto font-[700] text-xl text-[#151515]">
           Booking Successful
