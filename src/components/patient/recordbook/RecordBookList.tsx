@@ -1,4 +1,3 @@
-import PatientNavigation from "../navigation/PatientNavigation";
 import RecordBookListTable from "./RecordBookListTable";
 import Footer from "../../Footer";
 // import { useEffect, useState } from "react";
@@ -120,7 +119,6 @@ const RecordBookList = () => {
 
   return (
     <>
-      <PatientNavigation />
 
       <div className="m-6">
         <p className="text-xl font-bold">Record Book</p>

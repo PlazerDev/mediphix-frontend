@@ -1,5 +1,4 @@
 import Footer from "../../Footer";
-import PatientNavigation from "../navigation/PatientNavigation";
 import { useLocation } from "react-router-dom";
 import DoctorDetails from "./DoctorDetails";
 import CenterDetails from "./CenterDetails";
@@ -69,7 +68,6 @@ const DetailsBeforeAppointment = () => {
 
   return (
     <>
-      <PatientNavigation />
       <div>
         <p className="text-xl font-bold ml-[1%] mt-4">
           Create an Appointment

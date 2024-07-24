@@ -1,7 +1,6 @@
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import Footer from "./../../Footer";
 import { Breadcrumb } from "antd";
-import PatientNavigation from "../navigation/PatientNavigation";
 import { useState } from "react";
 import { LuAlertTriangle } from "react-icons/lu";
 const AppointmentDetails = () => {
