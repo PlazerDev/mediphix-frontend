@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DetailCard from "./DetailCard";
-import PatientNavigation from "../navigation/PatientNavigation";
 import { Breadcrumb } from "antd";
 const { RangePicker } = DatePicker;
 import { DatePicker, Space } from "antd";
@@ -165,7 +164,7 @@ const CreateAppointment = () => {
   ]);
 
   const handleItemClick = (list: Doctor | Center) => {
-    navigate("/patient/appoinment/detailsbeforeappointment", {
+    navigate("/patient/appointment/details", {
       state: { detailType, list },
     });
   };
@@ -178,7 +177,6 @@ const CreateAppointment = () => {
 
   return (
     <>
-      <PatientNavigation />
       <div>
         <p className="text-xl font-bold ml-[1%] mt-[1%]">
           Create an Appointment

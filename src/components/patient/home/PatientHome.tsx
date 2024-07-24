@@ -1,4 +1,3 @@
-import Navigation from "./../navigation/PatientNavigation";
 import ProfileOverview from "./ProfileOverview";
 import UpcomingAppointment from "./UpcomingAppointment ";
 import Footer from "./../../Footer";
@@ -76,7 +75,6 @@ const PatientHome = () => {
   return (
     <>
       <div className="h-screen flex flex-col">
-        <Navigation />
         <div className={`h-screen flex flex-col ${loaded ? "fade-in" : ""}`}>
           <div className="mt-2 ml-4">
             <p className="  text-xl font-bold">Good Evening, Vishwa</p>
