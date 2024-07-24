@@ -60,7 +60,7 @@ const PatientNavigation = (props: NavigationProps) => {
           navigate('/patient/home');
           break;
         case 'Appointment':
-          setCurrentSegment('Appointment');
+          setCurrentSegment('Appointment');           /* these routes must be same as actual components routes*/
           navigate('/patient/appointment');
           break;
         case 'Record Book':
@@ -74,14 +74,17 @@ const PatientNavigation = (props: NavigationProps) => {
     }
     else if (props.role === "doctor") {
       switch (value) {
-        case 'Home':
-          navigate('/doctor/home');
+        case 'Home':                                   
+          navigate('/doctor/home');                  /* these routes must be same as actual components routes*/
+          setCurrentSegment('Home');
           break;
         case 'Sessions':
           navigate('/doctor/sessions');
+          setCurrentSegment('Sessions');
           break;
         case 'Medical Centers':
           navigate('/doctor/medicalcenters');
+          setCurrentSegment('Medical Centers');
           break;
         
       }
