@@ -1,7 +1,7 @@
 import {useAuthContext} from "@asgardeo/auth-react";
-import PatientHome from "./patient/home/PatientHome.tsx";
+// import PatientHome from "./patient/home/PatientHome.tsx";
 import CustomButton from "./patient/CustomButton.tsx";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 
 
 function Home() {
@@ -10,7 +10,7 @@ function Home() {
         !state.isAuthenticated ?
             <GuestHomePage/>
             :
-            <PatientHome/>
+            <Navigate to={"patient/home"}/>
 
     );
 }
