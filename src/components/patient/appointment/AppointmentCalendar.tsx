@@ -127,7 +127,7 @@ const AppointmentCalendar = ({
     setSelectedDate(date);
   };
 
-  const details = detailType === "doctor" ? doctorDetails : medicalCenterData;
+  const details = detailType === "center" ? doctorDetails : medicalCenterData;
 
   const appointmentsFound =
     selectedDate && bookedDates.some((date) => date.isSame(selectedDate, "day"))
