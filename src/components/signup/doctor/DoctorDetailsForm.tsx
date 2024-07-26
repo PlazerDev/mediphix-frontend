@@ -1,7 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { SelectProps } from 'antd';
 import { Select } from 'antd';
 
-function DoctorDetailsForm(props) {
+interface FormData {
+    name: string;
+    slmc: string;
+    nic: string;
+    education: string;
+    mobile: string;
+    specialization: any ;
+}
+
+
+interface EmailandDocumetsFromProps {
+    formData: FormData;
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    handleSelectChange: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    validationErrors: { [key: string]: string };
+}
+
+function DoctorDetailsForm(props:EmailandDocumetsFromProps) {
 
 
     const options: SelectProps['options'] = [];
@@ -26,6 +45,7 @@ function DoctorDetailsForm(props) {
                 <div className='text-left w-[100%] mt-5 flex flex-row flex-wrap gap-x-[10%] gap-y-4'>
                     <div className='w-[100%] mb-0'>
                         <p className='ml-2'>Name with Initials: <span className='text-red-600'>*</span></p>
+                        <p className="ml-2 text-xs text-red-500 w-full italic" >{props.validationErrors.name}</p>
                         <input
                             type="text"
                             name="name"
@@ -37,6 +57,7 @@ function DoctorDetailsForm(props) {
                     </div>
                     <div className='w-[45%] mb-0'>
                         <p className='ml-2'>SLMC Registration Number: <span className='text-red-600'>*</span></p>
+                        <p className="ml-2 text-xs text-red-500 w-full italic" >{props.validationErrors.slmc}</p>
                         <input
                             type="text"
                             name="slmc"
@@ -48,6 +69,7 @@ function DoctorDetailsForm(props) {
                     </div>
                     <div className='w-[45%] mb-0'>
                         <p className='ml-2'>NIC: <span className='text-red-600'>*</span></p>
+                        <p className="ml-2 text-xs text-red-500 w-full italic" >{props.validationErrors.nic}</p>
                         <input
                             type="text"
                             name="nic"
@@ -60,6 +82,7 @@ function DoctorDetailsForm(props) {
 
                     <div className='w-[45%] mb-0'>
                         <p className='ml-2'>Education : <span className='text-red-600'>*</span> </p>
+                        <p className="ml-2 text-xs text-red-500 w-full italic" >{props.validationErrors.education}</p>
                         <input
                             type="text"
                             name="education"
@@ -72,6 +95,7 @@ function DoctorDetailsForm(props) {
 
                     <div className='w-[45%] mb-0'>
                         <p className='ml-2'>Mobile Number : <span className='text-red-600'>*</span> </p>
+                        <p className="ml-2 text-xs text-red-500 w-full italic" >{props.validationErrors.mobile}</p>
                         <input
                             type="text"
                             name="mobile"
@@ -82,12 +106,14 @@ function DoctorDetailsForm(props) {
                         />
                     </div>
                     <div className='w-[100%] mb-0'>
-                        <p className='ml-2'>Specialization * : <span className='text-red-600'>*</span> </p>
+                        <p className='ml-2'>Specialization : <span className='text-red-600'>*</span> </p>
+                        <p className="ml-2 text-xs text-red-500 w-full italic" >{props.validationErrors.specialization}</p>
                         <Select
                             mode="multiple"
-                            style={{ width: '100%', height:"48px", fontSize:'17px', color:'black',outline:"var(--text-c)" }}
+                            style={{ width: '100%', height:"48px", fontSize:'17px', color:'black', }}
                             placeholder="Please select Specialization"
                             // defaultValue={['a10', 'c12']}
+                            value={props.formData.specialization}
                             onChange={props.handleSelectChange}
                             options={options}
                         />
