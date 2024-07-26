@@ -1,7 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { SelectProps } from 'antd';
 import { Select } from 'antd';
 
-function DoctorDetailsForm(props) {
+interface FormData {
+    name: string;
+    slmc: string;
+    nic: string;
+    education: string;
+    mobile: string;
+    specialization: any ;
+}
+
+
+interface EmailandDocumetsFromProps {
+    formData: FormData;
+    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    handleSelectChange: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    validationErrors: { [key: string]: string };
+}
+
+function DoctorDetailsForm(props:EmailandDocumetsFromProps) {
 
 
     const options: SelectProps['options'] = [];
