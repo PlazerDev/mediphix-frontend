@@ -16,13 +16,7 @@ const convertFileToBase64 = (file: File): Promise<string> => {
 };
 
 interface EmailandDocumetsFromProps {
-    formData: {
-        email: string,
-        password: string,
-        confirmpass: string,
-        idback: string,
-        idfront: string,
-    },
+    formData: any,
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
     handleClick: (e: React.MouseEvent<HTMLButtonElement>) => void,
     validationErrors: any;

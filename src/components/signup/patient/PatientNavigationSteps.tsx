@@ -69,7 +69,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
     else if (props.role === 'doctor') {
         currentData = doctorData;
     }
-    else if (props.role === 'laboratary' || props.role === 'medicalcenter') {
+    else if (props.role === 'laboratary' || props.role === 'medical center') {
         currentData = otherData;
     }
 
@@ -159,7 +159,101 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 if (formData.password !== formData.confirmpass) {
                     validationErrors.password = "Password Not match"
                 }
+                if(!formData.idfront){
+                    validationErrors.idfront = "Front Side of ID is Requred"
+                }
+                if(!formData.idback){
+                    validationErrors.idback = "Back Side of ID is Requred"
+                }
 
+
+            }
+        }
+
+        else if (role === 'medical center') {
+            if (currentStep == 1) {
+                if (!formData.name.trim()) {
+                    validationErrors.name = "Medical Center Name is Requred";
+                }
+                if (!formData.address.trim()) {
+                    validationErrors.address = "Address is Requred";
+                }
+                if (!formData.district.trim()) {
+                    validationErrors.district = "District is Requred";
+                }
+                
+                if (!formData.mobile.trim()) {
+                    validationErrors.mobile = "Mobile is Requred";
+                }
+                
+
+            }
+            else if (currentStep == 2) {
+                if (! /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(formData.email)) {
+                    validationErrors.dob = "Email is invalid";
+                } else if (!formData.email.trim()) {
+                    validationErrors.email = "Email is Requred";
+                }
+
+                if (!formData.password.trim()) {
+                    validationErrors.password = "Password is Requred";
+                } else if (formData.password.length < 7) {
+                    validationErrors.password = "Password Should be at least 8 Charatcetrs"
+                }
+
+                if (formData.password !== formData.confirmpass) {
+                    validationErrors.password = "Password Not match"
+                }
+                if(!formData.idfront){
+                    validationErrors.idfront = "Front Side of ID is Requred"
+                }
+                if(!formData.idback){
+                    validationErrors.idback = "Back Side of ID is Requred"
+                }
+
+            }
+        }
+
+        else if (role === 'laboratary') {
+            if (currentStep == 1) {
+                if (!formData.name.trim()) {
+                    validationErrors.name = "Laboratary Name is Requred";
+                }
+                if (!formData.address.trim()) {
+                    validationErrors.address = "Address is Requred";
+                }
+                if (!formData.district.trim()) {
+                    validationErrors.district = "District is Requred";
+                }
+                
+                if (!formData.mobile.trim()) {
+                    validationErrors.mobile = "Mobile is Requred";
+                }
+                
+
+            }
+            else if (currentStep == 2) {
+                if (! /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(formData.email)) {
+                    validationErrors.dob = "Email is invalid";
+                } else if (!formData.email.trim()) {
+                    validationErrors.email = "Email is Requred";
+                }
+
+                if (!formData.password.trim()) {
+                    validationErrors.password = "Password is Requred";
+                } else if (formData.password.length < 7) {
+                    validationErrors.password = "Password Should be at least 8 Charatcetrs"
+                }
+
+                if (formData.password !== formData.confirmpass) {
+                    validationErrors.password = "Password Not match"
+                }
+                if(!formData.idfront){
+                    validationErrors.idfront = "Front Side of ID is Requred"
+                }
+                if(!formData.idback){
+                    validationErrors.idback = "Back Side of ID is Requred"
+                }
 
             }
         }
@@ -169,15 +263,16 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
 
     const handleNextClick = async () => {
 
-        checkFormValidations(props.role);
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            return;
-        }
+        // checkFormValidations(props.role);
+        // if (Object.keys(validationErrors).length > 0) {
+        //     setErrors(validationErrors);
+        //     return;
+        // }
 
 
         if (currentStep < 3) {
             setCurrentStep(currentStep + 1);
+            console.log(formData);
 
             // Update the formData state with the current formData values
             setFormData((prevData: any) => ({ ...prevData, ...formData }));
@@ -240,6 +335,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 }
 
             }
+
             else if (props.role === 'medical center') {
                 console.log(formData);
                 setLoading(true);
@@ -256,7 +352,37 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                     // navigate('/signup/registrationcomplete');
                     console.log('debug response');
                     console.log(response);
-                    response.status == 200 ? navigate('/signup/registrationcomplete') : console.error('Error in doctorSignup:', error);
+                    response.status == 200 ? navigate('/signup/registrationcomplete') : console.error('Error in medicalCenterSignup:', error);
+
+
+                    // Handle success (e.g., navigate to a success page or show a success message)
+                } catch (error) {
+                    console.log(error);
+
+                    console.log((error as any).response.data.message);
+                    // Handle the error as u need from here
+                } finally {
+                    setLoading(false);
+                }
+
+            }
+            else if (props.role === 'laboratary') {
+                console.log(formData);
+                setLoading(true);
+                setError(null);
+                try {
+
+
+                    // Make the POST request to the API endpoint for patient signup
+                    const response = await axios.post('http://localhost:9090/signup/laboratary', formData, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                    // navigate('/signup/registrationcomplete');
+                    console.log('debug response');
+                    console.log(response);
+                    response.status == 200 ? navigate('/signup/registrationcomplete') : console.error('Error in laboratarySignup:', error);
 
 
                     // Handle success (e.g., navigate to a success page or show a success message)
@@ -327,21 +453,21 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 case 1:
                     return <DoctorDetailsForm formData={formData} handleChange={handleChange} handleClick={handleClick} handleSelectChange={handleSpecializationChange} validationErrors={errors} />;
                 case 2:
-                    return <EmailandDocumetsFrom formData={formData} handleChange={handleChange} handleClick={handleClick} validationErrors={errors} />;
+                    return <EmailandDocumetsFrom formData={formData} handleChange={handleChange} handleClick={handleClick} validationErrors={errors}  />;
                 case 3:
                     return <Verification formData={formData} handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} />;
                 default:
                     return null;
             }
         }
-        else if (props.role === "medicalcenter") {
+        else if (props.role === "medical center") {
             const verificationTitles: string[] = ['Name', 'Email', 'Mobile', 'District', 'Address']
             const verificationData: string[] = ['name', 'email', 'mobile', 'district', 'address']
             switch (currentStep) {
                 case 1:
-                    return <MedicalCenterDetailsForm formData={formData} handleChange={handleChange} handleClick={handleClick} firstinpunName={'Medical Center Name'} />;
+                    return <MedicalCenterDetailsForm formData={formData} handleChange={handleChange} handleClick={handleClick} validationErrors={errors} titleName={'Medical Center Name'} />;
                 case 2:
-                    return <EmailandDocumetsFrom formData={formData} handleChange={addMobile} handleClick={handleClick} />;
+                    return <EmailandDocumetsFrom formData={formData} handleChange={handleChange} handleClick={handleClick} validationErrors={errors} />;
                 case 3:
                     return <Verification formData={formData} handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} />;
                 default:
@@ -353,9 +479,9 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
             const verificationData: string[] = ['name', 'email', 'mobile', 'district', 'address']
             switch (currentStep) {
                 case 1:
-                    return <MedicalCenterDetailsForm formData={formData} handleChange={handleChange} handleClick={handleClick} firstinpunName={'Laboratary Name'} />;
+                    return <MedicalCenterDetailsForm formData={formData} handleChange={handleChange} handleClick={handleClick} validationErrors={errors} titleName={'Laboratary Name'} />;
                 case 2:
-                    return <EmailandDocumetsFrom formData={formData} handleChange={addMobile} handleClick={handleClick} />;
+                    return <EmailandDocumetsFrom formData={formData} handleChange={handleChange} handleClick={handleClick} validationErrors={errors} />;
                 case 3:
                     return <Verification formData={formData} handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} />;
                 default:

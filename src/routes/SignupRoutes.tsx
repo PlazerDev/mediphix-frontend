@@ -46,7 +46,7 @@ function SignupRoutes() {
                         <SignupBg
                             titlename="Email & Documents"
                             stepnumber={1}
-                            role="medicalcenter"
+                            role="medical center"
                         />
                     }
                 />
