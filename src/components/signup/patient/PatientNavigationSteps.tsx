@@ -43,34 +43,34 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
         nic: '',
         education: '',
         mobile: '',
-        specialization: '',
+        specialization: [],
         email: '',
         password: '',
         confirmpass: '',
         idfront: '',
-        idback: '',
+        idback: ''
     };
 
-    const otherData={
-        name:'',
-        address:'',
-        district:'',
-        mobile:'',
-        email:'',
+    const otherData = {
+        name: '',
+        address: '',
+        district: '',
+        mobile: '',
+        email: '',
         password: '',
         confirmpass: '',
         idfront: '',
-        idback: '',
+        idback: ''
     }
-    if (props.role == 'patient') {
+    if (props.role === 'patient') {
 
         currentData = patientData;
     }
-    else if (props.role == 'doctor') {
+    else if (props.role === 'doctor') {
         currentData = doctorData;
     }
-    else if(props.role == 'laboratary' || props.role == 'medicalcenter'){
-        currentData=otherData;
+    else if (props.role === 'laboratary' || props.role === 'medicalcenter') {
+        currentData = otherData;
     }
 
     const [formData, setFormData] = useState(currentData);
@@ -114,7 +114,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 if (!formData.mobile.trim()) {
                     validationErrors.mobile = "Mobile Number is Requred";
                 }
-                else if(formData.mobile.length !== 9){
+                else if (formData.mobile.length !== 9) {
                     validationErrors.mobile = "Invalid Fromat";
                 }
             }
@@ -138,7 +138,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 if (!formData.mobile.trim()) {
                     validationErrors.mobile = "Mobile is Requred";
                 }
-                if (!formData.specialization.trim()) {
+                if (!formData.specialization.length) {
                     validationErrors.specialization = "Specialization is Requred";
                 }
 
@@ -169,11 +169,11 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
 
     const handleNextClick = async () => {
 
-        // checkFormValidations(props.role);
-        // if (Object.keys(validationErrors).length > 0) {
-        //     setErrors(validationErrors);
-        //     return;
-        // }
+        checkFormValidations(props.role);
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
 
 
         if (currentStep < 3) {
@@ -187,26 +187,88 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 setError(null);
                 try {
 
-                    // console.log(JSON.stringify(formData))
 
                     // Make the POST request to the API endpoint for patient signup
-                    const response=await axios.post('http://localhost:9090/signup', formData, {
+                    const response = await axios.post('http://localhost:9090/signup/patient', formData, {
                         headers: {
                             'Content-Type': 'application/json',
                         },
                     });
                     // navigate('/signup/registrationcomplete');
-                    // console.log(response);
-                    response.status==200 ? navigate('/signup/registrationcomplete') :console.error('Error in patientSignup:', error);
-                    
-                    
+                    // console.log('debug response');
+                    console.log(response);
+                    response.status == 200 ? navigate('/signup/registrationcomplete') : console.error('Error in patientSignup:', error);
+
+
                     // Handle success (e.g., navigate to a success page or show a success message)
                 } catch (error) {
-                    console.error('Error signing up patient request:', error);
-                    setError('Error signing up patient. Please try again.' as any);
+                    console.log(error);
+                    console.log((error as any).response.data.message);
+                    // Handle the error as u need from here
                 } finally {
                     setLoading(false);
                 }
+            }
+
+            else if (props.role === 'doctor') {
+                console.log(formData);
+                setLoading(true);
+                setError(null);
+                try {
+
+
+                    // Make the POST request to the API endpoint for patient signup
+                    const response = await axios.post('http://localhost:9090/signup/doctor', formData, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                    // navigate('/signup/registrationcomplete');
+                    console.log('debug response');
+                    console.log(response);
+                    response.status == 200 ? navigate('/signup/registrationcomplete') : console.error('Error in doctorSignup:', error);
+
+
+                    // Handle success (e.g., navigate to a success page or show a success message)
+                } catch (error) {
+                    console.log(error);
+
+                    console.log((error as any).response.data.message);
+                    // Handle the error as u need from here
+                } finally {
+                    setLoading(false);
+                }
+
+            }
+            else if (props.role === 'medical center') {
+                console.log(formData);
+                setLoading(true);
+                setError(null);
+                try {
+
+
+                    // Make the POST request to the API endpoint for patient signup
+                    const response = await axios.post('http://localhost:9090/signup/medicalcenter', formData, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                    // navigate('/signup/registrationcomplete');
+                    console.log('debug response');
+                    console.log(response);
+                    response.status == 200 ? navigate('/signup/registrationcomplete') : console.error('Error in doctorSignup:', error);
+
+
+                    // Handle success (e.g., navigate to a success page or show a success message)
+                } catch (error) {
+                    console.log(error);
+
+                    console.log((error as any).response.data.message);
+                    // Handle the error as u need from here
+                } finally {
+                    setLoading(false);
+                }
+
             }
         }
     };
@@ -244,7 +306,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
 
     // meken thami component handle wenne
     const renderComponent = () => {
-        if (props.role == "patient") {
+        if (props.role === "patient") {
             const verificationTitles: string[] = ['First Name', 'Last Name', 'Mobile Number', 'Date of Birth', 'Email', 'Nationality', 'NIC', 'Address'];
             const verificationData: string[] = ['fname', 'lname', 'mobile', 'dob', 'email', 'nationality', 'nic', 'address']
             switch (currentStep) {
@@ -258,14 +320,14 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                     return null;
             }
         }
-        else if (props.role == "doctor") {
+        else if (props.role === "doctor") {
             const verificationTitles: string[] = ['Name with Initials', 'SLMC Reg No', 'Education', 'Mobile Number', 'Email', 'NIC', 'Specialization']
             const verificationData: string[] = ['name', 'slmc', 'education', 'mobile', 'email', 'nic', 'specialization']
             switch (currentStep) {
                 case 1:
-                    return <DoctorDetailsForm formData={formData} handleChange={handleChange} handleClick={handleClick} handleSelectChange={handleSpecializationChange} />;
+                    return <DoctorDetailsForm formData={formData} handleChange={handleChange} handleClick={handleClick} handleSelectChange={handleSpecializationChange} validationErrors={errors} />;
                 case 2:
-                    return <EmailandDocumetsFrom formData={formData} handleChange={handleChange} handleClick={handleClick} />;
+                    return <EmailandDocumetsFrom formData={formData} handleChange={handleChange} handleClick={handleClick} validationErrors={errors} />;
                 case 3:
                     return <Verification formData={formData} handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} />;
                 default:
@@ -286,7 +348,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                     return null;
             }
         }
-        else if (props.role == "laboratary") {
+        else if (props.role === "laboratary") {
             const verificationTitles: string[] = ['Name', 'Email', 'Mobile', 'District', 'Address']
             const verificationData: string[] = ['name', 'email', 'mobile', 'district', 'address']
             switch (currentStep) {
