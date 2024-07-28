@@ -11,12 +11,13 @@ import PatientRoutes from "./routes/PatientRoutes";
 import {AuthProvider} from "@asgardeo/auth-react";
 
 
+
 function App() {
     const asgardioConfig = {
         signInRedirectURL: "http://localhost:5173",
         signOutRedirectURL: "http://localhost:5173",
-        clientID: "GK474MKclkINMWlDMaXXX0YH7lAa",
-        baseUrl: "https://api.asgardeo.io/t/mediphix",
+        clientID: import.meta.env.VITE_PATIENT_ASGARDEO_CLIENT_ID,
+        baseUrl: import.meta.env.VITE_PATIENT_ASGARDEO_BASE_URL,
         scope: ["openid", "email", "profile", "insert_appointment", "retrieve_own_patient_data"]
     };
     return (
