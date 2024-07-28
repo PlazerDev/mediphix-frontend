@@ -7,6 +7,7 @@ import { FaHandHoldingMedical } from "react-icons/fa";
 import MCSMainGreeting from "../../components/medical-center-staff/MCSMainGreeting";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Loading from "../../components/Loading";
 
 interface MCSMemeberData {
   first_name: string;
@@ -16,6 +17,7 @@ interface MCSMemeberData {
 
 function MedicalCenterStaffHomePage() {
   const [mcsMemeberData, setMCSMemberData] = useState<MCSMemeberData>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
@@ -30,47 +32,51 @@ function MedicalCenterStaffHomePage() {
       {/* Navigation Bar  */}
       <MCSNavBar />
       {/* Body */}
-      <div className="flex-grow px-8">
-        <MCSMainGreeting
-          medicalCenterName={
-            mcsMemeberData
-              ? mcsMemeberData.medical_center_name
-              : "medical center name"
-          }
-          memberName={
-            mcsMemeberData ? mcsMemeberData.first_name : "mcs member name"
-          }
-        />
-        {/* Main Body div */}
-        <div className="px-8 bg-mediphix_card_background py-8 rounded-lg">
-          <div className="flex flex-col md:flex-row items-center md:items-center md:justify-between">
-            <p className="text-xl md:text-2xl font-bold">
-              Hi{" "}
-              {mcsMemeberData ? mcsMemeberData.first_name : "mcs member name"}!
-              <br /> Manage your assigned clinic sessions here
-            </p>
-            <img
-              src={bodyImg}
-              alt="body"
-              className="w-32 my-2 md:my-0 md:w-60 object-contain"
-            />
-          </div>
-          <div className="flex flex-col items-center md:flex-row justify-center gap-4 mt-2">
-            <MCSCustomButton
-              path="/medicalCenterStaff/upcomingSessions"
-              buttonTitle="Upcoming Clinic Sessions"
-              isPrimary={false}
-              buttonIcon={FaCalendarDays}
-            />
-            <MCSCustomButton
-              path="/medicalCenterStaff/onGoingSessions"
-              buttonTitle="Ongoing Clinic Sessions"
-              isPrimary={true}
-              buttonIcon={FaHandHoldingMedical}
-            />
+      {!loading && (
+        <div className="flex-grow px-8">
+          <MCSMainGreeting
+            medicalCenterName={
+              mcsMemeberData
+                ? mcsMemeberData.medical_center_name
+                : "medical center name"
+            }
+            memberName={
+              mcsMemeberData ? mcsMemeberData.first_name : "mcs member name"
+            }
+          />
+          {/* Main Body div */}
+          <div className="px-8 bg-mediphix_card_background py-8 rounded-lg">
+            <div className="flex flex-col md:flex-row items-center md:items-center md:justify-between">
+              <p className="text-xl md:text-2xl font-bold">
+                Hi{" "}
+                {mcsMemeberData ? mcsMemeberData.first_name : "mcs member name"}
+                !
+                <br /> Manage your assigned clinic sessions here
+              </p>
+              <img
+                src={bodyImg}
+                alt="body"
+                className="w-32 my-2 md:my-0 md:w-60 object-contain"
+              />
+            </div>
+            <div className="flex flex-col items-center md:flex-row justify-center gap-4 mt-2">
+              <MCSCustomButton
+                path="/medicalCenterStaff/upcomingSessions"
+                buttonTitle="Upcoming Clinic Sessions"
+                isPrimary={false}
+                buttonIcon={FaCalendarDays}
+              />
+              <MCSCustomButton
+                path="/medicalCenterStaff/onGoingSessions"
+                buttonTitle="Ongoing Clinic Sessions"
+                isPrimary={true}
+                buttonIcon={FaHandHoldingMedical}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      )}
+      {loading && <Loading />}
       {/* Footer */}
       <Footer />
     </div>
