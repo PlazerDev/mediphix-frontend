@@ -93,9 +93,9 @@ const PatientNavigation = (props: NavigationProps) => {
 
   // // Set the current segment based on location
 
-  // const pathSegments = location.pathname.split('/').filter(Boolean);
-  // const firstTwoSegments = `/${pathSegments.slice(0, 2).join('/')}`;
-  // const currentSegment = segmentMap[firstTwoSegments];
+  const pathSegments = location.pathname.split('/').filter(Boolean);
+  const firstTwoSegments = `/${pathSegments.slice(0, 2).join('/')}`;
+  const locationSegment = segmentMap[firstTwoSegments];
   
 
 
@@ -123,7 +123,7 @@ const PatientNavigation = (props: NavigationProps) => {
         </div>
         <div>
           <Segmented<string>
-            value={currentSegment}
+            value={locationSegment}
             size="middle"
             className="custom-segmented"
             defaultValue={currentSegment}
