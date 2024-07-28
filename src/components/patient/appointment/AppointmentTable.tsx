@@ -1,6 +1,5 @@
 import { useLocation } from "react-router-dom";
 import { DatePicker, Space, Breadcrumb } from "antd";
-import PatientNavigation from "../navigation/PatientNavigation";
 const { RangePicker } = DatePicker;
 import TableComponent from "../../TableComponent";
 
@@ -48,10 +47,6 @@ const AppointmentTable = () => {
 
   return (
     <div>
-      <div>
-        <PatientNavigation />
-      </div>
-
       <div>
         <p className="text-xl font-bold ml-[1%] mt-[1%]">{title}</p>
       </div>

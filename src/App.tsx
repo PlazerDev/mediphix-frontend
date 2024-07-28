@@ -1,107 +1,57 @@
 import LoginOtp from "./components/login/patient/LoginOtp";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Home from "./components/Home";
 import MedicalLogin from "./components/login/medical-center/MedicalLogin";
-
-
-
-
 import LoginAuth from "./components/login/LoginAuth";
 
-
-import PreviousAppointmentDetails from "./components/patient/appointment/PreviousAppointmentDetails";
-
-
 import SignupRoutes from "./routes/SignupRoutes";
-
-
-
-
-
-import { FaRegAddressBook } from "react-icons/fa";
-import { MdOutlineCreateNewFolder } from "react-icons/md";
-import RecordBookList from "./components/patient/recordbook/RecordBookList";
-import AppointmentTable from "./components/patient/appointment/AppointmentTable";
-import SelectDoctor from "./components/patient/appointment/SelectDoctor";
-import MedicalCenterCard from "./components/patient/appointment/MedicalCenterCard";
-import AppointmentDetails from "./components/patient/appointment/AppointmentDetails";
-import UpComingAppointment from "./components/patient/home/UpcomingAppointment ";
-
 import MedicalCenterStaffRoutes from "./routes/MedicalCenterStaffRoutes";
 import DoctorRoutes from "./routes/DoctorRoutes";
 import PatientRoutes from "./routes/PatientRoutes";
-import { HomeOutlined, CalendarOutlined, BookOutlined } from "@ant-design/icons";
+import {AuthProvider} from "@asgardeo/auth-react";
 
-import Navigation from "./components/Navigation";
 
 
 function App() {
-  return (
-    <div>
+    const asgardioConfig = {
+        signInRedirectURL: "http://localhost:5173",
+        signOutRedirectURL: "http://localhost:5173",
+        clientID: import.meta.env.VITE_PATIENT_ASGARDEO_CLIENT_ID,
+        baseUrl: import.meta.env.VITE_PATIENT_ASGARDEO_BASE_URL,
+        scope: ["openid", "email", "profile", "insert_appointment", "retrieve_own_patient_data"]
+    };
+    return (
+        <div>
+            <AuthProvider config={asgardioConfig}>
+                <Router>
+                    <Routes>
+                        <Route path="/" element={<Home/>}/>
+                        <Route path="/Login" element={<LoginAuth/>}/>
+                        <Route path="/LoginOTP" element={<LoginOtp/>}/>
 
-      <Router>
+                        <Route path="/MedicalOfficialLogin" element={<MedicalLogin/>}/>
 
-        <Routes>
+                        {/* patient Routes  */}
+                        <Route path="/patient/*" element={<PatientRoutes/>}/>
+                        {/* doctor Rotes  */}
+                        <Route
+                            path="/doctor/*"
+                            element={<DoctorRoutes/>}
+                        />
 
+                        {/* Signup Section Routes  */}
+                        <Route path="/signup/*" element={<SignupRoutes/>}/>
 
-
-
-
-
-          <Route path="/" element={<Navigation
-          currentSegment="Home"
-            role="patient"
-            buttonNames={["Home", "Appoinmnet", "Record Book"]}
-            buttonImages={[<HomeOutlined />, <CalendarOutlined />, <BookOutlined />]} />} />
-          <Route path="/Login" element={<LoginAuth />} />
-          <Route path="/LoginOTP" element={<LoginOtp />} />
-
-          <Route path="/MedicalOfficialLogin" element={<MedicalLogin />} />
-
-          <Route
-            path="/PreviousAppoinmentsDetails"
-            element={<PreviousAppointmentDetails />}
-          />
-
-
-
-          {/* Commented this out because of props not being passed -- uncomment later */}
-          {/* <Route
-            path="/patient/home/upcommingappointment"
-            element={<UpComingAppointment />}
-          /> */}
-
-          <Route path="/SearchDoctor" element={<SelectDoctor />} />
-
-
-
-
-          {/* patient Routes  */}
-          <Route
-            path="/patient/*"
-            element={<PatientRoutes />}
-          />
-          {/* doctor Rotes  */}
-          <Route
-            path="/doctor/*"
-            element={<DoctorRoutes />}
-          />
-
-          {/* Signup Section Routes  */}
-          <Route
-            path="/signup/*"
-            element={<SignupRoutes />}
-          />
-
-          {/* Medical Center Staff Routes  */}
-          <Route
-            path="/medicalCenterStaff/*"
-            element={<MedicalCenterStaffRoutes />}
-          />
-        </Routes>
-      </Router>
-    </div>
-  );
+                        {/* Medical Center Staff Routes  */}
+                        <Route
+                            path="/medicalCenterStaff/*"
+                            element={<MedicalCenterStaffRoutes/>}
+                        />
+                    </Routes>
+                </Router>
+            </AuthProvider>
+        </div>
+    );
 }
 
-export default App;
+export default App;

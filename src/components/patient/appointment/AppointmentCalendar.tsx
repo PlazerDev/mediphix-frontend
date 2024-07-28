@@ -14,6 +14,7 @@ interface AppointmentCalendarProps {
 const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>["mode"]) => {
   console.log(value.format("YYYY-MM-DD"), mode);
 };
+
 const AppointmentCalendar = ({
   detailType,
   appointmentDates,
@@ -34,7 +35,7 @@ const AppointmentCalendar = ({
       doctorNote: "N/A",
       centerNote:
         "Please arrive at least 15 minutes before your scheduled appointment time for payment.",
-        availability: true,
+      availability: true,
     },
     {
       time: "09.00 AM - 12.00 PM",
@@ -44,7 +45,8 @@ const AppointmentCalendar = ({
       email: "info@asiri.lk",
       category: "Heart Health",
       doctorNote: "N/A",
-      centerNote: "Please arrive at least 15 minutes before your scheduled appointment time for payment.",
+      centerNote:
+        "Please arrive at least 15 minutes before your scheduled appointment time for payment.",
       availability: false,
     },
   ]);
@@ -58,7 +60,7 @@ const AppointmentCalendar = ({
       doctorNote: "N/A",
       centerNote:
         "Please arrive at least 15 minutes before your scheduled appointment time for payment.",
-        availability: true,
+      availability: true,
     },
     {
       time: "10.00 AM - 01.00 PM",
@@ -66,7 +68,8 @@ const AppointmentCalendar = ({
       degree: "MD (Medicine)",
       speciality: "Dermatology",
       doctorNote: "N/A",
-      centerNote: "Please arrive at least 15 minutes before your scheduled appointment time for payment.",
+      centerNote:
+        "Please arrive at least 15 minutes before your scheduled appointment time for payment.",
       availability: false,
     },
   ]);
@@ -76,6 +79,7 @@ const AppointmentCalendar = ({
     border: `1px solid ${token.colorBorderSecondary}`,
     borderRadius: token.borderRadiusLG,
   };
+
   const cellRender: CalendarProps<Dayjs>["cellRender"] = (current, info) => {
     const isSelected = selectedDate && current.isSame(selectedDate, "day");
     const isToday = current.isSame(dayjs(), "day");
@@ -123,6 +127,23 @@ const AppointmentCalendar = ({
     setSelectedDate(date);
   };
 
+  const details = detailType === "center" ? doctorDetails : medicalCenterData;
+
+  const appointmentsFound =
+    selectedDate && bookedDates.some((date) => date.isSame(selectedDate, "day"))
+      ? details.length
+      : 0;
+
+  const selectedDateFormatted = selectedDate
+    ? selectedDate.format("D")
+    : "";
+  const selectedDayOfWeek = selectedDate
+    ? selectedDate.format("dddd")
+    : "";
+  const selectedMonthYear = selectedDate
+    ? selectedDate.format("MMMM YYYY")
+    : "";
+
   return (
     <>
       <div className="bg-[#ffffff] rounded-[16px] m-4 p-8">
@@ -133,29 +154,34 @@ const AppointmentCalendar = ({
               fullscreen={false}
               onPanelChange={onPanelChange}
               cellRender={cellRender}
-              onSelect={(date) => setSelectedDate(date)}
+              onSelect={handleSelect}
             />
           </div>
         </div>
-        {selectedDate ? (
-          bookedDates.some((date) => date.isSame(selectedDate, "day")) ? (
-            (detailType === "doctor" ? medicalCenterData : doctorDetails).map(
-              (details, index) => (
-                <DateAppointmentDetails
-                  key={index}
-                  details={details}
-                  detailType={detailType}
-                />
-              )
-            )
-          ) : (
-            <p className="text-center m-4">
-              No appointments available for this date.
-            </p>
-          )
-        ) : (
-          <NoSelectedDate />
+        {selectedDate && appointmentsFound >= 0 && (
+          <div className="flex bg-[#363636] m-4 rounded-[8px] p-4 text-[#FFFFFF]">
+            <div className="bg-[#FF7300] p-3 rounded-[8px] text-2xl mr-4">
+              {selectedDateFormatted}
+            </div>
+            <div className="flex flex-col">
+              <p>{selectedDayOfWeek}</p>
+              <p className="text-sm">{selectedMonthYear}</p>
+            </div>
+            <div className="flex-grow flex justify-end items-center">
+              <p>{appointmentsFound} Appointments Found</p>
+            </div>
+          </div>
         )}
+        {selectedDate && bookedDates.some((date) => date.isSame(selectedDate, "day")) && (
+          details.map((detail, index) => (
+            <DateAppointmentDetails
+              key={index}
+              details={detail}
+              detailType={detailType}
+            />
+          ))
+        )}
+        {!selectedDate && <NoSelectedDate />}
       </div>
     </>
   );

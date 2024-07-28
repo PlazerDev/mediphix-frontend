@@ -1,4 +1,3 @@
-import Navigation from "./../navigation/PatientNavigation";
 import ProfileOverview from "./ProfileOverview";
 import UpcomingAppointment from "./UpcomingAppointment ";
 import Footer from "./../../Footer";
@@ -7,6 +6,7 @@ import { useState, useEffect } from "react";
 import NoAppointment from "./NoAppointment";
 import OngoingAppointment from "./OngoingAppointment";
 import NoUpcomingAppointment from "./NoUpcomingAppointment";
+import Token from "./Token";
 
 const PatientHome = () => {
   const [isOngoingAppointment, setIsOngoingAppointment] = useState(true);
@@ -75,29 +75,38 @@ const PatientHome = () => {
 
   return (
     <>
-      <div className="h-screen flex flex-col">
-        <Navigation />
-        <div className={`h-screen flex flex-col ${loaded ? "fade-in" : ""}`}>
+      <div className="flex flex-col">
+        <div className={`flex flex-col ${loaded ? "fade-in" : ""}`}>
           <div className="mt-2 ml-4">
-            <p className="  text-xl font-bold">Good Evening, Vishwa</p>
+            <p className="  text-xl font-bold">
+              Good Evening, {patientDetails.name}
+            </p>
             <p className="text-sm mb-2">We hope you're having a great day.</p>
           </div>
           <div className="flex flex-grow">
-            <div className="w-2/3  bg-[#E3E3E3] flex-grow">
-              <div className="flex h-full justify-center ml-4 p-4 bg-[#ffffff] rounded-[16px]">
+            <div className="w-2/3 flex-grow ">
+              <div className="flex justify-center ml-4 p-4 bg-[#ffffff] rounded-[16px]">
                 {isOngoingAppointment ? (
-                  <OngoingAppointment
-                    status={ongoingAppointmentStatus}
-                    appointmentDetails={appointmentDetails}
-                    queueDetails={queueDetails}
-                  />
+                  <>
+                    {" "}
+                    <div className="flex flex-col  w-full">
+                      <OngoingAppointment
+                        status={ongoingAppointmentStatus}
+                        appointmentDetails={appointmentDetails}
+                        queueDetails={queueDetails}
+                      />
+                      <div className="flex justify-center mt-1">
+                        <Token {...appointmentDetails} />
+                      </div>
+                    </div>
+                  </>
                 ) : (
                   <NoAppointment />
                 )}
               </div>
             </div>
 
-            <div className="w-1/3 flex flex-col gap-4 mx-4 flex-grow">
+            <div className="w-1/3  flex flex-col mx-4">
               {isUpcomingAppointment ? (
                 <UpcomingAppointment
                   upcomingAppointments={upcommingAppointments}

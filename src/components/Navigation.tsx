@@ -60,7 +60,7 @@ const PatientNavigation = (props: NavigationProps) => {
           navigate('/patient/home');
           break;
         case 'Appointment':
-          setCurrentSegment('Appointment');
+          setCurrentSegment('Appointment');           /* these routes must be same as actual components routes*/
           navigate('/patient/appointment');
           break;
         case 'Record Book':
@@ -74,14 +74,17 @@ const PatientNavigation = (props: NavigationProps) => {
     }
     else if (props.role === "doctor") {
       switch (value) {
-        case 'Home':
-          navigate('/doctor/home');
+        case 'Home':                                   
+          navigate('/doctor/home');                  /* these routes must be same as actual components routes*/
+          setCurrentSegment('Home');
           break;
         case 'Sessions':
           navigate('/doctor/sessions');
+          setCurrentSegment('Sessions');
           break;
         case 'Medical Centers':
           navigate('/doctor/medicalcenters');
+          setCurrentSegment('Medical Centers');
           break;
         
       }
@@ -90,9 +93,9 @@ const PatientNavigation = (props: NavigationProps) => {
 
   // // Set the current segment based on location
 
-  // const pathSegments = location.pathname.split('/').filter(Boolean);
-  // const firstTwoSegments = `/${pathSegments.slice(0, 2).join('/')}`;
-  // const currentSegment = segmentMap[firstTwoSegments];
+  const pathSegments = location.pathname.split('/').filter(Boolean);
+  const firstTwoSegments = `/${pathSegments.slice(0, 2).join('/')}`;
+  const locationSegment = segmentMap[firstTwoSegments];
   
 
 
@@ -120,7 +123,7 @@ const PatientNavigation = (props: NavigationProps) => {
         </div>
         <div>
           <Segmented<string>
-            value={currentSegment}
+            value={locationSegment}
             size="middle"
             className="custom-segmented"
             defaultValue={currentSegment}
