@@ -5,20 +5,49 @@ import MCSCustomButton from "../../components/medical-center-staff/MCSCustomButt
 import { FaCalendarDays } from "react-icons/fa6";
 import { FaHandHoldingMedical } from "react-icons/fa";
 import MCSMainGreeting from "../../components/medical-center-staff/MCSMainGreeting";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+interface MCSMemeberData {
+  first_name: string;
+  medical_center_id: string;
+  medical_center_name: string;
+}
 
 function MedicalCenterStaffHomePage() {
+  const [mcsMemeberData, setMCSMemberData] = useState<MCSMemeberData>();
+
+  useEffect(() => {
+    axios
+      .get<MCSMemeberData>(
+        "http://localhost:9090/mcsMember?userId=66a4ccd911b7d9fcc87b5d6c"
+      )
+      .then((res) => setMCSMemberData(res.data));
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navigation Bar  */}
       <MCSNavBar />
       {/* Body */}
       <div className="flex-grow px-8">
-        <MCSMainGreeting />
+        <MCSMainGreeting
+          medicalCenterName={
+            mcsMemeberData
+              ? mcsMemeberData.medical_center_name
+              : "medical center name"
+          }
+          memberName={
+            mcsMemeberData ? mcsMemeberData.first_name : "mcs member name"
+          }
+        />
         {/* Main Body div */}
         <div className="px-8 bg-mediphix_card_background py-8 rounded-lg">
           <div className="flex flex-col md:flex-row items-center md:items-center md:justify-between">
             <p className="text-xl md:text-2xl font-bold">
-              Hi, Vishwa! <br /> Manage your assigned clinic sessions here
+              Hi{" "}
+              {mcsMemeberData ? mcsMemeberData.first_name : "mcs member name"}!
+              <br /> Manage your assigned clinic sessions here
             </p>
             <img
               src={bodyImg}
