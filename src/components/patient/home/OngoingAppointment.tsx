@@ -49,7 +49,7 @@ const OngoingAppointment = ({
   return (
     <>
       <div className="w-full rounded-[16px] ">
-        <div className="flex justify-between mb-6">
+        <div className="flex justify-between mb-3">
           <h3 className="text-lg font-bold">Ongoing Appointment</h3>
           <p className="text-[#FF7300] text-sm font-semibold mt-1">View More</p>
         </div>
@@ -85,9 +85,7 @@ const OngoingAppointment = ({
           {status === 1 && <QueueDetails {...queueDetails} />}
           {status === 2 && <WithDoctor />}
         </div>
-        <div className="flex justify-center mt-3">
-          <Token {...appointmentDetails} />
-        </div>
+        
       </div>
     </>
   );

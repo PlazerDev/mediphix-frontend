@@ -23,8 +23,8 @@ const ProfileOverview = ({
 }: ProfileProps) => {
   return (
     <>
-      <div className="bg-[#ffffff] rounded-[16px]  p-4">
-        <div className=" flex justify-between mb-4">
+      <div className="bg-[#ffffff] rounded-[16px]  h-1/2  p-4 mt-3">
+        <div className=" flex justify-between mb-1">
           <div>
             <h1 className="text-lg font-bold">Profile Overview</h1>
           </div>
@@ -37,7 +37,7 @@ const ProfileOverview = ({
           <div className="flex justify-between">
             <div className="flex items-center justify-center">
               <img
-                className="w-20 h-20 rounded-full bg-contain"
+                className="w-24 h-24 rounded-full bg-contain"
                 src={profilepic}
                 alt="Profile Pic"
               />
