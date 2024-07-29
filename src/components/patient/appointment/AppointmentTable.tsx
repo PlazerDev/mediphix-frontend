@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { DatePicker, Space, Breadcrumb } from "antd";
+import { DatePicker, Space, Breadcrumb, Select } from "antd";
 const { RangePicker } = DatePicker;
 import TableComponent from "../../TableComponent";
 
@@ -65,7 +65,7 @@ const AppointmentTable = () => {
         />
       </div>
 
-      <div className="flex ml-[1%] mb-[1%] mt-[1%]">
+      {/* <div className="flex ml-[1%] mb-[1%] mt-[1%]">
         <Space direction="vertical" size={15}>
           <RangePicker style={{ height: "50px" }} />
         </Space>
@@ -81,6 +81,41 @@ const AppointmentTable = () => {
         <button className="bg-[#FF7300] text-white rounded-lg ml-[0.1%] w-[10%] h-[50px] pl-[0.5%]">
           Search
         </button>
+      </div> */}
+
+      <div className="flex m-4">
+        <div>
+          <Space direction="vertical" size={15} className="custom-rangepicker">
+            <RangePicker style={{ height: "50px" }} />
+          </Space>
+        </div>
+        <div className="flex ml-8 w-full">
+          <Select
+            showSearch
+            placeholder="Doctor Name"
+            optionFilterProp="label"
+            // onChange={handleDoctorChange}
+            onSearch={(value: string) => console.log("search:", value)}
+            // options={doctorOptions}
+            style={{ width: "224px", height: "50px" }}
+            className="custom-select"
+          />
+          <div className="flex w-full">
+            <input
+              type="text"
+              placeholder="Type Here"
+              className="focus:outline-none placeholder:text-[var(--text-c)] h-[50px] px-6 w-5/6"
+              // value={searchTerm}
+              // onChange={handleSearchTermChange}
+            />
+            <button
+              className="bg-[#FF7300] text-white  p-3 w-56 rounded-r-lg"
+              // onClick={handleSearch}
+            >
+              Search
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="mt-[-2%]">
