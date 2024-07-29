@@ -1,4 +1,3 @@
-import React from "react";
 import BtnFilled from "./BtnFilled";
 
 function FirstSectionTitle() {
@@ -9,7 +8,13 @@ function FirstSectionTitle() {
         Streamline Your Healthcare Experience with Easy Appointments,
         Comprehensive Records, and Accurate Diagnoses
       </p>
-      <BtnFilled title="Join Now" />
+      <BtnFilled
+        title="Join Now"
+        bgColor="bg-black"
+        hoverBgColor="bg-white"
+        textColor="text-white"
+        hoverTextColor="text-mediphix_accent"
+      />
     </div>
   );
 }
