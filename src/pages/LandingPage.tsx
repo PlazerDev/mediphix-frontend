@@ -35,8 +35,8 @@ function LandingPage() {
           <FirstSectionImg />
         </div>
         {/* Second Section */}
+        <Stat />
         <div className="px-24 bg-red-200">
-          <Stat />
           <Feature />
           <Feature />
           <Feature />
