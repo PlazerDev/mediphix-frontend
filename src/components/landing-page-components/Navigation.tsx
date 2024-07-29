@@ -1,8 +1,10 @@
+import { useAuthContext } from "@asgardeo/auth-react";
 import logo from "./../../assets/images/mediphix_logo_white.png";
 import BtnWithBorder from "./BtnWithBorder";
 import BtnWithoutBorder from "./BtnWithoutBorder";
 import DropDown from "./DropDown";
 function Navigation() {
+  const { signIn } = useAuthContext();
   return (
     <div className="bg-mediphix_accent px-24 py-4 flex flex-row justify-between items-center ">
       <img src={logo} alt="logo" className="object-contain h-8" />
@@ -13,7 +15,7 @@ function Navigation() {
         <p className="hover:cursor-pointer hover:text-white">FAQ</p>
       </div>
       <div className="flex flex-row gap-4">
-        <BtnWithoutBorder title="Login" />
+        <BtnWithoutBorder title="Login" onClickFunction={() => signIn()} />
         <BtnWithBorder title="Register" />
       </div>
     </div>

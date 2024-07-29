@@ -30,8 +30,7 @@ function App() {
       <AuthProvider config={asgardioConfig}>
         <Router>
           <Routes>
-            <Route path="/landing" element={<LandingPage />} />
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<LandingPage />} />
             <Route path="/Login" element={<LoginAuth />} />
             <Route path="/LoginOTP" element={<LoginOtp />} />
 

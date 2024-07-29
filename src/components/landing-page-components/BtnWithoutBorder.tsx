@@ -1,11 +1,15 @@
 interface Props {
   title: string;
+  onClickFunction?: () => void;
 }
-function BtnWithoutBorder({ title }: Props) {
+function BtnWithoutBorder({ title, onClickFunction }: Props) {
   return (
-    <div className="flex items-center justify-center text-[#ededed] hover:text-white hover:cursor-pointer">
+    <button
+      onClick={onClickFunction}
+      className="flex items-center justify-center text-[#ededed] hover:text-white hover:cursor-pointer"
+    >
       {title}
-    </div>
+    </button>
   );
 }
 

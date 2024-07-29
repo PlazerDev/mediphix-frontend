@@ -15,12 +15,17 @@ import featureImg3 from "./../assets/images/landing-page/feature_03.png";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
+import { useAuthContext } from "@asgardeo/auth-react";
+import { Navigate } from "react-router-dom";
 
 function LandingPage() {
+  const { state } = useAuthContext();
+
   useEffect(() => {
     AOS.init();
   }, []);
-  return (
+
+  return !state.isAuthenticated ? (
     // ConfigProvider wrapper shouold have move to the app.tsx later
     <ConfigProvider
       theme={{
@@ -84,6 +89,8 @@ function LandingPage() {
         </div>
       </div>
     </ConfigProvider>
+  ) : (
+    <Navigate to={"patient/home"} />
   );
 }
 
