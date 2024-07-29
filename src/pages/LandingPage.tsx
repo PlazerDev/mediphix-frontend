@@ -65,8 +65,10 @@ function LandingPage() {
         <div className="bg-mediphix_card_background px-24 py-8">
           <Feedback />
         </div>
-        <div className="px-24 bg-red-200">
+        <div className="bg-mediphix_card_background px-24 py-8">
           <FAQ />
+        </div>
+        <div className="px-24 bg-red-200">
           <JoinWithUs />
           <Footer />
         </div>
