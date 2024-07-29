@@ -12,8 +12,14 @@ import { ConfigProvider } from "antd";
 import featureImg1 from "./../assets/images/landing-page/feature_01.png";
 import featureImg2 from "./../assets/images/landing-page/feature_02.png";
 import featureImg3 from "./../assets/images/landing-page/feature_03.png";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useEffect } from "react";
 
 function LandingPage() {
+  useEffect(() => {
+    AOS.init();
+  }, []);
   return (
     // ConfigProvider wrapper shouold have move to the app.tsx later
     <ConfigProvider
