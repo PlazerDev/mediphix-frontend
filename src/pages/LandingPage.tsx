@@ -38,7 +38,9 @@ function LandingPage() {
           <FirstSectionImg />
         </div>
         {/* Second Section */}
-        <Stat />
+        <div className="bg-mediphix_card_background px-24 py-8">
+          <Stat />
+        </div>
         <div className="px-24 bg-mediphix_card_background">
           <Feature
             isReverse={false}
@@ -68,8 +70,10 @@ function LandingPage() {
         <div className="bg-mediphix_card_background px-24 py-8">
           <FAQ />
         </div>
-        <div className="px-24 bg-red-200">
+        <div className="bg-mediphix_card_background px-24 py-8">
           <JoinWithUs />
+        </div>
+        <div className="bg-mediphix_card_background px-24 pt-8 pb-2">
           <Footer />
         </div>
       </div>

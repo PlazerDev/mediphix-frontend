@@ -3,7 +3,7 @@ import img from "./../../assets/images/landing-page/stat_img.png";
 
 function Stat() {
   return (
-    <div className="bg-white px-24 py-8">
+    <div className="bg-white">
       <div className="flex flex-row justify-center items-center gap-8">
         <StatElement number={500} title={"Qualified Doctors"} />
         <p className="text-5xl font-extrabold">+</p>

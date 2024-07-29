@@ -10,10 +10,7 @@ function FirstSectionTitle() {
       </p>
       <BtnFilled
         title="Join Now"
-        bgColor="bg-black"
-        hoverBgColor="bg-white"
-        textColor="text-white"
-        hoverTextColor="text-mediphix_accent"
+        style="bg-black hover:bg-white text-white hover:text-mediphix_accent"
       />
     </div>
   );

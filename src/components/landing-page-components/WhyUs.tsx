@@ -15,10 +15,7 @@ function WhyUs() {
       <div className="w-32">
         <BtnFilled
           title="Join Now"
-          bgColor="bg-white"
-          textColor="text-black"
-          hoverBgColor="bg-black"
-          hoverTextColor="text-white"
+          style="bg-white text-black hover:bg-black hover:text-white"
         />
       </div>
     </div>
