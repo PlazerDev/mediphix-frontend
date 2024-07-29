@@ -49,11 +49,16 @@ function FAQ() {
   ];
   return (
     <div>
-      <p className="text-center font-bold text-3xl">
+      <p className="text-center font-bold text-3xl mb-8">
         Frequently asked questions
       </p>
       <div>
-        <Collapse items={items} bordered={false} defaultActiveKey={["1"]} />
+        <Collapse
+          style={{ backgroundColor: "transparent" }}
+          items={items}
+          bordered={false}
+          defaultActiveKey={["1"]}
+        />
       </div>
     </div>
   );

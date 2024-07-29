@@ -3,7 +3,7 @@ import BtnFilled from "./BtnFilled";
 function WhyUs() {
   return (
     <div className="flex flex-col justify-center items-center bg-mediphix_text_a text-white p-8 rounded-lg">
-      <p className="text-center font-bold text-2xl">Why Us?</p>
+      <p className="text-center font-bold text-2xl ">Why Us?</p>
       <p className="text-center text-mediphix_background my-4">
         Mediphix puts your healthcare needs at your fingertips. Easily book
         appointments, access your medical records, and stay informed with timely
@@ -15,7 +15,7 @@ function WhyUs() {
       <div className="w-32">
         <BtnFilled
           title="Join Now"
-          style="bg-white text-black hover:bg-black hover:text-white"
+          style="bg-[#e8e8e8] text-black hover:bg-white "
         />
       </div>
     </div>

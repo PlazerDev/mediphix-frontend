@@ -4,7 +4,7 @@ import BtnWithoutBorder from "./BtnWithoutBorder";
 import DropDown from "./DropDown";
 function Navigation() {
   return (
-    <div className="bg-mediphix_accent px-24 py-4 flex flex-row justify-between items-center">
+    <div className="bg-mediphix_accent px-24 py-4 flex flex-row justify-between items-center ">
       <img src={logo} alt="logo" className="object-contain h-8" />
       <div className="flex gap-4 text-[#ededed] ">
         <DropDown />

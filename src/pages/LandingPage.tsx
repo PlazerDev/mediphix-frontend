@@ -30,9 +30,9 @@ function LandingPage() {
         },
       }}
     >
-      <div className="min-h-screen w-screen bg-green-300">
+      <div className="min-h-screen bg-white">
         <Navigation />
-        {/* First Section  */}
+        {/* First Section */}
         <div className="px-24 bg-mediphix_accent">
           <FirstSectionTitle />
           <FirstSectionImg />

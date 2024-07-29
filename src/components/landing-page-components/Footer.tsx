@@ -12,8 +12,8 @@ function Footer() {
   return (
     <div>
       <div className="flex flex-row justify-between mb-8">
-        <div>
-          <img src={logo} alt="Logo" className="w-32" />
+        <div className="flex">
+          <img src={logo} alt="Logo" className="w-32 object-contain" />
         </div>
         <div className="flex flex-row gap-32">
           <FooterItemSet
