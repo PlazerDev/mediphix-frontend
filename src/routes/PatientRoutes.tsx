@@ -19,6 +19,7 @@ import RecordBookList from "../components/patient/recordbook/RecordBookList";
 import Navigation from "../components/Navigation";
 import CreateAppointment from "../components/patient/appointment/CreateAppointment";
 import DetailsBeforeAppointment from "../components/patient/appointment/DetailsBeforeAppointment";
+import BookAppointment from "../components/patient/appointment/BookAppointment";
 
 function PatientRoutes() {
   return (
@@ -84,6 +85,11 @@ function PatientRoutes() {
         <Route
           path="/appointment/upcomingappointments"
           element={<AppointmentTable />}
+        />
+
+        <Route
+          path="/appointment/bookappointment"
+          element={<BookAppointment />}
         />
 
         <Route path="/appointment/bookingfailed" element={<BookingFailed />} />
