@@ -6,11 +6,11 @@ function Navigation() {
   return (
     <div className="bg-mediphix_accent px-24 py-4 flex flex-row justify-between items-center">
       <img src={logo} alt="logo" className="object-contain h-8" />
-      <div className="flex gap-4 text-[#ededed] hover:cursor-pointer hover:text-white">
+      <div className="flex gap-4 text-[#ededed] ">
         <DropDown />
-        <p>Features</p>
-        <p>Feedbacks</p>
-        <p>FAQ</p>
+        <p className="hover:cursor-pointer hover:text-white">Features</p>
+        <p className="hover:cursor-pointer hover:text-white">Feedbacks</p>
+        <p className="hover:cursor-pointer hover:text-white">FAQ</p>
       </div>
       <div className="flex flex-row gap-4">
         <BtnWithoutBorder title="Login" />
