@@ -59,11 +59,13 @@ function LandingPage() {
             img={featureImg3}
           />
         </div>
-        <div className="bg-mediphix_card_background px-16 py-8">
+        <div className="bg-mediphix_card_background px-24 py-8">
           <WhyUs />
         </div>
-        <div className="px-24 bg-red-200">
+        <div className="bg-mediphix_card_background px-24 py-8">
           <Feedback />
+        </div>
+        <div className="px-24 bg-red-200">
           <FAQ />
           <JoinWithUs />
           <Footer />
