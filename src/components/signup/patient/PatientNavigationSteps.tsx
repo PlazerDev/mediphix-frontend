@@ -267,11 +267,11 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
 
     const handleNextClick = async () => {
 
-        // checkFormValidations(props.role);
-        // if (Object.keys(validationErrors).length > 0) {
-        //     setErrors(validationErrors);
-        //     return;
-        // }
+        checkFormValidations(props.role);
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
 
 
         if (currentStep < 3) {
