@@ -57,8 +57,8 @@ function UserDetailsForm(props:any) {
                             className='border-2 w-full h-12 rounded-[25px] p-2 focus:outline-[var(--accent)]'
                         >
                             <option value="">Select Nationality</option>
-                            <option value="sinhala">Sinhala</option>
-                            <option value="tamil">Tamil</option>
+                            <option value="srilankan">Sri Lankan</option>
+                            <option value="other">Othre</option>
                         </select>
                     </div>
 
