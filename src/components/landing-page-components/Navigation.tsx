@@ -3,8 +3,10 @@ import logo from "./../../assets/images/mediphix_logo_white.png";
 import BtnWithBorder from "./BtnWithBorder";
 import BtnWithoutBorder from "./BtnWithoutBorder";
 import DropDown from "./DropDown";
+import { Navigate, useNavigate } from "react-router-dom";
 function Navigation() {
   const { signIn } = useAuthContext();
+  const navigate = useNavigate();
   return (
     <div className="bg-mediphix_accent px-24 py-4 flex flex-row justify-between items-center ">
       <img src={logo} alt="logo" className="object-contain h-8" />
@@ -16,7 +18,10 @@ function Navigation() {
       </div>
       <div className="flex flex-row gap-4">
         <BtnWithoutBorder title="Login" onClickFunction={() => signIn()} />
-        <BtnWithBorder title="Register" />
+        <BtnWithBorder
+          title="Register"
+          onClickFunction={() => navigate("/signup")}
+        />
       </div>
     </div>
   );
