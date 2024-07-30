@@ -1,7 +1,7 @@
-import { useLocation } from "react-router-dom";
-import { DatePicker, Space, Breadcrumb, Select } from "antd";
+import { useLocation, useNavigate } from "react-router-dom";
+import { DatePicker, Space, Breadcrumb, Select, Table } from "antd";
 const { RangePicker } = DatePicker;
-import TableComponent from "../../TableComponent";
+import "../../../assets/css/table.css";
 
 const columns = [
   {
@@ -43,6 +43,7 @@ const columns = [
 
 const AppointmentTable = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { title, appointments } = location.state;
 
   return (
@@ -120,7 +121,21 @@ const AppointmentTable = () => {
 
       <div className="mt-[-2%]">
         <div className="ml-[1%] mr-[1%] pt-7">
-          <TableComponent dataSource={appointments} columns={columns} />
+          {/* <TableComponent dataSource={appointments} columns={columns} /> */}
+          <Table
+            dataSource={appointments}
+            columns={columns}
+            pagination={{
+              className: "custom-pagination", // Apply custom pagination styles
+            }}
+            onRow={(record) => ({
+              onClick: () =>
+                navigate(`/patient/appointments/appointmentdetails`, {
+                  state: { appointment: record },
+                }),
+            })}
+            rowClassName={() => 'pointer-cursor'}
+          />
         </div>
       </div>
     </div>

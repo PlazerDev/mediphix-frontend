@@ -1,17 +1,21 @@
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import Footer from "./../../Footer";
 import { Breadcrumb } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LuAlertTriangle } from "react-icons/lu";
-const AppointmentDetails = () => {
+import dayjs from "dayjs";
+import { useLocation } from "react-router-dom";
 
+const AppointmentDetails = () => {
+  const location = useLocation();
+  const appointment = location.state.appointment;
   const [appointmentDetails, setAppointmentDetails] = useState({
-    referenceNumber: "REF_1653",
-    queueNumber: "07",
-    date: "2024/June/13",
-    status: "Active",
+    referenceNumber: appointment.refNumber,
+    queueNumber: appointment.queueNumber,
+    date: appointment.date,
+    status: appointment.status,
     timeSlot: "03.00 PM - 04.00 PM",
-    paymentDetails: { 
+    paymentDetails: {
       paymentDate: "2024/June/15",
       paymentTime: "03.00 PM - 04.00 PM",
     },
@@ -31,9 +35,19 @@ const AppointmentDetails = () => {
     },
   });
 
+  const [isActive, setIsActive] = useState(true);
+
+  useEffect(() => {
+    const appointmentDate = dayjs(appointmentDetails.date, "YYYY/MMM/DD");
+    const currentDate = dayjs();
+
+    if (appointmentDate.isBefore(currentDate, "day")) {
+      setIsActive(false);
+    }
+  }, [appointmentDetails.date]);
+
   return (
     <div>
-     
       <div className="mt-2 ml-4">
         <p className="font-Roboto font-[700] text-xl text-[#151515]">
           Appointment - {appointmentDetails.referenceNumber}
@@ -70,15 +84,12 @@ const AppointmentDetails = () => {
                 <p className="text-[#868686] text-sm">Status</p>
                 <p className="text-[#FF7300]">{appointmentDetails.status}</p>
               </div>
-              {/* <div className="flex bg-[#FF7300] rounded-[8px] align-middle px-4 py-2 text-[#FFFFFF] w-fit ">
-                <div className="flex my-1">
-                  <MdOutlineRemoveRedEye className="text-lg mr-1" />
-                  <p className="text-sm ">View Record Book Entry</p>
-                </div>
-              </div> */}
+
               <div
                 className={`flex rounded-[8px] align-middle px-4 py-2 text-[#FFFFFF] w-fit ${
-                  appointmentDetails.status === "Active" ? "bg-[#FF462D]" : "bg-[#FF7300]"
+                  appointmentDetails.status === "Active"
+                    ? "bg-[#FF462D]"
+                    : "bg-[#FF7300]"
                 }`}
               >
                 <div className="flex my-1">
@@ -93,8 +104,17 @@ const AppointmentDetails = () => {
                       : "View Record Book Entry"}
                   </p>
                 </div>
+                {/* <div className="flex my-1">
+                  {isActive ? (
+                    <LuAlertTriangle className="text-lg mr-1" />
+                  ) : (
+                    <MdOutlineRemoveRedEye className="text-lg mr-1" />
+                  )}
+                  <p className="text-sm">
+                    {isActive ? "Cancel Appointment" : "View Record Book Entry"}
+                  </p>
+                </div> */}
               </div>
-              
             </div>
           </div>
           <div>
