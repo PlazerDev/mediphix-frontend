@@ -22,7 +22,7 @@ function MobileNumberForm(props:MobileNumberFormProps) {
                         <p className='text-[#868686]'>+94</p>
                         <input
                             type="text"
-                            name="mobileNumber"
+                            name="mobile"
                             className='rounded-[20px] focus:outline-none pl-2 w-full bg-white'
                             placeholder='Enter Your Number'
                             value={props.formData.mobile}

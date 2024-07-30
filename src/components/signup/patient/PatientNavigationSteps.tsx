@@ -118,7 +118,9 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 }
                 else if (formData.mobile.length !== 9) {
                     validationErrors.mobile = "Invalid Fromat";
+                    
                 }
+               
             }
 
         }
@@ -443,7 +445,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 case 2:
                     return <MobileNumberForm formData={formData} handleChange={handleChange} addMobile={addMobile} handleClick={handleClick} validationErrors={errors} />;
                 case 3:
-                    return <Verification formData={formData} role='patient' handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} />;
+                    return <Verification formData={formData}  handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} />;
                 default:
                     return null;
             }
