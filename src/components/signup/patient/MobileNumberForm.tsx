@@ -5,9 +5,9 @@ interface MobileNumberFormProps {
     addMobile: (event: React.ChangeEvent<HTMLInputElement>) => void;
     handleClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
     validationErrors: any;
-  }
-  
-function MobileNumberForm(props:MobileNumberFormProps) {
+}
+
+function MobileNumberForm(props: MobileNumberFormProps) {
     return (
         <div className="">
             <p className='text-[var(--text-c)] mt-5'>
@@ -42,6 +42,8 @@ function MobileNumberForm(props:MobileNumberFormProps) {
                                 value={props.formData.password}
                                 onChange={props.handleChange}
                             />
+                            <p className="ml-2 text-xs text-red-500 w-full italic" >{props.validationErrors.password}</p>
+
                         </div>
                         <div className='w-[40%] mb-0'>
                             <p className='ml-2'>Confirm Password: <span className='text-red-600'>*</span></p>
