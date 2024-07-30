@@ -23,16 +23,59 @@ interface EmailandDocumetsFromProps {
 function DoctorDetailsForm(props:EmailandDocumetsFromProps) {
 
 
-    const options: SelectProps['options'] = [];
+    const options = [
+        { label: 'Allergy and Immunology', value: 'allergy_and_immunology' },
+        { label: 'Anesthesiology', value: 'anesthesiology' },
+        { label: 'Cardiology', value: 'cardiology' },
+        { label: 'Dermatology', value: 'dermatology' },
+        { label: 'Emergency Medicine', value: 'emergency_medicine' },
+        { label: 'Endocrinology', value: 'endocrinology' },
+        { label: 'Family Medicine', value: 'family_medicine' },
+        { label: 'Gastroenterology', value: 'gastroenterology' },
+        { label: 'Geriatrics', value: 'geriatrics' },
+        { label: 'Hematology', value: 'hematology' },
+        { label: 'Infectious Disease', value: 'infectious_disease' },
+        { label: 'Internal Medicine', value: 'internal_medicine' },
+        { label: 'Nephrology', value: 'nephrology' },
+        { label: 'Neurology', value: 'neurology' },
+        { label: 'Obstetrics and Gynecology', value: 'obstetrics_and_gynecology' },
+        { label: 'Oncology', value: 'oncology' },
+        { label: 'Ophthalmology', value: 'ophthalmology' },
+        { label: 'Orthopedics', value: 'orthopedics' },
+        { label: 'Otolaryngology', value: 'otolaryngology' },
+        { label: 'Pediatrics', value: 'pediatrics' },
+        { label: 'Physical Medicine and Rehabilitation', value: 'physical_medicine_and_rehabilitation' },
+        { label: 'Plastic Surgery', value: 'plastic_surgery' },
+        { label: 'Podiatry', value: 'podiatry' },
+        { label: 'Psychiatry', value: 'psychiatry' },
+        { label: 'Pulmonology', value: 'pulmonology' },
+        { label: 'Radiology', value: 'radiology' },
+        { label: 'Rheumatology', value: 'rheumatology' },
+        { label: 'Surgery', value: 'surgery' },
+        { label: 'Thoracic Surgery', value: 'thoracic_surgery' },
+        { label: 'Urology', value: 'urology' },
+        { label: 'Vascular Surgery', value: 'vascular_surgery' },
+        { label: 'Pathology', value: 'pathology' },
+        { label: 'Public Health', value: 'public_health' },
+        { label: 'Radiation Oncology', value: 'radiation_oncology' },
+        { label: 'Sports Medicine', value: 'sports_medicine' },
+        { label: 'Occupational Medicine', value: 'occupational_medicine' },
+        { label: 'Preventive Medicine', value: 'preventive_medicine' },
+        { label: 'Medical Genetics', value: 'medical_genetics' },
+        { label: 'Neurosurgery', value: 'neurosurgery' },
+        { label: 'Nuclear Medicine', value: 'nuclear_medicine' },
+        { label: 'Pain Medicine', value: 'pain_medicine' }
+    ];
+    
 
-    for (let i = 0; i < 100000; i++) {
-        const value = `${i.toString(36)}${i}`;
-        options.push({
-            label: value,
-            value
+    // for (let i = 0; i < 100000; i++) {
+    //     const value = `${i.toString(36)}${i}`;
+    //     options.push({
+    //         label: value,
+    //         value
             
-        });
-    }
+    //     });
+    // }
     
 
     return (
