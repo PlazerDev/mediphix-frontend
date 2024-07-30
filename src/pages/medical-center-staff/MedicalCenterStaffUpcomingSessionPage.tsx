@@ -6,13 +6,16 @@ import MCSSelectedDate from "../../components/medical-center-staff/MCSSelectedDa
 import Footer from "./../../components/Footer";
 import doctorImg from "./../../assets/images/patient/appoinment/doctorImage.jpeg";
 import { useState } from "react";
+import dayjs from "dayjs";
 
 function MedicalCenterStaffUpcomingSessionPage() {
+  const currentDate = dayjs();
+
   const [dateComponents, setDateComponents] = useState({
-    day: "",
-    weekday: "",
-    month: "",
-    year: "",
+    day: currentDate.format("DD"),
+    weekday: currentDate.format("dddd"),
+    month: currentDate.format("MMMM"),
+    year: currentDate.format("YYYY"),
   });
 
   // Function to update state with date components

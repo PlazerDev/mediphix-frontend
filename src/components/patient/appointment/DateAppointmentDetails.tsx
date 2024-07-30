@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import profilepic from "./../../../assets/images/patient/appoinment/doctorImage.jpeg";
 import centerlogo from "./../../../assets/images/patient/appoinment/NawalokaHospitals.jpeg";
 
@@ -34,6 +35,12 @@ const DateAppointmentDetails = ({
 }: DateAppointmentDetailsProps) => {
   const { time, doctorNote, centerNote, availability } = details;
 
+  const navigate = useNavigate();
+
+  const handleBookAppointment = () => {
+    navigate("/patient/appointment/bookappointment");
+  };
+
   return (
     <>
       <div className="bg-[#DCDCDC] rounded-[16px] m-4">
@@ -45,6 +52,7 @@ const DateAppointmentDetails = ({
             className={`rounded-md py-4 w-52 flex justify-center mt-4 mr-4 ${
               availability ? "bg-[#FF7300]  cursor-pointer" : "bg-[#868686]"
             } text-[#FFFFFF]`}
+            onClick={availability ? handleBookAppointment : undefined}
           >
             <p className="mx-2">
               {availability ? "Book An Appointment" : "Fully Booked!"}

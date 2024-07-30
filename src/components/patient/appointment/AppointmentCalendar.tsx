@@ -80,66 +80,73 @@ const AppointmentCalendar = ({
     borderRadius: token.borderRadiusLG,
   };
 
-  const cellRender: CalendarProps<Dayjs>["cellRender"] = (current, info) => {
-    const isSelected = selectedDate && current.isSame(selectedDate, "day");
-    const isToday = current.isSame(dayjs(), "day");
+  // const cellRender: CalendarProps<Dayjs>["cellRender"] = (current, info) => {
+  //   const isSelected = selectedDate && current.isSame(selectedDate, "day");
+  //   const isToday = current.isSame(dayjs(), "day");
+  //   const isBooked = bookedDates.some((date) => current.isSame(date, "day"));
+
+  //   let cellStyle: React.CSSProperties = {};
+
+  //   if (isSelected) {
+  //     cellStyle = {
+  //       backgroundColor: "#FF7300",
+  //       color: "#fff",
+  //       borderRadius: "8px",
+  //       width: "120px",
+  //       height: "28px",
+  //       lineHeight: "28px",
+  //       display: "inline-block",
+  //       textAlign: "center",
+  //     };
+  //   } else if (isToday) {
+  //     cellStyle = {
+  //       border: "1px dashed #FF7300",
+  //       borderRadius: "8px",
+  //       width: "120px",
+  //       height: "28px",
+  //       lineHeight: "28px",
+  //       display: "inline-block",
+  //       textAlign: "center",
+  //     };
+  //   } else if (isBooked) {
+  //     cellStyle = {
+  //       border: "1px solid #FF7300",
+  //       borderRadius: "8px",
+  //       width: "120px",
+  //       height: "28px",
+  //       lineHeight: "28px",
+  //       display: "inline-block",
+  //       textAlign: "center",
+  //     };
+  //   }
+
+  //   return <div style={cellStyle}>{current.date()}</div>;
+  // };
+
+ 
+  const cellRender: CalendarProps<Dayjs>["cellRender"] = (current) => {
     const isBooked = bookedDates.some((date) => current.isSame(date, "day"));
 
-    let cellStyle: React.CSSProperties = {};
-
-    if (isSelected) {
-      cellStyle = {
-        backgroundColor: "#FF7300",
-        color: "#fff",
-        borderRadius: "8px",
-        width: "120px",
-        height: "28px",
-        lineHeight: "28px",
-        display: "inline-block",
-        textAlign: "center",
-      };
-    } else if (isToday) {
-      cellStyle = {
-        border: "1px dashed #FF7300",
-        borderRadius: "8px",
-        width: "120px",
-        height: "28px",
-        lineHeight: "28px",
-        display: "inline-block",
-        textAlign: "center",
-      };
-    } else if (isBooked) {
-      cellStyle = {
-        border: "1px solid #FF7300",
-        borderRadius: "8px",
-        width: "120px",
-        height: "28px",
-        lineHeight: "28px",
-        display: "inline-block",
-        textAlign: "center",
-      };
-    }
-
-    return <div style={cellStyle}>{current.date()}</div>;
+    if (isBooked) {
+      return (
+        <div className="bg-mediphix_text_c w-full h-1 rounded-full mt-[1px]"></div>
+      );
+    } 
   };
 
   const handleSelect = (date: Dayjs | null) => {
     setSelectedDate(date);
   };
 
-  const details = detailType === "doctor" ? doctorDetails : medicalCenterData;
+  const details = detailType === "center" ? doctorDetails : medicalCenterData;
 
   const appointmentsFound =
     selectedDate && bookedDates.some((date) => date.isSame(selectedDate, "day"))
       ? details.length
       : 0;
 
-  const selectedDateFormatted = selectedDate
-    ? selectedDate.format("D")
-    : "";
-  const selectedDayOfWeek = selectedDate
-    ? selectedDate.format("dddd")
-    : "";
+  const selectedDateFormatted = selectedDate ? selectedDate.format("D") : "";
+  const selectedDayOfWeek = selectedDate ? selectedDate.format("dddd") : "";
   const selectedMonthYear = selectedDate
     ? selectedDate.format("MMMM YYYY")
     : "";
@@ -172,15 +179,15 @@ const AppointmentCalendar = ({
             </div>
           </div>
         )}
-        {selectedDate && bookedDates.some((date) => date.isSame(selectedDate, "day")) && (
+        {selectedDate &&
+          bookedDates.some((date) => date.isSame(selectedDate, "day")) &&
           details.map((detail, index) => (
             <DateAppointmentDetails
               key={index}
               details={detail}
               detailType={detailType}
             />
-          ))
-        )}
+          ))}
         {!selectedDate && <NoSelectedDate />}
       </div>
     </>

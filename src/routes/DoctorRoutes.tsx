@@ -1,4 +1,5 @@
-import PatientNavigation from "../components/patient/navigation/PatientNavigation"
+
+import Navigation from "../components/Navigation";
 import {
     HomeOutlined,
     AppstoreOutlined,
@@ -9,7 +10,7 @@ import {
 function DoctorRoutes() {
   return (
     <div>
-      <PatientNavigation
+      <Navigation
           role="doctor"
           buttonNames={["Home", "Sessions", "Medical Centers"]}
           buttonImages={[<HomeOutlined />, <AppstoreOutlined />, <HeartOutlined />]} />

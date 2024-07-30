@@ -11,7 +11,7 @@ const TableComponent = ({ dataSource, columns }: any) => {
         }}
       />
     </div>
-  )
-}
+  );
+};
 
-export default TableComponent
+export default TableComponent;
