@@ -101,6 +101,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 if (!formData.fname.trim()) {
                     validationErrors.fname = "First Name is Requred";
                 }
+            
                 if (!formData.lname.trim()) {
                     validationErrors.lname = "Last Name is Requred";
                 }
@@ -113,14 +114,23 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
             }
 
             else if (currentStep == 2) {
+               
                 if (!formData.mobile.trim()) {
                     validationErrors.mobile = "Mobile Number is Requred";
                 }
                 else if (formData.mobile.length !== 9) {
                     validationErrors.mobile = "Invalid Fromat";
-                    
+
                 }
-               
+                
+                const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\/?`~])[A-Za-z\d!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\/?`~]{8,}$/;
+                if (!passwordRegex.test(formData.password)) {
+                    validationErrors.password = "Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character.";
+                }
+                else if (formData.password !== formData.confirmpass) {
+                    validationErrors.password = "Password Not match"
+                }
+
             }
 
         }
@@ -163,10 +173,10 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 if (formData.password !== formData.confirmpass) {
                     validationErrors.password = "Password Not match"
                 }
-                if(!formData.idfront){
+                if (!formData.idfront) {
                     validationErrors.idfront = "Front Side of ID is Requred"
                 }
-                if(!formData.idback){
+                if (!formData.idback) {
                     validationErrors.idback = "Back Side of ID is Requred"
                 }
 
@@ -185,11 +195,11 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 if (!formData.district.trim()) {
                     validationErrors.district = "District is Requred";
                 }
-                
+
                 if (!formData.mobile.trim()) {
                     validationErrors.mobile = "Mobile is Requred";
                 }
-                
+
 
             }
             else if (currentStep == 2) {
@@ -208,10 +218,10 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 if (formData.password !== formData.confirmpass) {
                     validationErrors.password = "Password Not match"
                 }
-                if(!formData.idfront){
+                if (!formData.idfront) {
                     validationErrors.idfront = "Front Side of ID is Requred"
                 }
-                if(!formData.idback){
+                if (!formData.idback) {
                     validationErrors.idback = "Back Side of ID is Requred"
                 }
 
@@ -229,11 +239,11 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 if (!formData.district.trim()) {
                     validationErrors.district = "District is Requred";
                 }
-                
+
                 if (!formData.mobile.trim()) {
                     validationErrors.mobile = "Mobile is Requred";
                 }
-                
+
 
             }
             else if (currentStep == 2) {
@@ -252,10 +262,10 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 if (formData.password !== formData.confirmpass) {
                     validationErrors.password = "Password Not match"
                 }
-                if(!formData.idfront){
+                if (!formData.idfront) {
                     validationErrors.idfront = "Front Side of ID is Requred"
                 }
-                if(!formData.idback){
+                if (!formData.idback) {
                     validationErrors.idback = "Back Side of ID is Requred"
                 }
 
@@ -271,6 +281,9 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             return;
+        }
+        else{
+            setErrors({});
         }
 
 
@@ -445,7 +458,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 case 2:
                     return <MobileNumberForm formData={formData} handleChange={handleChange} addMobile={addMobile} handleClick={handleClick} validationErrors={errors} />;
                 case 3:
-                    return <Verification formData={formData}  handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} />;
+                    return <Verification formData={formData} handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} />;
                 default:
                     return null;
             }
@@ -457,7 +470,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 case 1:
                     return <DoctorDetailsForm formData={formData} handleChange={handleChange} handleClick={handleClick} handleSelectChange={handleSpecializationChange} validationErrors={errors} />;
                 case 2:
-                    return <EmailandDocumetsFrom formData={formData} handleChange={handleChange} handleClick={handleClick} validationErrors={errors}  />;
+                    return <EmailandDocumetsFrom formData={formData} handleChange={handleChange} handleClick={handleClick} validationErrors={errors} />;
                 case 3:
                     return <Verification formData={formData} handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} />;
                 default:
