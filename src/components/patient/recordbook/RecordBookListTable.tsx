@@ -100,6 +100,7 @@ const RecordBookListTable = ({
         onRow={() => ({
           onClick: () => onRowClick(),
         })}
+        rowClassName={() => "pointer-cursor"}
       />
     </>
   );

@@ -93,7 +93,7 @@ const RecordBookDetails = () => {
           <p className="py-1 px-4 bg-[#DCDCDC] rounded-[8px] max-w-fit">
             {data.diagnosis.category}
           </p>
-          <p className="text-sm text-[#868686] mt-2">Detailed Diagnosis</p>
+          <p className="text-sm text-[#868686] mt-6">Detailed Diagnosis</p>
           <p>{data.diagnosis.details}</p>
         </div>
         <Divider />
@@ -105,7 +105,7 @@ const RecordBookDetails = () => {
               <li key={index}>{medication}</li>
             ))}
           </ul>
-          <p className="text-sm text-[#868686] mt-2">Procedures</p>
+          <p className="text-sm text-[#868686] mt-6">Procedures</p>
           <ul className="list-disc custom-disc-color">
             {data.treatments.procedures.map((procedure, index) => (
               <li key={index}>{procedure}</li>
@@ -116,6 +116,34 @@ const RecordBookDetails = () => {
         <div>
           <h3 className="text-lg mb-3 font-semibold">Special Note</h3>
           <p>{data.specialNote}</p>
+        </div>
+        <Divider />
+        <div>
+          <h3 className="text-lg mb-3 font-semibold">Lab Report Details</h3>
+          <div className="grid grid-cols-5 gap-y-2 gap-x-4">
+            <div>
+              <p className="text-sm text-[#868686]">Test Type</p>
+              <p>Blood Test</p>
+            </div>
+            <div>
+              <p className="text-sm text-[#868686]">Test Name</p>
+              <p>Complete Blood Count</p>
+            </div>
+            <div>
+              <p className="text-sm text-[#868686]">Priority Level</p>
+              <p>Urgent</p>
+            </div>
+            <div>
+              <p className="text-sm text-[#868686]">Status</p>
+              <p>Received</p>
+            </div>
+            <div>
+              <div className="flex bg-[#FF7300] rounded-[8px] align-middle p-2 text-[#FFFFFF] w-fit ">
+                <MdOutlineRemoveRedEye className="text-lg mr-1" />
+                <p className="text-sm ">View the report </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
