@@ -15,3 +15,7 @@
     color: #363636; /* Change the active page font color */
     background-color: #FFFFFF; /* Change the active page background color */
   }
+
+  .pointer-cursor {
+    cursor: pointer;
+  }

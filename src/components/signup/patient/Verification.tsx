@@ -1,7 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+interface VerificationProps {
+  formData: any;
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleClick: () => void;
+  Voptions: string[]; // array of verification titles or options
+  Vdata: string[]; // array of verification data
+}
 
-function Verification(props) {
+
+function Verification(props:VerificationProps) {
   return (
     <div className='w-full'>
       <p className='text-[var(--text-c)]'>Here is a preview of the details you have been entered.</p>
@@ -17,7 +25,7 @@ function Verification(props) {
 
       <div>
       
-        <p className='text-[var(--text-c)]'>Enter the OTP code sent to the <span className='font-semibold text-black'> {props.role ==='patient' ? props.formData.mobile : props.formData.email}</span></p>
+        {/* <p className='text-[var(--text-c)]'>Enter the OTP code sent to the <span className='font-semibold text-black'> {props.role ==='patient' ? props.formData.mobile : props.formData.email}</span></p>
         
         <div className='flex flex-row mt-1' >
           <input type="text" placeholder='-' className='w-[40px] h-[40px] text-center mr-6  border-[var(--text-c)] border rounded-[20%] border-solid focus:outline-[var(--accent)]' />
@@ -29,7 +37,7 @@ function Verification(props) {
 
         <div className='text-xsm '>
           <p className='text-[var(--text-c)]  text-[15px] mt-2'>Didn’t receive the code ? <span className='text-[var(--accent)] font-medium cursor-pointer'>Resend</span></p>
-        </div>
+        </div> */}
 
 
       </div>
