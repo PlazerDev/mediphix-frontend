@@ -61,7 +61,10 @@ function PatientRoutes() {
             />
           }
         />
-        <Route path="/appoinmentdetails" element={<AppointmentDetails />} />
+        <Route
+          path="/appointments/appointmentdetails"
+          element={<AppointmentDetails />}
+        />
         <Route
           path="/appoinment/createappoinmnets"
           element={<CreateAppointment />}
