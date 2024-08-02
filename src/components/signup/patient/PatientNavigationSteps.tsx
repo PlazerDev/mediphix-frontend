@@ -18,6 +18,7 @@ import axios from 'axios';
 
 
 
+
 const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: string }> = (props) => {
 
     const [loading, setLoading] = useState(false);
@@ -78,7 +79,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
     const [formData, setFormData] = useState(currentData);
 
 
-    const addMobile = (e) => {
+    const addMobile = (e:any) => {
         setFormData((prevData: any) => ({ ...prevData, mobile: e.target.value }));
     }
 
@@ -101,7 +102,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 if (!formData.fname.trim()) {
                     validationErrors.fname = "First Name is Requred";
                 }
-            
+
                 if (!formData.lname.trim()) {
                     validationErrors.lname = "Last Name is Requred";
                 }
@@ -114,7 +115,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
             }
 
             else if (currentStep == 2) {
-               
+
                 if (!formData.mobile.trim()) {
                     validationErrors.mobile = "Mobile Number is Requred";
                 }
@@ -122,7 +123,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                     validationErrors.mobile = "Invalid Fromat";
 
                 }
-                
+
                 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\/?`~])[A-Za-z\d!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\/?`~]{8,}$/;
                 if (!passwordRegex.test(formData.password)) {
                     validationErrors.password = "Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character.";
@@ -282,7 +283,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
             setErrors(validationErrors);
             return;
         }
-        else{
+        else {
             setErrors({});
         }
 
@@ -433,14 +434,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
         }));
     };
 
-    const handleUploads = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-
-    }
+    
 
 
     const handleClick = () => {
@@ -458,7 +452,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 case 2:
                     return <MobileNumberForm formData={formData} handleChange={handleChange} addMobile={addMobile} handleClick={handleClick} validationErrors={errors} />;
                 case 3:
-                    return <Verification formData={formData} handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} />;
+                    return <Verification formData={formData} handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} isLoading={loading} />;
                 default:
                     return null;
             }
@@ -472,7 +466,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 case 2:
                     return <EmailandDocumetsFrom formData={formData} handleChange={handleChange} handleClick={handleClick} validationErrors={errors} />;
                 case 3:
-                    return <Verification formData={formData} handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} />;
+                    return <Verification formData={formData} handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} isLoading={loading}/>;
                 default:
                     return null;
             }
@@ -486,7 +480,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 case 2:
                     return <EmailandDocumetsFrom formData={formData} handleChange={handleChange} handleClick={handleClick} validationErrors={errors} />;
                 case 3:
-                    return <Verification formData={formData} handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} />;
+                    return <Verification formData={formData} handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} isLoading={loading} />;
                 default:
                     return null;
             }
@@ -500,7 +494,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 case 2:
                     return <EmailandDocumetsFrom formData={formData} handleChange={handleChange} handleClick={handleClick} validationErrors={errors} />;
                 case 3:
-                    return <Verification formData={formData} handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} />;
+                    return <Verification formData={formData} handleChange={handleChange} handleClick={handleClick} Voptions={verificationTitles} Vdata={verificationData} isLoading={loading} />;
                 default:
                     return null;
             }
@@ -587,6 +581,18 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                         onBackClick={handleBackClick}
                         onNextClick={handleNextClick}
                     />
+                    {/* <div className='w-full mt-4'>
+                        {loading ? <Loading /> : renderComponent()}
+                    </div>
+
+                    {!loading && (
+                        <FormButtonSet
+                            backDisplay={false}
+                            nxt={nxt()}
+                            onBackClick={handleBackClick}
+                            onNextClick={handleNextClick}
+                        />
+                    )} */}
                 </div>
             </div>
         </ConfigProvider>
