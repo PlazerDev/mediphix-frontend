@@ -8,7 +8,7 @@ import FormButtonSet from './patient/FormButtonSet'
 function RegistrationComplete() {
     const navigate=useNavigate();
     const clickNext=()=>{
-        navigate('/Login');
+        navigate('/');
     }
     return (
         <div>
