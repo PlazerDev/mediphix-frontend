@@ -15,8 +15,8 @@ function App() {
   const asgardioConfig = {
     signInRedirectURL: "http://localhost:5173",
     signOutRedirectURL: "http://localhost:5173",
-    clientID: import.meta.env.VITE_PATIENT_ASGARDEO_CLIENT_ID,
-    baseUrl: import.meta.env.VITE_PATIENT_ASGARDEO_BASE_URL,
+    clientID: import.meta.env.VITE_ASGARDEO_CLIENT_ID,
+    baseUrl: import.meta.env.VITE_ASGARDEO_BASE_URL,
     scope: [
       "openid",
       "email",
