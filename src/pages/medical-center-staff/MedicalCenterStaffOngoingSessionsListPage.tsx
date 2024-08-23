@@ -5,7 +5,7 @@ import MCSDateTimeTitle from "../../components/medical-center-staff/MCSDateTimeT
 import MCSOnGoingSessionDetailsCard from "../../components/medical-center-staff/MCSOnGoingSessionDetailsCard";
 import { Divider, Pagination } from "antd";
 import doctorImg from "./../../assets/images/patient/appoinment/doctorImage.jpeg";
-import swal from "sweetalert";
+import swal from "sweetalert2";
 import MCSEmptyCard from "../../components/medical-center-staff/MCSEmptyCard";
 
 function MedicalCenterStaffOnGoingSessionsListPage() {
