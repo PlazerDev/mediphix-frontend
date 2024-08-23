@@ -16,7 +16,7 @@
   background-color: var(--background);
 }
 
-/* Custom SweetAlert Styles */
+/* Custom sweetalert2 Styles */
 .swal-title {
   @apply text-mediphix_text_b font-bold text-2xl;
 }

@@ -8,8 +8,12 @@ import OngoingAppointment from "./OngoingAppointment";
 import NoUpcomingAppointment from "./NoUpcomingAppointment";
 import Token from "./Token";
 import {useQuery} from "@tanstack/react-query";
-import axios from "axios";
+import axios, {AxiosRequestConfig} from "axios";
 import Loading from "../../Loading.tsx";
+import Swal from 'sweetalert2';
+import LandingPage from "../../../pages/LandingPage.tsx";
+import {data} from "autoprefixer";
+import {Navigate} from "react-router-dom";
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -24,10 +28,12 @@ interface Patient {
     nationality: string;
 }
 
+interface TokenData {
+    access_token: string;
+}
+
 const PatientHome = () => {
     const [isOngoingAppointment, setIsOngoingAppointment] = useState(true);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState();
     // const [loaded, setLoaded] = useState(false);
     // 0-start
     // 1-in the queue
@@ -72,69 +78,170 @@ const PatientHome = () => {
         },
     ]);
 
-    const [patientDetails, setPatientDetails] = useState({
-        mobile_number: "0766936981",
-        first_name: "Kasun",
-        last_name: "Atigala",
-        nic: "200011504872",
-        birthday: "2000-04-24",
-        email: "sashmitharavindu77@gmail.com",
-        address: "9A, Samudra Mawatha, Wellawatta",
-        nationality: "srilankan",
-    });
-
-    // const {
-    //     data: patientDetails,
-    //     isError,
-    //     isPending,
-    //     error
-    // } = useQuery({
-    //     queryKey: ["patient"],
-    //     queryFn: async () => {
-    //         const response = await axios.get(`${backendURL}/patient/patientdata`);
-    //         return (await response.data) as Patient;
-    //     },
+    // const [patientDetails, setPatientDetails] = useState({
+    //     mobile_number: "0766936981",
+    //     first_name: "Kasun",
+    //     last_name: "Atigala",
+    //     nic: "200011504872",
+    //     birthday: "2000-04-24",
+    //     email: "sashmitharavindu77@gmail.com",
+    //     address: "9A, Samudra Mawatha, Wellawatta",
+    //     nationality: "srilankan",
     // });
+
+    let access_token: string = "";
+
+    function getToken(): string {
+        const sessionDataString: string | null = sessionStorage.getItem('session_data-instance_0-ws3zT_tcti_dAXam7cpJ9eL9rvwa');
+
+        if (!sessionDataString) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'No session token found. Please login!',
+                icon: 'error',
+                confirmButtonText: 'OK',
+            })
+            return "";
+        }
+
+        try {
+            const sessionData: TokenData = JSON.parse(sessionDataString);
+            access_token = sessionData.access_token;
+            if (access_token == "") {
+                throw new Error("Access token not found in session data");
+            }
+            return access_token;
+        } catch (parseError) {
+            Swal.fire({
+                title: 'Error!',
+                text: "Invalid session data please login again.",
+                icon: "error",
+                confirmButtonText: 'OK'
+            })
+            return "";
+        }
+    }
+
+    access_token = getToken();
+
+    console.log("Access token: " + access_token);
+
+    // if (access_token == "") {
     //
-    // if (isError) {
-    //     return (<span>Error occurred: ${error}</span>);
     // }
 
-    useEffect(() => {
-        const fetchPatient = async () => {
-
-            setIsLoading(true);
-            const sessionDataString = sessionStorage.getItem('session_data-instance_0-ws3zT_tcti_dAXam7cpJ9eL9rvwa');
-            const sessionData = JSON.parse(sessionDataString);
-            const token = sessionData.access_token;
-
-            console.log("token: "+token);
-            try{
-                const resp = await fetch("http://localhost:9000/patient/patientdata", {
-                    method: 'GET',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`,
-                    }
-                }).then(response => response.json()).then(data => {
-                    console.log(data);
-                    setPatientDetails(data);
-                });
-                // const patient = await resp.json() as Patient;
-                // setPatientDetails(patient);
-            }catch (e){
-                setError(e);
-            }finally {
-                setIsLoading(false);
-            }
-
+    const config: AxiosRequestConfig = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${access_token}`
         }
-        fetchPatient();
-    }, []);
+    };
 
-    if (error) {
+    const {
+        data: patientDetails,
+        isError,
+        isPending,
+        error
+    } = useQuery({
+        queryKey: ["patient", {backendURL}, {config}],
+        queryFn: async () => {
+            const response = await axios.get<Patient>(`${backendURL}/patient/patientdata`, config);
+
+            if (response.status === 200) {
+                // Swal.fire({
+                //     title: 'Success!',
+                //     text: 'Welcome to Patient Dashboard! Patient Data fetched successfully.',
+                //     icon: 'success',
+                //     confirmButtonText: 'OK',
+                // });
+                return (await response.data) as Patient;
+            } else if (response.status === 401) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Unauthorized, please login again (401).',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+                return;
+            } else if (response.status === 403) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'You do not have access to patient dashboard, please login via correct portal (403).',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+                return;
+            } else if (response.status === 404) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Patient not found (404).',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+                return;
+            } else if (response.status === 500) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Internal server error (500). Please try again later.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+                return;
+            } else {
+                Swal.fire({
+                    title: 'Error!',
+                    text: `Unexpected error occurred (status code: ${response.status}).`,
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+                return;
+            }
+        },
+    });
+
+    if (!patientDetails) {
+
+    }
+
+    if (isError) {
         return (<span>Error occurred: ${error}</span>);
     }
+
+    // useEffect(() => {
+    //     const fetchPatient = async () => {
+    //
+    //         setIsLoading(true);
+    //         const sessionDataString = sessionStorage.getItem('session_data-instance_0-ws3zT_tcti_dAXam7cpJ9eL9rvwa');
+    //         const sessionData = JSON.parse(sessionDataString);
+    //         const token = sessionData.access_token;
+    //
+    //         console.log("token: "+token);
+    //         try{
+    //             const resp = await fetch("http://localhost:9000/patient/patientdata", {
+    //                 method: 'GET',
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                     "Authorization": `Bearer ${token}`,
+    //                 }
+    //             }).then(response => response.json()).then(data => {
+    //                 console.log(data);
+    //                 setPatientDetails(data);
+    //             });
+    //             // const patient = await resp.json() as Patient;
+    //             // setPatientDetails(patient);
+    //         }catch (e){
+    //             setError(e);
+    //         }finally {
+    //             setIsLoading(false);
+    //         }
+    //
+    //     }
+    //     fetchPatient();
+    // }, []);
+    //
+    // if (error) {
+    //     return (<span>Error occurred: ${error}</span>);
+    // }
 
     // useEffect(() => {
     //     const timer = setTimeout(() => {
@@ -147,51 +254,54 @@ const PatientHome = () => {
     return (
         <>
             <div className="flex flex-col">
-                {isLoading && <Loading footer={true}/>}
-                <div className={`flex flex-col ${!isLoading ? "fade-in" : ""}`}>
-                    <div className="mt-2 ml-4">
-                        <p className="  text-xl font-bold">
-                            Good Evening, {patientDetails?.first_name}
-                        </p>
-                        <p className="text-sm mb-2">We hope you're having a great day.</p>
-                    </div>
-                    <div className="flex flex-grow">
-                        <div className="w-2/3 flex-grow ">
-                            <div className="flex justify-center ml-4 p-4 bg-[#ffffff] rounded-[16px]">
-                                {isOngoingAppointment ? (
-                                    <>
-                                        {" "}
-                                        <div className="flex flex-col  w-full">
-                                            <OngoingAppointment
-                                                status={ongoingAppointmentStatus}
-                                                appointmentDetails={appointmentDetails}
-                                                queueDetails={queueDetails}
-                                            />
-                                            <div className="flex justify-center mt-1">
-                                                <Token {...appointmentDetails} />
+                {isPending && <Loading footer={true}/>}
+                {!isPending &&
+                    <div className={`flex flex-col ${!isPending ? "fade-in" : ""}`}>
+                        <div className="mt-2 ml-4">
+                            <p className="  text-xl font-bold">
+                                Good Evening, {patientDetails?.first_name}
+                            </p>
+                            <p className="text-sm mb-2">We hope you're having a great day.</p>
+                        </div>
+                        <div className="flex flex-grow">
+                            <div className="w-2/3 flex-grow ">
+                                <div className="flex justify-center ml-4 p-4 bg-[#ffffff] rounded-[16px]">
+                                    {isOngoingAppointment ? (
+                                        <>
+                                            {" "}
+                                            <div className="flex flex-col  w-full">
+                                                <OngoingAppointment
+                                                    status={ongoingAppointmentStatus}
+                                                    appointmentDetails={appointmentDetails}
+                                                    queueDetails={queueDetails}
+                                                />
+                                                <div className="flex justify-center mt-1">
+                                                    <Token {...appointmentDetails} />
+                                                </div>
                                             </div>
-                                        </div>
-                                    </>
+                                        </>
+                                    ) : (
+                                        <NoAppointment/>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="w-1/3  flex flex-col mx-4">
+                                {isUpcomingAppointment ? (
+                                    <UpcomingAppointment
+                                        upcomingAppointments={upcommingAppointments}
+                                    />
                                 ) : (
-                                    <NoAppointment/>
+                                    <NoUpcomingAppointment/>
                                 )}
+
+                                <ProfileOverview {...patientDetails} />
                             </div>
                         </div>
-
-                        <div className="w-1/3  flex flex-col mx-4">
-                            {isUpcomingAppointment ? (
-                                <UpcomingAppointment
-                                    upcomingAppointments={upcommingAppointments}
-                                />
-                            ) : (
-                                <NoUpcomingAppointment/>
-                            )}
-
-                            <ProfileOverview {...patientDetails} />
-                        </div>
+                        <Footer/>
                     </div>
-                    <Footer/>
-                </div>
+                }
+
             </div>
         </>
     );
