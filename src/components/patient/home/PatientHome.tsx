@@ -144,6 +144,7 @@ const PatientHome = () => {
         error
     } = useQuery({
         queryKey: ["patient", {backendURL}, {config}],
+        staleTime: 20000,
         queryFn: async () => {
             const response = await axios.get<Patient>(`${backendURL}/patient/patientdata`, config);
 
