@@ -11,7 +11,7 @@ function Loading(props:LoadingProps) {
         color="#FF7300"
         className="w-20 items-center justify-center"
       />
-      { props.footer === true ? <p className="text-mediphix_text_c text-center">Loading, Please Wait</p> : null}
+      { footer === true ? <p className="text-mediphix_text_c text-center">Loading, Please Wait</p> : null}
       
     </div>
   );

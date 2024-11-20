@@ -8,7 +8,7 @@ import OngoingAppointment from "./OngoingAppointment";
 import NoUpcomingAppointment from "./NoUpcomingAppointment";
 import Token from "./Token";
 import {useQuery} from "@tanstack/react-query";
-import axios, {AxiosRequestConfig} from "axios";
+import axios, {AxiosRequestConfig, AxiosError} from "axios";
 import Loading from "../../Loading.tsx";
 import Swal from 'sweetalert2';
 import LandingPage from "../../../pages/LandingPage.tsx";
@@ -144,6 +144,7 @@ const PatientHome = () => {
         error
     } = useQuery({
         queryKey: ["patient", {backendURL}, {config}],
+        staleTime: 20000,
         queryFn: async () => {
             const response = await axios.get<Patient>(`${backendURL}/patient/patientdata`, config);
 
@@ -156,6 +157,7 @@ const PatientHome = () => {
                 // });
                 return (await response.data) as Patient;
             } else if (response.status === 401) {
+                console.log("Hello you are unauthorized")
                 Swal.fire({
                     title: 'Error!',
                     text: 'Unauthorized, please login again (401).',
@@ -199,13 +201,82 @@ const PatientHome = () => {
         },
     });
 
-    if (!patientDetails) {
-
-    }
-
     if (isError) {
-        return (<span>Error occurred: ${error}</span>);
+        if (axios.isAxiosError(error)) {
+            if (error.response) {
+                const statusCode = error.response.status;
+
+                if (statusCode === 401) {
+                    console.log("Hello you are unauthorized")
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Unauthorized, please login again (401).',
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                    });
+
+                    return (
+                        <Navigate to={"/"}/>
+                    );
+                } else if (statusCode === 403) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'You do not have access to patient dashboard, please login via correct portal (403).',
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                    });
+                    return (
+                        <Navigate to={"/"}/>
+                    );
+                } else if (statusCode === 404) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Patient not found (404).',
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                    });
+                    return (
+                        <Navigate to={"/"}/>
+                    );
+                } else if (statusCode === 500) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Internal server error (500). Please try again later.',
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                    });
+                    return (
+                        <Navigate to={"/"}/>
+                    );
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: `Unexpected error occurred (status code: ${statusCode}).`,
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                    });
+                    return (
+                        <Navigate to={"/"}/>
+                    );
+                }
+            }
+        }
+
+        Swal.fire({
+            title: 'Error!',
+            text: `Unexpected error occurred.`,
+            icon: 'error',
+            confirmButtonText: 'OK',
+        });
+
+        return (
+            <Navigate to={"/"}/>
+        );
     }
+
+    // if (isError) {
+    //     return (<span>Error occurred: ${error}</span>);
+    // }
 
     // useEffect(() => {
     //     const fetchPatient = async () => {

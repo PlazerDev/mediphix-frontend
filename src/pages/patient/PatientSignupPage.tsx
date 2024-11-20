@@ -124,7 +124,7 @@ const PatientNavigationPage: React.FC<{ step: number; titlename: string; }> = (p
                                 },
                                 {
                                     status: status2,
-                                    title: props.titlename,
+                                    title: titlename,
                                 },
                                 {
                                     status: status3,
