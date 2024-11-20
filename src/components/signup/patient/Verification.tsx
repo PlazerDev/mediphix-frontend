@@ -16,17 +16,17 @@ function Verification(props:VerificationProps) {
     <div className='w-full'>
       <p className='text-[var(--text-c)]'>Here is a preview of the details you have been entered.</p>
       <div className='flex flex-row gap-6 p-5 ml-3 mt-3 mb-5 border-2 rounded-[10px] gap-x-18 flex-shrink-0 gap-y-5  flex-wrap border-dotted-[var(--text-c)]'>
-        {props.Vdata.map((option:any, index:any) => (
+        {Vdata.map((option:any, index:any) => (
           <div className='w-[180px]' key={index}>
-            <p className='text-[var(--text-c)] text-sm'>{props.Voptions[index]}</p>
-            <p>{props.formData[option]}</p>
+            <p className='text-[var(--text-c)] text-sm'>{Voptions[index]}</p>
+            <p>{formData[option]}</p>
           </div>
         ))}
         
       </div>
 
       <div className=' z-1 absolute top-[50%] left-[45%] '>
-        {props.isLoading === true ? <Loading footer={false}/> : null}
+        {isLoading === true ? <Loading footer={false}/> : null}
 
        </div> 
 

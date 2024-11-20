@@ -16,7 +16,7 @@ function MobileNumberForm(props: MobileNumberFormProps) {
 
             <div className='mt-10 flex flex-col flex-wrap'>
                 <span>Mobile Number: <span className='text-red-500'>*</span></span>
-                <p className="ml-2 text-xs text-red-500 w-full italic" >{props.validationErrors.mobile}</p>
+                <p className="ml-2 text-xs text-red-500 w-full italic" >{validationErrors.mobile}</p>
                 <form onSubmit={(e) => { e.preventDefault }}>
                     <div className='flex rounded-[20px] w-[40%] border bg-white border-gray-300 p-2 transition-colors duration-300 hover:border-[var(--accent)]'>
                         <p className='text-[#868686]'>+94</p>
@@ -25,8 +25,8 @@ function MobileNumberForm(props: MobileNumberFormProps) {
                             name="mobile"
                             className='rounded-[20px] focus:outline-none pl-2 w-full bg-white'
                             placeholder='Enter Your Number'
-                            value={props.formData.mobile}
-                            onChange={props.addMobile}
+                            value={formData.mobile}
+                            onChange={addMobile}
 
                         />
                     </div>
@@ -39,10 +39,10 @@ function MobileNumberForm(props: MobileNumberFormProps) {
                                 name="password"
                                 className='border-2 w-full h-12 rounded-[25px] p-2 focus:outline-[var(--accent)]'
                                 placeholder='Enter Your Password'
-                                value={props.formData.password}
-                                onChange={props.handleChange}
+                                value={formData.password}
+                                onChange={handleChange}
                             />
-                            <p className="ml-2 text-xs text-red-500 w-full italic" >{props.validationErrors.password}</p>
+                            <p className="ml-2 text-xs text-red-500 w-full italic" >{validationErrors.password}</p>
 
                         </div>
                         <div className='w-[40%] mb-0'>
@@ -52,8 +52,8 @@ function MobileNumberForm(props: MobileNumberFormProps) {
                                 name="confirmpass"
                                 className='border-2 w-full h-12 rounded-[25px] p-2 focus:outline-[var(--accent)]'
                                 placeholder='Enter Your Password again'
-                                value={props.formData.confirmpass}
-                                onChange={props.handleChange}
+                                value={formData.confirmpass}
+                                onChange={handleChange}
                             />
                         </div>
                     </div>
