@@ -65,14 +65,14 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
         idfront: '',
         idback: ''
     }
-    if (props.role === 'patient') {
+    if (role === 'patient') {
 
         currentData = patientData;
     }
-    else if (props.role === 'doctor') {
+    else if (role === 'doctor') {
         currentData = doctorData;
     }
-    else if (props.role === 'laboratary' || props.role === 'medical center') {
+    else if (role === 'laboratary' || role === 'medical center') {
         currentData = otherData;
     }
 
@@ -278,7 +278,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
 
     const handleNextClick = async () => {
 
-        checkFormValidations(props.role);
+        checkFormValidations(role);
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             return;
@@ -295,7 +295,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
             // Update the formData state with the current formData values
             setFormData((prevData: any) => ({ ...prevData, ...formData }));
         } else if (currentStep === 3) {
-            if (props.role === 'patient') {
+            if (role === 'patient') {
                 setLoading(true);
                 setError(null);
                 try {
@@ -323,7 +323,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 }
             }
 
-            else if (props.role === 'doctor') {
+            else if (role === 'doctor') {
                 console.log(formData);
                 setLoading(true);
                 setError(null);
@@ -354,7 +354,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
 
             }
 
-            else if (props.role === 'medical center') {
+            else if (role === 'medical center') {
                 console.log(formData);
                 setLoading(true);
                 setError(null);
@@ -384,7 +384,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                 }
 
             }
-            else if (props.role === 'laboratary') {
+            else if (role === 'laboratary') {
                 console.log(formData);
                 setLoading(true);
                 setError(null);
@@ -443,7 +443,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
 
     // meken thami component handle wenne
     const renderComponent = () => {
-        if (props.role === "patient") {
+        if (role === "patient") {
             const verificationTitles: string[] = ['First Name', 'Last Name', 'Mobile Number', 'Date of Birth', 'Email', 'Nationality', 'NIC', 'Address'];
             const verificationData: string[] = ['fname', 'lname', 'mobile', 'dob', 'email', 'nationality', 'nic', 'address']
             switch (currentStep) {
@@ -457,7 +457,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                     return null;
             }
         }
-        else if (props.role === "doctor") {
+        else if (role === "doctor") {
             const verificationTitles: string[] = ['Name with Initials', 'SLMC Reg No', 'Education', 'Mobile Number', 'Email', 'NIC', 'Specialization']
             const verificationData: string[] = ['name', 'slmc', 'education', 'mobile', 'email', 'nic', 'specialization']
             switch (currentStep) {
@@ -471,7 +471,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                     return null;
             }
         }
-        else if (props.role === "medical center") {
+        else if (role === "medical center") {
             const verificationTitles: string[] = ['Name', 'Email', 'Mobile', 'District', 'Address']
             const verificationData: string[] = ['name', 'email', 'mobile', 'district', 'address']
             switch (currentStep) {
@@ -485,7 +485,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                     return null;
             }
         }
-        else if (props.role === "laboratary") {
+        else if (role === "laboratary") {
             const verificationTitles: string[] = ['Name', 'Email', 'Mobile', 'District', 'Address']
             const verificationData: string[] = ['name', 'email', 'mobile', 'district', 'address']
             switch (currentStep) {
@@ -560,7 +560,7 @@ const PatientNavigationSteps: React.FC<{ step: number; titlename: string; role: 
                                 },
                                 {
                                     status: status2,
-                                    title: props.titlename,
+                                    title: titlename,
                                 },
                                 {
                                     status: status3,

@@ -12,7 +12,7 @@ function SignupBg(props: { stepnumber: number; titlename: string; role:string })
       backgroundRepeat: "no-repeat",
       backgroundBlendMode: "luminosity",
     }}>
-      <PatientNavigationSteps step={props.stepnumber} titlename={props.titlename} role={props.role} />
+      <PatientNavigationSteps step={stepnumber} titlename={titlename} role={role} />
    
       <Footer/>
     </div>

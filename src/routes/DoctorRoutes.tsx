@@ -1,5 +1,5 @@
 
-import Navigation from "../components/Navigation";
+import Navigation from "../components/patient/navigation/Navigation.tsx";
 import {
     HomeOutlined,
     AppstoreOutlined,

@@ -33,10 +33,10 @@ function EmailandDocumetsFrom(props: EmailandDocumetsFromProps) {
             const base64 = await convertFileToBase64(file);
             if (file.name.includes('front')) {
                 setFrontIdBase64(base64);
-                props.formData.idfront = base64;
+                formData.idfront = base64;
             } else {
                 setBackIdBase64(base64);
-                props.formData.idback = base64;
+                formData.idback = base64;
             }
             return false; // Prevent upload
         },
@@ -70,8 +70,8 @@ function EmailandDocumetsFrom(props: EmailandDocumetsFromProps) {
                         name="email"
                         className='border-2 w-[45%] h-12 rounded-[25px] p-2 focus:outline-[var(--accent)]'
                         placeholder='Enter Your  Email'
-                        value={props.formData.email}
-                        onChange={props.handleChange}
+                        value={formData.email}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className='w-[45%] mb-0'>
@@ -81,8 +81,8 @@ function EmailandDocumetsFrom(props: EmailandDocumetsFromProps) {
                         name="password"
                         className='border-2 w-full h-12 rounded-[25px] p-2 focus:outline-[var(--accent)]'
                         placeholder='Enter Your Password'
-                        value={props.formData.password}
-                        onChange={props.handleChange}
+                        value={formData.password}
+                        onChange={handleChange}
                     />
                 </div>
                 <div className='w-[45%] mb-0'>
@@ -92,8 +92,8 @@ function EmailandDocumetsFrom(props: EmailandDocumetsFromProps) {
                         name="confirmpass"
                         className='border-2 w-full h-12 rounded-[25px] p-2 focus:outline-[var(--accent)]'
                         placeholder='Enter Your Password again'
-                        value={props.formData.confirmpass}
-                        onChange={props.handleChange}
+                        value={formData.confirmpass}
+                        onChange={handleChange}
                     />
                 </div>
 
