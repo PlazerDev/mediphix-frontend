@@ -42,13 +42,8 @@ const PatientNavigation = (props: NavigationProps) => {
     '/patient/appointment': 'Appointment',
     '/patient/recordbook': 'Record Book',
   };
-  const doctorSegmentMap: Record<string, string> = {
-    '/doctor/home': 'Home',
-    '/doctor/sessions': 'Sessions',
-    '/doctor/medicalcenters': 'Medical Centers',
-  };
 
-  const segmentMap = props.role === "patient" ? patientSegmentMap : doctorSegmentMap;
+  const segmentMap = patientSegmentMap;
 
 
   const handleSegmentChange = (value: string) => {
@@ -72,36 +67,12 @@ const PatientNavigation = (props: NavigationProps) => {
           break;
       }
     }
-    else if (props.role === "doctor") {
-      switch (value) {
-        case 'Home':                                   
-          navigate('/doctor/home');                  /* these routes must be same as actual components routes*/
-          setCurrentSegment('Home');
-          break;
-        case 'Sessions':
-          navigate('/doctor/sessions');
-          setCurrentSegment('Sessions');
-          break;
-        case 'Medical Centers':
-          navigate('/doctor/medicalcenters');
-          setCurrentSegment('Medical Centers');
-          break;
-        
-      }
-    }
   };
 
-  // // Set the current segment based on location
-
+  // Set the current segment based on location
   const pathSegments = location.pathname.split('/').filter(Boolean);
   const firstTwoSegments = `/${pathSegments.slice(0, 2).join('/')}`;
   const locationSegment = segmentMap[firstTwoSegments];
-  
-
-
-
-
-
 
 
   return (
