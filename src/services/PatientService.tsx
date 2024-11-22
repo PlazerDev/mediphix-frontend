@@ -11,6 +11,7 @@ interface Patient {
   email: string;
   address: string;
   nationality: string;
+  gender: string;
 }
 
 export class PatientService {

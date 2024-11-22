@@ -9,6 +9,7 @@ interface ProfileProps {
   email?: string | undefined;
   address?: string | undefined;
   nationality?: string | undefined;
+  gender?: string | undefined;
 }
 
 function calculateAge(birthday: string) {
@@ -37,6 +38,7 @@ const ProfileOverview = ({
   email,
   address,
   nationality,
+  gender,
 }: ProfileProps) => {
   return (
     <>
@@ -69,8 +71,8 @@ const ProfileOverview = ({
                     <p>{birthday ? calculateAge(birthday) : "N/A"}</p>
                   </div>
                   <div>
-                    <p className="text-[#868686] text-sm">Gender</p>
-                    <p>{"N/A"}</p>
+                    <p className="text-[rgb(134,134,134)] text-sm">Gender</p>
+                    <p>{gender}</p>
                   </div>
                   <div>
                     <p className="text-[#868686] text-sm">NIC</p>

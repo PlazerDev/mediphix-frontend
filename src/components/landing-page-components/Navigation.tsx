@@ -20,7 +20,7 @@ function Navigation() {
         <BtnWithoutBorder title="Login" onClickFunction={() => signIn()} />
         <BtnWithBorder
           title="Register"
-          onClickFunction={() => navigate("/signup")}
+          onClickFunction={() => navigate("/signup/patient")}
         />
       </div>
     </div>
