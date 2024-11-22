@@ -12,8 +12,6 @@ interface TokenProps {
   medicalCenter: string;
 }
 
-
-
 const Token = ({
   date,
   time,
@@ -81,7 +79,7 @@ const Token = ({
             </div>
           </div>
         </div>
-        <div className="flex justify-center text-[#FF7300]">
+        <div className="flex justify-center text-[#FF7300] mt-4">
           <IoDownloadOutline className="font-extrabold text-lg  mr-1" />
 
           <a className=" text-center  font-semibold text-[14px]">
