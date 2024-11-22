@@ -1,13 +1,13 @@
 import {
-    BookOutlined,
-    CalendarOutlined,
-    HomeOutlined,
+  BookOutlined,
+  CalendarOutlined,
+  HomeOutlined,
 } from "@ant-design/icons";
 
-import {Routes, Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
-import {FaRegAddressBook} from "react-icons/fa";
-import {MdOutlineCreateNewFolder} from "react-icons/md";
+import { FaRegAddressBook } from "react-icons/fa";
+import { MdOutlineCreateNewFolder } from "react-icons/md";
 
 import AppointmentSection from "../components/patient/appointment/AppointmentSection";
 import PatientHome from "../components/patient/home/PatientHome";
@@ -22,85 +22,85 @@ import DetailsBeforeAppointment from "../components/patient/appointment/DetailsB
 import BookAppointment from "../components/patient/appointment/BookAppointment";
 
 function PatientRoutes() {
-    return (
-        <div>
-            <Navigation
-                role="patient"
-                buttonNames={["Home", "Appointment", "Record Book"]}
-                buttonImages={[
-                    <HomeOutlined/>,
-                    <CalendarOutlined/>,
-                    <BookOutlined/>,
-                ]}
+  return (
+    <div>
+      <Navigation
+        role="patient"
+        buttonNames={["Home", "Appointment", "Record Book"]}
+        buttonImages={[
+          <HomeOutlined />,
+          <CalendarOutlined />,
+          <BookOutlined />,
+        ]}
+      />
+
+      <Routes>
+        <Route path="/home" element={<PatientHome />} />
+        <Route
+          path="/appointment"
+          element={
+            <AppointmentSection
+              name={"Visal"}
+              title={"Manage your appointments here"}
+              buttontitles={[
+                "Upcoming Appointments",
+                "Create an Appointment",
+                "Previous Appointments",
+              ]}
+              buttonimages={[
+                FaRegAddressBook,
+                MdOutlineCreateNewFolder,
+                FaRegAddressBook,
+              ]}
+              // must be same order as buttontiles
+              navigations={[
+                "/patient/appointment/upcomingappointments",
+                "/patient/appoinment/createappoinmnets",
+                "/patient/appointment/previousappointments",
+              ]}
             />
+          }
+        />
+        <Route
+          path="/appointments/appointmentdetails"
+          element={<AppointmentDetails />}
+        />
+        <Route
+          path="/appoinment/createappoinmnets"
+          element={<CreateAppointment />}
+        />
+        <Route
+          path="/appointment/appointmentsuccessful"
+          element={<AppointmentSuccessful />}
+        />
 
-            <Routes>
-                <Route path="/home" element={<PatientHome/>}/>
-                <Route
-                    path="/appointment"
-                    element={
-                        <AppointmentSection
-                            name={"Visal"}
-                            title={"Manage your appointments here"}
-                            buttontitles={[
-                                "Upcoming Appointments",
-                                "Create an Appointment",
-                                "Previous Appointments",
-                            ]}
-                            buttonimages={[
-                                FaRegAddressBook,
-                                MdOutlineCreateNewFolder,
-                                FaRegAddressBook,
-                            ]}
-                            // must be same order as buttontiles
-                            navigations={[
-                                "/patient/appointment/upcomingappointments",
-                                "/patient/appoinment/createappoinmnets",
-                                "/patient/appointment/previousappointments",
-                            ]}
-                        />
-                    }
-                />
-                <Route
-                    path="/appointments/appointmentdetails"
-                    element={<AppointmentDetails/>}
-                />
-                <Route
-                    path="/appoinment/createappoinmnets"
-                    element={<CreateAppointment/>}
-                />
-                <Route
-                    path="/appointment/appointmentsuccessful"
-                    element={<AppointmentSuccessful/>}
-                />
+        <Route
+          path="/appointment/details"
+          element={<DetailsBeforeAppointment />}
+        />
+        <Route path="/appointment/bookingfailed" element={<BookingFailed />} />
 
-                <Route
-                    path="/appointment/details"
-                    element={<DetailsBeforeAppointment/>}
-                />
-                <Route path="/appointment/bookingfailed" element={<BookingFailed/>}/>
+        <Route
+          path="/appointment/previousappointments"
+          element={<AppointmentTable />}
+        />
 
-                <Route
-                    path="/appointment/previousappointments"
-                    element={<AppointmentTable/>}
-                />
+        <Route
+          path="/appointment/upcomingappointments"
+          element={<AppointmentTable />}
+        />
 
-                <Route
-                    path="/appointment/upcomingappointments"
-                    element={<AppointmentTable/>}
-                />
+        <Route
+          path="/appointment/bookappointment"
+          element={<BookAppointment />}
+        />
 
-                <Route
-                    path="/appointment/bookappointment"
-                    element={<BookAppointment/>}
-                />
+        <Route path="/appointment/bookingfailed" element={<BookingFailed />} />
 
-                <Route path="/appointment/bookingfailed" element={<BookingFailed/>}/>
-
-                <Route path="/recordbook" element={<RecordBookList/>}/>
-            </Routes>
-        </div>
-    );
+        <Route path="/recordbook" element={<RecordBookList />} />
+      </Routes>
+    </div>
+  );
 }
 
 export default PatientRoutes;
