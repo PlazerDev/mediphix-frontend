@@ -1,29 +1,48 @@
 import profilepic from "./../../../assets/images/patient/home/profile_pic.jpg";
 
 interface ProfileProps {
-  name: string;
-  age: number;
-  gender: string;
-  nic: string;
-  address: string;
-  phoneNo: string;
-  email: string;
-  nationality: string;
+  mobile_number?: string | undefined;
+  first_name?: string | undefined;
+  last_name?: string | undefined;
+  nic?: string | undefined;
+  birthday?: string | undefined;
+  email?: string | undefined;
+  address?: string | undefined;
+  nationality?: string | undefined;
+  gender?: string | undefined;
+}
+
+function calculateAge(birthday: string) {
+  const birthDate = new Date(birthday);
+  const today = new Date();
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDifference = today.getMonth() - birthDate.getMonth();
+
+  if (
+    monthDifference < 0 ||
+    (monthDifference === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age--;
+  }
+
+  return age;
 }
 
 const ProfileOverview = ({
-  name,
-  age,
-  gender,
+  mobile_number,
+  first_name,
+  last_name,
   nic,
-  address,
-  phoneNo,
+  birthday,
   email,
+  address,
   nationality,
+  gender,
 }: ProfileProps) => {
   return (
     <>
-      <div className="bg-[#ffffff] rounded-[16px]  h-1/2  p-4 mt-3">
+      <div className="bg-[#ffffff] h-full rounded-[16px]  p-4 mt-3">
         <div className=" flex justify-between mb-1">
           <div>
             <h1 className="text-lg font-bold">Profile Overview</h1>
@@ -34,8 +53,8 @@ const ProfileOverview = ({
           </div>
         </div>
         <div>
-          <div className="flex justify-between">
-            <div className="flex items-center justify-center">
+          <div className="flex justify-start gap-8">
+            <div className="flex items-center justify-center ">
               <img
                 className="w-24 h-24 rounded-full bg-contain"
                 src={profilepic}
@@ -43,30 +62,40 @@ const ProfileOverview = ({
               />
             </div>
             <div>
-              <p className="text-[#868686] text-sm">Name</p>
-              <p className="mb-1">{name}</p>
-              <div className="flex gap-4 mb-1">
-                <div>
-                  <p className="text-[#868686] text-sm">Age</p>
-                  <p>{age}</p>
+              <div>
+                <p className="text-[#868686] text-sm">Name</p>
+                <p className="mb-1">{first_name + " " + last_name}</p>
+                <div className="flex gap-4 mb-1">
+                  <div>
+                    <p className="text-[#868686] text-sm">Age</p>
+                    <p>{birthday ? calculateAge(birthday) : "N/A"}</p>
+                  </div>
+                  <div>
+                    <p className="text-[rgb(134,134,134)] text-sm">Gender</p>
+                    <p>{gender}</p>
+                  </div>
+                  <div>
+                    <p className="text-[#868686] text-sm">NIC</p>
+                    <p className="mb-1">{nic}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-[#868686] text-sm">Gender</p>
-                  <p>{gender}</p>
+                <p className="text-[#868686] text-sm">Address</p>
+                <p>{address}</p>
+              </div>
+              <div>
+                <p className="text-[#868686] text-sm">Email</p>
+                <p className="mb-1"> {email}</p>
+                <div className="flex gap-4">
+                  <div>
+                    <p className="text-[#868686] text-sm">Mobile Number</p>
+                    <p className="mb-1">{mobile_number}</p>
+                  </div>
+                  <div>
+                    <p className="text-[#868686] text-sm">Nationality</p>
+                    <p>{nationality}</p>
+                  </div>
                 </div>
               </div>
-              <p className="text-[#868686] text-sm">NIC</p>
-              <p className="mb-1">{nic}</p>
-              <p className="text-[#868686] text-sm">Address</p>
-              <p>{address}</p>
-            </div>
-            <div className="mr-20">
-              <p className="text-[#868686] text-sm">Mobile Number</p>
-              <p className="mb-1">{phoneNo}</p>
-              <p className="text-[#868686] text-sm">Email</p>
-              <p className="mb-1"> {email}</p>
-              <p className="text-[#868686] text-sm">Nationality</p>
-              <p>{nationality}</p>
             </div>
           </div>
         </div>
