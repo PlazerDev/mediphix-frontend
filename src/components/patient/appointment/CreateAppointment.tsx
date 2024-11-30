@@ -109,12 +109,12 @@ const CreateAppointment = () => {
         "Colombo South Teaching Hospital",
       ],
       appointmentDates: [
-        "2024-07-20",
-        "2024-07-25",
-        "2024-07-30",
-        "2024-09-05",
-        "2024-09-10",
-        "2024-09-15",
+        "2024-11-30",
+        "2024-12-25",
+        "2024-12-30",
+        "2024-12-05",
+        "2024-12-10",
+        "2024-12-15",
       ],
     },
   ]);
@@ -164,7 +164,7 @@ const CreateAppointment = () => {
   ]);
 
   const handleItemClick = (list: Doctor | Center) => {
-    navigate("/patient/appointment/details", {
+    navigate("/patient/appointment/createappoinmnets/details", {
       state: { detailType, list },
     });
   };
@@ -201,8 +201,8 @@ const CreateAppointment = () => {
           className="border-gray-300 rounded-l-lg w-[25%] mr-1 py-4 px-8"
           onChange={handleSelectChange}
         >
-          <option value="doctor">Doctor Name</option>
-          <option value="center">Medical Center Name</option>
+          <option value="doctor">Doctor</option>
+          <option value="center">Medical Center</option>
         </select>
         <input
           type="text"
