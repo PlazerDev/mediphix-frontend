@@ -75,8 +75,12 @@ function PatientRoutes() {
         />
 
         <Route
-          path="/appointment/details"
+          path="/appointment/createappoinmnets/details"
           element={<DetailsBeforeAppointment />}
+        />
+        <Route
+          path="/appointment/bookappointment"
+          element={<BookAppointment />}
         />
         <Route path="/appointment/bookingfailed" element={<BookingFailed />} />
 
@@ -91,10 +95,19 @@ function PatientRoutes() {
         />
 
         <Route
-          path="/appointment/bookappointment"
+          path="/appointment/createappoinmnets/doctor/:name/bookappointment"
           element={<BookAppointment />}
         />
 
+        <Route
+          path="/appointment/createappoinmnets/center/:name/bookappointment"
+          element={<BookAppointment />}
+        />
+
+        {/* <Route
+          path="/appointment/createappoinmnets/bookappointment"
+          element={<BookAppointment />}
+        /> */}
         <Route path="/appointment/bookingfailed" element={<BookingFailed />} />
 
         <Route path="/recordbook" element={<RecordBookList />} />

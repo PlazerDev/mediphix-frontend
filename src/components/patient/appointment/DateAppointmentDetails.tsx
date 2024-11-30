@@ -38,7 +38,12 @@ const DateAppointmentDetails = ({
   const navigate = useNavigate();
 
   const handleBookAppointment = () => {
-    navigate("/patient/appointment/bookappointment");
+    const path =
+      detailType === "doctor"
+        ? `/patient/appointment/createappoinmnets/doctor/${details.name}/bookappointment`
+        : `/patient/appointment/createappoinmnets/center/${details.name}/bookappointment`;
+
+    navigate(path, { state: { details } });
   };
 
   return (
