@@ -9,16 +9,17 @@ import { Breadcrumb } from "antd";
 import { useState } from "react";
 
 interface Doctor {
+  id: string;
   name: string;
   degree: string;
   speciality: string;
   appointmentCategory: string[];
   description: string;
   centers: string[];
-  appointmentDates: string[];
 }
 
 interface Center {
+  id: string;
   name: string;
   address: string;
   appointmentCategory: string[];
@@ -37,7 +38,6 @@ const DetailsBeforeAppointment = () => {
   const { detailType, list } = location.state as DetailsProps;
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [appointmentDates, setAppointmentDates] = useState<string[]>([]);
 
   const hardcodedAppointmentDates : Record<string, string[]> = {
     "OPD": ["2024-11-30", "2024-12-25", "2024-12-30"],
@@ -45,7 +45,6 @@ const DetailsBeforeAppointment = () => {
   };
 
   const fetchAppointmentDates = (category: string) => {
-    setAppointmentDates(hardcodedAppointmentDates[category] || []);
     setSelectedCategory(category);
   };
 
@@ -62,9 +61,15 @@ const DetailsBeforeAppointment = () => {
       </div>
     ));
 
-  if (selectedCategory) {
-    return <AppointmentCalendar detailType={detailType} appointmentDates={appointmentDates} />;
-  }
+    if (selectedCategory) {
+      return (
+        <AppointmentCalendar
+          detailType={detailType}
+          id={(list as Doctor | Center).id}
+          category={selectedCategory}
+        />
+      );
+    }
 
   return (
     <>
@@ -122,7 +127,7 @@ const DetailsBeforeAppointment = () => {
       </div>
 
       {detailType === "doctor" && (
-        <AppointmentCalendar detailType={detailType} appointmentDates={(list as Doctor).appointmentDates} />
+        <AppointmentCalendar detailType={detailType} id={(list as Doctor).id} />
       )}
 
       <Footer />

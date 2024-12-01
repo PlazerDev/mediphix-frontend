@@ -5,10 +5,14 @@ import dayjs from "dayjs";
 import NoSelectedDate from "./NoSelectedDate";
 import { useState } from "react";
 import DateAppointmentDetails from "./DateAppointmentDetails";
+import TokenService from "../../../services/TokenService";
+import { useQuery } from "@tanstack/react-query";
+import { PatientService } from "../../../services/PatientService";
 
 interface AppointmentCalendarProps {
   detailType: string;
-  appointmentDates: string[];
+  id: string;
+  category?: string; // Optional because it's only applicable for "center"
 }
 
 const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>["mode"]) => {
@@ -17,12 +21,34 @@ const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>["mode"]) => {
 
 const AppointmentCalendar = ({
   detailType,
-  appointmentDates,
+  id,
+  category,
 }: AppointmentCalendarProps) => {
   const { token } = theme.useToken();
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
 
-  const bookedDates = appointmentDates.map((date) => dayjs(date));
+
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${TokenService.getToken()}`,
+    },
+  };
+
+  // Fetch doctor appointment dates if detailType is "doctor"
+  const { data: doctorAppointmentDates, isLoading } = useQuery({
+    queryKey: ["doctorAppointmentDates", id],
+    queryFn: () =>
+      detailType === "doctor"
+        ? PatientService.getDoctorAppointmentDates(backendURL, id, config)
+        : Promise.resolve([]),
+    staleTime: 200000,
+  });
+
+  const bookedDates = (doctorAppointmentDates || []).map((date) =>
+    dayjs(date.date)
+  );
 
   const [medicalCenterData, setMedicalCenterData] = useState([
     {
@@ -79,50 +105,6 @@ const AppointmentCalendar = ({
     border: `1px solid ${token.colorBorderSecondary}`,
     borderRadius: token.borderRadiusLG,
   };
-
-  // const cellRender: CalendarProps<Dayjs>["cellRender"] = (current, info) => {
-  //   const isSelected = selectedDate && current.isSame(selectedDate, "day");
-  //   const isToday = current.isSame(dayjs(), "day");
-  //   const isBooked = bookedDates.some((date) => current.isSame(date, "day"));
-
-  //   let cellStyle: React.CSSProperties = {};
-
-  //   if (isSelected) {
-  //     cellStyle = {
-  //       backgroundColor: "#FF7300",
-  //       color: "#fff",
-  //       borderRadius: "8px",
-  //       width: "120px",
-  //       height: "28px",
-  //       lineHeight: "28px",
-  //       display: "inline-block",
-  //       textAlign: "center",
-  //     };
-  //   } else if (isToday) {
-  //     cellStyle = {
-  //       border: "1px dashed #FF7300",
-  //       borderRadius: "8px",
-  //       width: "120px",
-  //       height: "28px",
-  //       lineHeight: "28px",
-  //       display: "inline-block",
-  //       textAlign: "center",
-  //     };
-  //   } else if (isBooked) {
-  //     cellStyle = {
-  //       border: "1px solid #FF7300",
-  //       borderRadius: "8px",
-  //       width: "120px",
-  //       height: "28px",
-  //       lineHeight: "28px",
-  //       display: "inline-block",
-  //       textAlign: "center",
-  //     };
-  //   }
-
-  //   return <div style={cellStyle}>{current.date()}</div>;
-  // };
-
  
   const cellRender: CalendarProps<Dayjs>["cellRender"] = (current) => {
     const isBooked = bookedDates.some((date) => current.isSame(date, "day"));
