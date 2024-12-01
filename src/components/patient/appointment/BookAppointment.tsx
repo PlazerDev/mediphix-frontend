@@ -1,9 +1,10 @@
 import { Breadcrumb } from "antd";
 import { Checkbox } from "antd";
 import type { CheckboxProps } from "antd";
-import { Button} from "antd";
+import { Button } from "antd";
 import Footer from "../../Footer";
 import TimeSlotCard from "./TimeSlotCard";
+import { useLocation } from "react-router-dom";
 
 interface BookAppointmentProps {
   doctorName: string;
@@ -19,12 +20,15 @@ const onChange: CheckboxProps["onChange"] = (e) => {
 };
 
 const BookAppointment = () => {
+  const location = useLocation();
+  const details = location.state?.details;
+
   return (
     <>
       <div>
         <div>
           <p className="text-xl font-bold ml-[1%] mt-[1%]">
-            Book Appointment - Nawaloka Hospital
+            Book Appointment - {details.name}
           </p>
         </div>
         <div>
@@ -55,17 +59,17 @@ const BookAppointment = () => {
               <div className="flex gap-4 mt-3">
                 <div>
                   <p className="text-[#868686] text-sm ">Time Frame</p>
-                  <p className="font-bold">08.00 PM - 11.00 PM</p>
+                  <p className="font-bold">{details.time}</p>
                 </div>
 
                 <div className="flex flex-col ml-10">
                   <p className="text-[#868686] text-sm">Date</p>
-                  <p className="font-bold">2024/06/15</p>
+                  <p className="font-bold">{details.date}</p>
                 </div>
 
                 <div className="flex flex-col ml-10 ">
                   <p className="text-[#868686] text-sm">Appointment Category</p>
-                  <p className="font-bold">OPD</p>
+                  <p className="font-bold">{details.category}</p>
                 </div>
               </div>
             </div>
@@ -80,7 +84,7 @@ const BookAppointment = () => {
             <div className="flex flex-col ml-10 justify-center ">
               <p className="text-[#868686] text-sm">Medical Center’s Name</p>
               <a style={{ color: "#F97316" }}>
-                <u>Nawaloka Hospital</u>
+                <u>{details.center}</u>
               </a>
             </div>
           </div>
