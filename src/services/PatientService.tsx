@@ -15,13 +15,17 @@ interface Patient {
 }
 
 interface Doctor {
-  id:string;
+  id: string;
   name: string;
   degree: string;
   speciality: string;
   appointmentCategory: string[];
   description: string;
   centers: string[];
+}
+
+interface AppointmentDate {
+  date: string; // Format: YYYY-MM-DD
 }
 
 export class PatientService {
@@ -81,5 +85,32 @@ export class PatientService {
     }
   }
 
-  
+  static async getDoctorAppointmentDates(
+    backendURL: string,
+    doctorId: string,
+    config: AxiosRequestConfig
+  ): Promise<AppointmentDate[] | undefined> {
+    try {
+      const response: AxiosResponse<AppointmentDate[]> = await axios.get(
+        `${backendURL}/doctor/${doctorId}/appointmentDates`,
+        config
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        ErrorService.handleError(response);
+        return undefined; 
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "An unexpected error occurred. Please try again later.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return undefined; 
+    }
+  }
 }
