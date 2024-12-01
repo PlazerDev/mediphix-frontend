@@ -14,6 +14,16 @@ interface Patient {
   gender: string;
 }
 
+interface Doctor {
+  id:string;
+  name: string;
+  degree: string;
+  speciality: string;
+  appointmentCategory: string[];
+  description: string;
+  centers: string[];
+}
+
 export class PatientService {
   static async getPatientData(
     backendURL: string,
@@ -42,4 +52,34 @@ export class PatientService {
       return undefined; // Return undefined on error
     }
   }
+
+  static async getDoctorData(
+    backendURL: string,
+    config: AxiosRequestConfig
+  ): Promise<Doctor | undefined> {
+    try {
+      const response: AxiosResponse<Doctor> = await axios.get(
+        `${backendURL}/patient/doctorData`,
+        config
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        ErrorService.handleError(response);
+        return undefined;
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "An unexpected error occurred. Please try again later.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return undefined;
+    }
+  }
+
+  
 }
