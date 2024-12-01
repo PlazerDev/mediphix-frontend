@@ -78,13 +78,13 @@ export class PatientService {
   static async getDoctorData(
     backendURL: string,
     config: AxiosRequestConfig
-  ): Promise<Doctor | undefined> {
+  ): Promise<Doctor[] | undefined> {
     try {
-      const response: AxiosResponse<Doctor> = await axios.get(
+      const response: AxiosResponse<Doctor[]> = await axios.get(
         `${backendURL}/patient/doctorData`,
         config
       );
-
+  
       if (response.status === 200) {
         return response.data;
       } else {
