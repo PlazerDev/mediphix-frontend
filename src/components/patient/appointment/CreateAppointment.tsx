@@ -6,6 +6,9 @@ const { RangePicker } = DatePicker;
 import { DatePicker, Space } from "antd";
 import { TimePicker } from "antd";
 import { Select } from "antd";
+import { PatientService } from "../../../services/PatientService";
+import TokenService from "../../../services/TokenService";
+import { useQuery } from "@tanstack/react-query";
 
 interface Doctor {
   name: string;
@@ -14,7 +17,6 @@ interface Doctor {
   appointmentCategory: string[];
   description: string;
   centers: string[];
-  appointmentDates: string[];
 }
 
 interface Center {
@@ -38,130 +40,27 @@ const CreateAppointment = () => {
   const [detailType, setDetailType] = useState("doctor");
   const navigate = useNavigate();
 
-  const [doctorList, setDoctorList] = useState<Doctor[]>([
-    {
-      name: "Nishantha Perera",
-      degree: "MBBS (COL)",
-      speciality: "Cardiology",
-      appointmentCategory: ["OPD", "Heart Health"],
-      description:
-        "With over 15 years of experience in cardiology, I am committed to providing exceptional care for patients with heart conditions. My approach emphasizes preventive cardiology, patient education, and personalized treatment plans to ensure optimal heart health.",
-      centers: [
-        "Nawaloka Hospital",
-        "Asiri Medical Hospital",
-        "Durdans Hospital",
-        "Lanka Hospitals",
-        "Colombo South Teaching Hospital",
-        "Helan Hospital",
-        "Medihub Hospital",
-        "Medihelp Hospitals",
-        "NineWhalesHospital",
-      ],
-      appointmentDates: [
-        "2024-07-25",
-        "2024-07-30",
-        "2024-08-10",
-        "2024-08-15",
-        "2024-08-18",
-        "2024-08-20",
-        "2024-08-21",
-        "2024-08-25",
-        "2024-08-27",
-        "2024-08-28",
-        "2024-08-30",
-      ],
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${TokenService.getToken()}`,
     },
-    {
-      name: "Nishantha Perera",
-      degree: "MBBS (COL)",
-      speciality: "Cardiology",
-      appointmentCategory: ["OPD", "Heart Health"],
-      description:
-        "With over 15 years of experience in cardiology, I am committed to providing exceptional care for patients with heart conditions. My approach emphasizes preventive cardiology, patient education, and personalized treatment plans to ensure optimal heart health.",
-      centers: [
-        "Nawaloka Hospital",
-        "Asiri Medical Hospital",
-        "Durdans Hospital",
-        "Lanka Hospitals",
-        "Colombo South Teaching Hospital",
-      ],
-      appointmentDates: [
-        "2024-07-20",
-        "2024-07-15",
-        "2024-07-30",
-        "2024-08-10",
-        "2024-08-15",
-        "2024-08-20",
-      ],
-    },
-    {
-      name: "Nishantha Perera",
-      degree: "MBBS (COL)",
-      speciality: "Cardiology",
-      appointmentCategory: ["OPD", "Heart Health"],
-      description:
-        "With over 15 years of experience in cardiology, I am committed to providing exceptional care for patients with heart conditions. My approach emphasizes preventive cardiology, patient education, and personalized treatment plans to ensure optimal heart health.",
-      centers: [
-        "Nawaloka Hospital",
-        "Asiri Medical Hospital",
-        "Durdans Hospital",
-        "Lanka Hospitals",
-        "Colombo South Teaching Hospital",
-      ],
-      appointmentDates: [
-        "2024-11-30",
-        "2024-12-25",
-        "2024-12-30",
-        "2024-12-05",
-        "2024-12-10",
-        "2024-12-15",
-      ],
-    },
-  ]);
+  };
 
-  const [centerList, setCenterList] = useState<Center[]>([
-    {
-      name: "Nawaloka Hospital",
-      address: "23 , Deshamanya H K Dharmadasa Mawatha, Colombo 00200",
-      appointmentCategory: [
-        "OPD",
-        "Heart Health",
-        "Dental Care",
-        "Pediatrics",
-        "Gynecology",
-        "Mental Health",
-        "Gastroenterology",
-        "Urology",
-        "Ophthalmology ",
-        "Neurology",
-        "Psychiatry",
-        "Cardiology",
-        "Dermatologist",
-        "ENT",
-        "Orthopedics",
-        "Radiology",
-      ],
-      noOfDoctors: 33,
-      description:
-        "At Navaloka Hospital, we provide top-notch healthcare with a patient-focused approach. Our expert team and advanced facilities ensure the best care for all your medical needs. Trust us for your health and well-being.",
-      phoneNo: "011-4564564",
-    },
-    {
-      name: "Asiri Hospital",
-      address: "23 , Deshamanya H K Dharmadasa Mawatha, Colombo 00200",
-      appointmentCategory: [
-        "OPD",
-        "Heart Health",
-        "Dental Care",
-        "Pediatrics",
-        "Gynecology",
-      ],
-      noOfDoctors: 15,
-      description:
-        "At Asiri Hospital, we provide top-notch healthcare with a patient-focused approach. Our expert team and advanced facilities ensure the best care for all your medical needs. Trust us for your health and well-being.",
-      phoneNo: "011-4564564",
-    },
-  ]);
+  // Fetch doctor data 
+  const { data: doctorList} = useQuery({
+    queryKey: ["doctors", backendURL, config],
+    queryFn: () => PatientService.getDoctorData(backendURL, config),
+    staleTime: 200000,
+  });
+
+  // Fetch center data
+  const { data: centerList} = useQuery({
+    queryKey: ["centers", backendURL, config],
+    queryFn: () => PatientService.getCenterData(backendURL, config),
+    staleTime: 200000,
+  });
 
   const handleItemClick = (list: Doctor | Center) => {
     navigate("/patient/appointment/createappoinmnets/details", {
@@ -173,7 +72,7 @@ const CreateAppointment = () => {
     setDetailType(e.target.value);
   };
 
-  const detailsList = detailType === "doctor" ? doctorList : centerList;
+  const detailsList = detailType === "doctor" ? doctorList || []: centerList || [];
 
   return (
     <>
