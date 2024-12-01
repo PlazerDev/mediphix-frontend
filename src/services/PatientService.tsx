@@ -28,6 +28,7 @@ interface Center {
   id: string;
   name: string;
   address: string;
+  email: string;
   appointmentCategory: string[];
   noOfDoctors: number;
   description: string;
@@ -44,11 +45,15 @@ interface Session {
   time: string;
   category: string;
   doctorName: string;
+  medicalcenterId: string;
   centerName: string;
   doctorNote: string;
+  centerNote: string;
+  maxPatientCount: number;
+  registeredPatientCount: number;
 }
 
-interface TimeSlot{
+interface TimeSlot {
   id: string;
   startTime: string;
   endTime: string;
@@ -94,7 +99,7 @@ export class PatientService {
         `${backendURL}/patient/doctorData`,
         config
       );
-  
+
       if (response.status === 200) {
         return response.data;
       } else {
@@ -122,7 +127,7 @@ export class PatientService {
         `${backendURL}/patient/centerData`,
         config
       );
-  
+
       if (response.status === 200) {
         return response.data;
       } else {
@@ -156,7 +161,7 @@ export class PatientService {
         return response.data;
       } else {
         ErrorService.handleError(response);
-        return undefined; 
+        return undefined;
       }
     } catch (error) {
       console.error("An unexpected error occurred:", error);
@@ -166,7 +171,7 @@ export class PatientService {
         icon: "error",
         confirmButtonText: "OK",
       });
-      return undefined; 
+      return undefined;
     }
   }
 
@@ -218,7 +223,7 @@ export class PatientService {
         return response.data;
       } else {
         ErrorService.handleError(response);
-        return undefined; 
+        return undefined;
       }
     } catch (error) {
       console.error("An unexpected error occurred:", error);
@@ -228,7 +233,7 @@ export class PatientService {
         icon: "error",
         confirmButtonText: "OK",
       });
-      return undefined; 
+      return undefined;
     }
   }
 }

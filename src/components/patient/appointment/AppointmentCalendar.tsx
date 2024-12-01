@@ -3,7 +3,7 @@ import type { CalendarProps } from "antd";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import NoSelectedDate from "./NoSelectedDate";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import DateAppointmentDetails from "./DateAppointmentDetails";
 import TokenService from "../../../services/TokenService";
 import { useQuery } from "@tanstack/react-query";
@@ -15,6 +15,45 @@ interface AppointmentCalendarProps {
   category?: string; // Optional because it's only applicable for "center"
 }
 
+interface Doctor {
+  id: string;
+  name: string;
+  degree: string;
+  speciality: string;
+  appointmentCategory: string[];
+  description: string;
+  centers: string[];
+}
+
+interface Center {
+  id: string;
+  name: string;
+  address: string;
+  email: string;
+  appointmentCategory: string[];
+  noOfDoctors: number;
+  description: string;
+  phoneNo: string;
+}
+
+interface Session {
+  id: string;
+  date: string;
+  time: string;
+  category: string;
+  doctorName: string;
+  medicalcenterId: string;
+  centerName: string;
+  doctorNote: string;
+  centerNote: string;
+  maxPatientCount: number;
+  registeredPatientCount: number;
+}
+
+interface SessionWithCenterDetails {
+  session: Session;
+  centerDetails: Center;
+}
 const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>["mode"]) => {
   console.log(value.format("YYYY-MM-DD"), mode);
 };
@@ -27,7 +66,6 @@ const AppointmentCalendar = ({
   const { token } = theme.useToken();
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
 
-
   const backendURL = import.meta.env.VITE_BACKEND_URL;
   const config = {
     headers: {
@@ -37,7 +75,7 @@ const AppointmentCalendar = ({
   };
 
   // Fetch doctor appointment dates if detailType is "doctor"
-  const { data: doctorAppointmentDates, isLoading } = useQuery({
+  const { data: doctorAppointmentDates, isLoading: datesLoading } = useQuery({
     queryKey: ["doctorAppointmentDates", id],
     queryFn: () =>
       detailType === "doctor"
@@ -46,59 +84,50 @@ const AppointmentCalendar = ({
     staleTime: 200000,
   });
 
+   // Fetch center data
+   const { data: centerData, isLoading: centerLoading } = useQuery({
+    queryKey: ["centerData"],
+    queryFn: () => PatientService.getCenterData(backendURL, config),
+    staleTime: 200000,
+  });
+
+   // Fetch sessions for the selected date
+   const { data: sessionDetails, isLoading: sessionsLoading } = useQuery({
+    queryKey: ["sessionDetails", id, selectedDate?.format("YYYY-MM-DD")],
+    queryFn: () => {
+      if (detailType === "doctor" && selectedDate) {
+        return PatientService.getSessionsByDoctorAndDate(
+          backendURL, 
+          id, 
+          selectedDate.format("YYYY-MM-DD"), 
+          config
+        );
+      }
+      return Promise.resolve([]);
+    },
+    enabled: !!selectedDate, // Only run query when a date is selected
+    staleTime: 200000,
+  });
+
+    // Combine sessions with center details
+    const sessionsWithCenterDetails = useMemo(() => {
+      if (!sessionDetails || !centerData) return [];
+  
+      return sessionDetails.map(session => {
+        const centerDetails = centerData.find(
+          center => center.id === session.medicalcenterId
+        );
+  
+        return {
+          session,
+          centerDetails: centerDetails || {} as Center
+        };
+      });
+    }, [sessionDetails, centerData]);
+    
   const bookedDates = (doctorAppointmentDates || []).map((date) =>
     dayjs(date.date)
   );
-
-  const [medicalCenterData, setMedicalCenterData] = useState([
-    {
-      time: "08.00 AM - 11.00 AM",
-      name: "Nawaloka Hospital",
-      phoneNo: "011-5777777",
-      location: "23, Deshamanya H K Dharmadasa Mawatha, Colombo 00200",
-      email: "nawaloka@slt.lk",
-      category: "OPD",
-      doctorNote: "N/A",
-      centerNote:
-        "Please arrive at least 15 minutes before your scheduled appointment time for payment.",
-      availability: true,
-    },
-    {
-      time: "09.00 AM - 12.00 PM",
-      name: "Asiri Medical Hospital",
-      phoneNo: "011-1234567",
-      location: "123, Colombo Road, Colombo 00500",
-      email: "info@asiri.lk",
-      category: "Heart Health",
-      doctorNote: "N/A",
-      centerNote:
-        "Please arrive at least 15 minutes before your scheduled appointment time for payment.",
-      availability: false,
-    },
-  ]);
-
-  const [doctorDetails, setDoctorDetails] = useState([
-    {
-      time: "08.00 AM - 11.00 AM",
-      name: "Dr. Nishantha Perera",
-      degree: "MBBS (COL)",
-      speciality: "Cardiology",
-      doctorNote: "N/A",
-      centerNote:
-        "Please arrive at least 15 minutes before your scheduled appointment time for payment.",
-      availability: true,
-    },
-    {
-      time: "10.00 AM - 01.00 PM",
-      name: "Dr. Samantha Silva",
-      degree: "MD (Medicine)",
-      speciality: "Dermatology",
-      doctorNote: "N/A",
-      centerNote:
-        "Please arrive at least 15 minutes before your scheduled appointment time for payment.",
-      availability: false,
-    },
-  ]);
 
   const wrapperStyle: React.CSSProperties = {
     width: "100%",
@@ -120,18 +149,18 @@ const AppointmentCalendar = ({
     setSelectedDate(date);
   };
 
-  const details = detailType === "center" ? doctorDetails : medicalCenterData;
-
-  const appointmentsFound =
-    selectedDate && bookedDates.some((date) => date.isSame(selectedDate, "day"))
-      ? details.length
-      : 0;
+  const appointmentsFound = sessionDetails?.length || 0;
 
   const selectedDateFormatted = selectedDate ? selectedDate.format("D") : "";
   const selectedDayOfWeek = selectedDate ? selectedDate.format("dddd") : "";
   const selectedMonthYear = selectedDate
     ? selectedDate.format("MMMM YYYY")
     : "";
+
+     // Loading state
+  if (datesLoading || sessionsLoading || centerLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -161,15 +190,14 @@ const AppointmentCalendar = ({
             </div>
           </div>
         )}
-        {selectedDate &&
-          bookedDates.some((date) => date.isSame(selectedDate, "day")) &&
-          details.map((detail, index) => (
-            <DateAppointmentDetails
-              key={index}
-              details={detail}
-              detailType={detailType}
-            />
-          ))}
+          {sessionsWithCenterDetails.map((item) => (
+          <DateAppointmentDetails
+            key={item.session.id}
+            details={item.centerDetails}
+            sessionDetails={item.session}
+            detailType={detailType}
+          />
+        ))}
         {!selectedDate && <NoSelectedDate />}
       </div>
     </>
