@@ -20,8 +20,10 @@ interface Doctor {
 }
 
 interface Center {
+  id: string;
   name: string;
   address: string;
+  email: string;
   appointmentCategory: string[];
   noOfDoctors: number;
   description: string;

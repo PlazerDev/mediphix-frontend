@@ -3,8 +3,10 @@ import bgimage from "../../../assets/images/patient/appoinment/doctordetails.png
 import { BiSolidBadgeCheck } from "react-icons/bi";
 
 interface Center {
+  id: string;
   name: string;
   address: string;
+  email: string;
   appointmentCategory: string[];
   noOfDoctors: number;
   description: string;
