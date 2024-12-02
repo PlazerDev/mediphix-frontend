@@ -98,7 +98,7 @@ export class PatientService {
   ): Promise<Doctor[] | undefined> {
     try {
       const response: AxiosResponse<Doctor[]> = await axios.get(
-        `${backendURL}/patient/doctorData`,
+        `${backendURL}/patient/doctordata`,
         config
       );
 
@@ -126,7 +126,7 @@ export class PatientService {
   ): Promise<Center[] | undefined> {
     try {
       const response: AxiosResponse<Center[]> = await axios.get(
-        `${backendURL}/patient/centerData`,
+        `${backendURL}/patient/centerdata`,
         config
       );
 
@@ -155,7 +155,7 @@ export class PatientService {
   ): Promise<AppointmentDate[] | undefined> {
     try {
       const response: AxiosResponse<AppointmentDate[]> = await axios.get(
-        `${backendURL}/patient/${doctorId}/appointmentDates`,
+        `${backendURL}/patient/${doctorId}/appointmentdates`,
         config
       );
 
@@ -254,7 +254,7 @@ export class PatientService {
   ) {
     try {
       const response = await axios.post(
-        `${backendURL}/appointments`, 
+        `${backendURL}/appointment`, 
         bookingPayload, 
         config
       );
