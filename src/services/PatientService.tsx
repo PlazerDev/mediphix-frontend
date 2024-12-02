@@ -44,6 +44,7 @@ interface Session {
   date: string;
   time: string;
   category: string;
+  doctorId: string;
   doctorName: string;
   medicalcenterId: string;
   centerName: string;

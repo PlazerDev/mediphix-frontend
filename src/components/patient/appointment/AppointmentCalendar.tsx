@@ -14,6 +14,7 @@ interface AppointmentCalendarProps {
   id: string;
   category?: string; // Optional because it's only applicable for "center"
 }
+
 interface Center {
   id: string;
   name: string;
@@ -30,6 +31,7 @@ interface Session {
   date: string;
   time: string;
   category: string;
+  doctorId: string;
   doctorName: string;
   medicalcenterId: string;
   centerName: string;

@@ -10,6 +10,30 @@ import TokenService from "../../../services/TokenService";
 import { PatientService } from "../../../services/PatientService";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../Loading";
+import BookingFailed from "./BookingFailed";
+
+interface TimeSlot {
+  id: string;
+  startTime: string;
+  endTime: string;
+  maxPatientCount: number;
+  patientCount: number;
+}
+
+interface Session {
+  id: string;
+  date: string;
+  time: string;
+  category: string;
+  doctorId: string;
+  doctorName: string;
+  medicalcenterId: string;
+  centerName: string;
+  doctorNote: string;
+  centerNote: string;
+  maxPatientCount: number;
+  registeredPatientCount: number;
+}
 
 interface TimeSlot {
   id: string;
@@ -90,12 +114,12 @@ const BookAppointment = () => {
   // Handle booking appointment
   const handleBookAppointment = () => {
     if (!isTermsAgreed) {
-      // Show terms agreement error
+      <BookingFailed />;
       return;
     }
 
     if (!selectedTimeSlot) {
-      // Show time slot selection error
+      <BookingFailed />;
       return;
     }
 
