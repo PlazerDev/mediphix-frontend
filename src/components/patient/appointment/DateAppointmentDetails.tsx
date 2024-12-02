@@ -61,7 +61,7 @@ const DateAppointmentDetails = ({
         ? `/patient/appointment/createappoinmnets/doctor/${doctorName}/bookappointment`
         : `/patient/appointment/createappoinmnets/center/${centerName}/bookappointment`;
 
-    navigate(path, { state: { details, sessionDetails } });
+    navigate(path, { state: { sessionDetails } });
   };
 
   return (

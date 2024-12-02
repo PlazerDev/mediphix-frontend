@@ -1,39 +1,20 @@
 import { Breadcrumb } from "antd";
 import { Checkbox } from "antd";
 import type { CheckboxProps } from "antd";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import Footer from "../../Footer";
 import TimeSlotCard from "./TimeSlotCard";
-import { Navigate, useLocation, useParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { useState } from "react";
 import TokenService from "../../../services/TokenService";
 import { PatientService } from "../../../services/PatientService";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Loading from "../../Loading";
 import BookingFailed from "./BookingFailed";
-
-interface TimeSlot {
-  id: string;
-  startTime: string;
-  endTime: string;
-  maxPatientCount: number;
-  patientCount: number;
-}
-
-interface Session {
-  id: string;
-  date: string;
-  time: string;
-  category: string;
-  doctorId: string;
-  doctorName: string;
-  medicalcenterId: string;
-  centerName: string;
-  doctorNote: string;
-  centerNote: string;
-  maxPatientCount: number;
-  registeredPatientCount: number;
-}
 
 interface TimeSlot {
   id: string;
@@ -48,9 +29,9 @@ const onChange: CheckboxProps["onChange"] = (e) => {
 };
 
 const BookAppointment = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const { sessionId } = useParams<{ sessionId: string }>();
-  const centerDetails = location.state?.details;
   const sessionDetails = location.state?.sessionDetails;
 
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(
@@ -69,11 +50,18 @@ const BookAppointment = () => {
     },
   };
 
+  // Fetch patient data
+  const { data: patientData, isLoading: isPatientLoading } = useQuery({
+    queryKey: ["patientData", backendURL],
+    queryFn: () => PatientService.getPatientData(backendURL, config),
+    enabled: !!backendURL, // Only run if backendURL exists
+  });
+
   // Use React Query to fetch time slots
   const {
     data: timeSlots,
-    isLoading,
-    isError,
+    isLoading: isTimeSlotsLoading,
+    isError: isTimeSlotError,
   } = useQuery<TimeSlot[]>({
     queryKey: ["timeSlots", sessionId, backendURL, config],
     queryFn: () => {
@@ -91,18 +79,53 @@ const BookAppointment = () => {
     staleTime: 200000, // Cache data for 200 seconds
   });
 
-  // Handle error case
-  if (isError) {
-    return <Navigate to="/" />;
-  }
+  // Mutation for booking appointment
+  const bookAppointmentMutation = useMutation({
+    mutationFn: async () => {
+      // Validate required data
+      if (!sessionId || !selectedTimeSlot || !patientData) {
+        throw new Error("Missing required booking information");
+      }
 
-  // Handle loading state
-  if (isLoading) {
-    return <Loading footer={true} />;
-  }
+      // Prepare booking payload
+      const bookingPayload = {
+        sessionId: sessionId,
+        doctorId: sessionDetails.doctorId,
+        patientId: patientData._id, // Use patient ID from fetched patient data
+        timeSlotId: selectedTimeSlot.id,
+        medicalCenterId: sessionDetails.medicalcenterId,
+        medicalCenterName: sessionDetails.centerName,
+        category: sessionDetails.category,
+      };
+
+      // Call the booking service method
+      return PatientService.bookAppointment(backendURL, bookingPayload, config);
+    },
+    onSuccess: (response) => {
+      message.success("Appointment booked successfully!");
+      navigate("/appointments/confirmation", {
+        state: {
+          appointmentDetails: response,
+        },
+      });
+    },
+    onError: (error: any) => {
+      console.error("Booking failed", error);
+      message.error(error.message || "Failed to book appointment");
+    },
+  });
+
+ // Handle loading and error states
+ if (isPatientLoading || isTimeSlotsLoading) {
+  return <Loading footer={true} />;
+}
+
+if (isTimeSlotError || !patientData) {
+  return <BookingFailed />;
+}
 
   // Handle checkbox change for terms agreement
-  const handleTermsChange: CheckboxProps["onChange"] = (e) => {
+  const handleTermsChange = (e: any) => {
     setIsTermsAgreed(e.target.checked);
   };
 
@@ -114,17 +137,16 @@ const BookAppointment = () => {
   // Handle booking appointment
   const handleBookAppointment = () => {
     if (!isTermsAgreed) {
-      <BookingFailed />;
+      message.warning("Please agree to the terms and conditions");
       return;
     }
 
     if (!selectedTimeSlot) {
-      <BookingFailed />;
+      message.warning("Please select a time slot");
       return;
     }
-
-    // Implement booking logic
-    // This might involve calling a booking API endpoint
+    // Trigger the booking mutation
+    bookAppointmentMutation.mutate();
   };
 
   return (
@@ -132,7 +154,7 @@ const BookAppointment = () => {
       <div>
         <div>
           <p className="text-xl font-bold ml-[1%] mt-[1%]">
-            Book Appointment - {centerDetails?.name}
+            Book Appointment - {sessionDetails?.centerName}
           </p>
         </div>
         <div>
@@ -201,15 +223,13 @@ const BookAppointment = () => {
             <p className="text-[#868686] text-sm mt-3">
               Special Note From Doctor
             </p>
-            <p className="">{sessionDetails.doctorNote}</p>
+            <p className="">{sessionDetails?.doctorNote}</p>
           </div>
           <div>
             <p className="text-[#868686] text-sm mt-3">
               Special Note From Medical Center
             </p>
-            <p className="">
-             {sessionDetails.centerNote}
-            </p>
+            <p className="">{sessionDetails?.centerNote}</p>
           </div>
         </div>
         <div>
@@ -254,9 +274,9 @@ const BookAppointment = () => {
                 width: "200px",
                 height: "40px",
               }}
-              disabled={!isTermsAgreed || !selectedTimeSlot}
+              disabled={!isTermsAgreed || !selectedTimeSlot  || bookAppointmentMutation.isPending}
             >
-              Book the Appointment
+              {bookAppointmentMutation.isPending ? 'Booking...' : 'Book the Appointment'}
             </Button>
           </div>
         </div>

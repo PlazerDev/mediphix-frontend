@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import ErrorService from "./ErrorService";
 
 interface Patient {
+  _id: string;
   mobile_number: string;
   first_name: string;
   last_name: string;
@@ -235,6 +236,52 @@ export class PatientService {
         confirmButtonText: "OK",
       });
       throw error;
+    }
+  }
+
+  static async bookAppointment(
+    backendURL: string, 
+    bookingPayload: {
+      sessionId: string;
+      doctorId: string;
+      patientId: string;
+      timeSlotId: string;
+      medicalCenterId: string;
+      medicalCenterName: string;
+      category: string;
+    }, 
+    config: any
+  ) {
+    try {
+      const response = await axios.post(
+        `${backendURL}/appointments`, 
+        bookingPayload, 
+        config
+      );
+      
+      return response.data;
+    } catch (error: any) {
+      // Handle different types of errors
+      if (axios.isAxiosError(error)) {
+        // Axios-specific error handling
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          throw new Error(
+            error.response.data.message || 
+            'Failed to book appointment. Please try again.'
+          );
+        } else if (error.request) {
+          // The request was made but no response was received
+          throw new Error('No response received from server. Please check your connection.');
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          throw new Error('Error setting up appointment booking request.');
+        }
+      } else {
+        // Generic error handling
+        throw new Error('An unexpected error occurred while booking appointment.');
+      }
     }
   }
 }
