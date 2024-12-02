@@ -4,15 +4,19 @@ import type { CheckboxProps } from "antd";
 import { Button } from "antd";
 import Footer from "../../Footer";
 import TimeSlotCard from "./TimeSlotCard";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation, useParams } from "react-router-dom";
+import { useState } from "react";
+import TokenService from "../../../services/TokenService";
+import { PatientService } from "../../../services/PatientService";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../../Loading";
 
-interface BookAppointmentProps {
-  doctorName: string;
-  centerName: string;
-  time: string;
-  doctorNote: string;
-  centerNote: string;
-  category: string;
+interface TimeSlot {
+  id: string;
+  startTime: string;
+  endTime: string;
+  maxPatientCount: number;
+  patientCount: number;
 }
 
 const onChange: CheckboxProps["onChange"] = (e) => {
@@ -21,14 +25,90 @@ const onChange: CheckboxProps["onChange"] = (e) => {
 
 const BookAppointment = () => {
   const location = useLocation();
-  const details = location.state?.details;
+  const { sessionId } = useParams<{ sessionId: string }>();
+  const centerDetails = location.state?.details;
+  const sessionDetails = location.state?.sessionDetails;
+
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(
+    null
+  );
+  const [isTermsAgreed, setIsTermsAgreed] = useState<boolean>(false);
+
+  // Backend URL from environment variables
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+
+  // Configuration for the API request
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${TokenService.getToken()}`,
+    },
+  };
+
+  // Use React Query to fetch time slots
+  const {
+    data: timeSlots,
+    isLoading,
+    isError,
+  } = useQuery<TimeSlot[]>({
+    queryKey: ["timeSlots", sessionId, backendURL, config],
+    queryFn: () => {
+      // Ensure sessionId exists before making the request
+      if (!sessionId) {
+        throw new Error("No session ID provided");
+      }
+      return PatientService.getTimeSlotsBySessionId(
+        backendURL,
+        sessionId,
+        config
+      );
+    },
+    enabled: !!sessionId, // Only run the query if sessionId exists
+    staleTime: 200000, // Cache data for 200 seconds
+  });
+
+  // Handle error case
+  if (isError) {
+    return <Navigate to="/" />;
+  }
+
+  // Handle loading state
+  if (isLoading) {
+    return <Loading footer={true} />;
+  }
+
+  // Handle checkbox change for terms agreement
+  const handleTermsChange: CheckboxProps["onChange"] = (e) => {
+    setIsTermsAgreed(e.target.checked);
+  };
+
+  // Handle time slot selection
+  const handleTimeSlotSelect = (slot: TimeSlot) => {
+    setSelectedTimeSlot(slot);
+  };
+
+  // Handle booking appointment
+  const handleBookAppointment = () => {
+    if (!isTermsAgreed) {
+      // Show terms agreement error
+      return;
+    }
+
+    if (!selectedTimeSlot) {
+      // Show time slot selection error
+      return;
+    }
+
+    // Implement booking logic
+    // This might involve calling a booking API endpoint
+  };
 
   return (
     <>
       <div>
         <div>
           <p className="text-xl font-bold ml-[1%] mt-[1%]">
-            Book Appointment - {details.name}
+            Book Appointment - {centerDetails?.name}
           </p>
         </div>
         <div>
@@ -42,7 +122,7 @@ const BookAppointment = () => {
                 title: <a href="">Create an appointment</a>,
               },
               {
-                title: "DR_NISHANTHA",
+                title: "{details?.name}",
               },
               {
                 title: <a href=""> Book appointment </a>,
@@ -59,17 +139,17 @@ const BookAppointment = () => {
               <div className="flex gap-4 mt-3">
                 <div>
                   <p className="text-[#868686] text-sm ">Time Frame</p>
-                  <p className="font-bold">{details.time}</p>
+                  <p className="font-bold">{sessionDetails.time}</p>
                 </div>
 
                 <div className="flex flex-col ml-10">
                   <p className="text-[#868686] text-sm">Date</p>
-                  <p className="font-bold">{details.date}</p>
+                  <p className="font-bold">{sessionDetails.date}</p>
                 </div>
 
                 <div className="flex flex-col ml-10 ">
                   <p className="text-[#868686] text-sm">Appointment Category</p>
-                  <p className="font-bold">{details.category}</p>
+                  <p className="font-bold">{sessionDetails.category}</p>
                 </div>
               </div>
             </div>
@@ -78,13 +158,13 @@ const BookAppointment = () => {
             <div>
               <p className="text-[#868686] text-sm ">Doctor’s Name</p>
               <a style={{ color: "orange-500" }}>
-                <u>Dr. C.M.K Jayawardana</u>
+                <u>Dr.{sessionDetails.doctorName}</u>
               </a>
             </div>
             <div className="flex flex-col ml-10 justify-center ">
               <p className="text-[#868686] text-sm">Medical Center’s Name</p>
               <a style={{ color: "#F97316" }}>
-                <u>{details.center}</u>
+                <u>{sessionDetails.CenterName}</u>
               </a>
             </div>
           </div>
@@ -97,20 +177,23 @@ const BookAppointment = () => {
             <p className="text-[#868686] text-sm mt-3">
               Special Note From Doctor
             </p>
-            <p className="">N/A</p>
+            <p className="">{sessionDetails.doctorNote}</p>
           </div>
           <div>
             <p className="text-[#868686] text-sm mt-3">
               Special Note From Medical Center
             </p>
             <p className="">
-              Please arrive at least 15 minutes before your scheduled
-              appointment time for payment.
+             {sessionDetails.centerNote}
             </p>
           </div>
         </div>
         <div>
-          <TimeSlotCard />
+          <TimeSlotCard
+            timeSlots={timeSlots || []}
+            onTimeSlotSelect={handleTimeSlotSelect}
+            selectedTimeSlot={selectedTimeSlot}
+          />
         </div>
 
         <div className="relative bg-[#ffffff] rounded-[16px] p-3 ml-[1%] mt-3 mb-1 mr-[1%] h-50">
@@ -140,19 +223,20 @@ const BookAppointment = () => {
             </Button>
             <Button
               type="primary"
+              onClick={handleBookAppointment}
               style={{
                 backgroundColor: "orange",
                 borderColor: "orange",
                 width: "200px",
                 height: "40px",
               }}
+              disabled={!isTermsAgreed || !selectedTimeSlot}
             >
               Book the Appointment
             </Button>
           </div>
         </div>
         <Footer />
-        <div></div>
       </div>
     </>
   );

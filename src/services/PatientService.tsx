@@ -212,10 +212,10 @@ export class PatientService {
     backendURL: string,
     sessionId: string,
     config: AxiosRequestConfig
-  ): Promise<TimeSlot[] | undefined> {
+  ): Promise<TimeSlot[]> {
     try {
       const response: AxiosResponse<TimeSlot[]> = await axios.get(
-        `${backendURL}/session/${sessionId}/timeslots`,
+        `${backendURL}/patient/${sessionId}/timeslots`,
         config
       );
 
@@ -223,7 +223,7 @@ export class PatientService {
         return response.data;
       } else {
         ErrorService.handleError(response);
-        return undefined;
+        throw new Error('Failed to fetch time slots');
       }
     } catch (error) {
       console.error("An unexpected error occurred:", error);
@@ -233,7 +233,7 @@ export class PatientService {
         icon: "error",
         confirmButtonText: "OK",
       });
-      return undefined;
+      throw error;
     }
   }
 }

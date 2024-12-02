@@ -13,12 +13,6 @@ interface Center {
   phoneNo: string;
 }
 
-
-interface Doctor {
-  degree: string;
-  speciality: string;
-}
-
 interface Session {
   id: string;
   date: string;
@@ -66,7 +60,7 @@ const DateAppointmentDetails = ({
         ? `/patient/appointment/createappoinmnets/doctor/${doctorName}/bookappointment`
         : `/patient/appointment/createappoinmnets/center/${centerName}/bookappointment`;
 
-    navigate(path, { state: { details } });
+    navigate(path, { state: { details, sessionDetails } });
   };
 
   return (
@@ -162,7 +156,7 @@ const DateAppointmentDetails = ({
               <p className=" font-semibold mb-2">Additional Details</p>
             </div>
             <p className="text-[#868686] text-sm">Special Note From Doctor</p>
-            <p>{doctorNote}</p>
+            <p>{doctorNote || 'No special notes from doctor.'}</p>
           </div>
           <div className="ml-4 pb-4">
             <div className="text-[#363636]">
@@ -170,7 +164,7 @@ const DateAppointmentDetails = ({
                 Special Note From Medical Center
               </p>
             </div>
-            <p>{centerNote}</p>
+            <p>{centerNote  || 'No special notes from medical center.'}</p>
           </div>
         </div>
       </div>

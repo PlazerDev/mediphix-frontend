@@ -39,10 +39,10 @@ const DetailsBeforeAppointment = () => {
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const hardcodedAppointmentDates : Record<string, string[]> = {
-    "OPD": ["2024-11-30", "2024-12-25", "2024-12-30"],
-    "Heart Health": ["2024-12-01", "2024-12-05", "2024-12-10"],
-  };
+  // const hardcodedAppointmentDates : Record<string, string[]> = {
+  //   "OPD": ["2024-11-30", "2024-12-25", "2024-12-30"],
+  //   "Heart Health": ["2024-12-01", "2024-12-05", "2024-12-10"],
+  // };
 
   const fetchAppointmentDates = (category: string) => {
     setSelectedCategory(category);

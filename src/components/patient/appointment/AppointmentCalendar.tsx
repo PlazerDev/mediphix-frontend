@@ -14,17 +14,6 @@ interface AppointmentCalendarProps {
   id: string;
   category?: string; // Optional because it's only applicable for "center"
 }
-
-interface Doctor {
-  id: string;
-  name: string;
-  degree: string;
-  speciality: string;
-  appointmentCategory: string[];
-  description: string;
-  centers: string[];
-}
-
 interface Center {
   id: string;
   name: string;
