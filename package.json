@@ -23,7 +23,7 @@
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.23.1",
     "react-spinners": "^0.14.1",
-    "sweetalert2": "^11.12.4",
+    "sweetalert2": "^11.14.5",
     "typeface-cookie": "^1.1.13"
   },
   "devDependencies": {
