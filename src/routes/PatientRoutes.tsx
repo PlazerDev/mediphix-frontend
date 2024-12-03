@@ -55,7 +55,7 @@ function PatientRoutes() {
               // must be same order as buttontiles
               navigations={[
                 "/patient/appointment/upcomingappointments",
-                "/patient/appoinment/createappoinmnets",
+                "/patient/appointment/createappoinmnets",
                 "/patient/appointment/previousappointments",
               ]}
             />
@@ -66,7 +66,7 @@ function PatientRoutes() {
           element={<AppointmentDetails />}
         />
         <Route
-          path="/appoinment/createappoinmnets"
+          path="/appointment/createappoinmnets"
           element={<CreateAppointment />}
         />
         <Route
