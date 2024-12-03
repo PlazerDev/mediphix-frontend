@@ -11,23 +11,24 @@ import TokenService from "../../../services/TokenService";
 import { useQuery } from "@tanstack/react-query";
 
 interface Doctor {
+  _id: string;
   name: string;
-  degree: string;
-  speciality: string;
-  appointmentCategory: string[];
-  description: string;
-  centers: string[];
+  education: string[];
+  specialization?: string[];
+  category: string[];
+  medical_centers: string[];
+  description?: string;
 }
 
 interface Center {
-  id: string;
+  _id: string;
   name: string;
   address: string;
   email: string;
-  appointmentCategory: string[];
-  noOfDoctors: number;
-  description: string;
-  phoneNo: string;
+  appointmentCategories: string[];
+  noOfDoctors?: number;
+  description?: string;
+  mobile: string;
 }
 
 const onChange = (value: string) => {
@@ -39,7 +40,7 @@ const onSearch = (value: string) => {
 };
 
 const CreateAppointment = () => {
-  const [detailType, setDetailType] = useState("doctor");
+  const [detailType, setDetailType] = useState<"doctor" | "center">("doctor");
   const navigate = useNavigate();
 
   const backendURL = import.meta.env.VITE_BACKEND_URL;
@@ -50,19 +51,30 @@ const CreateAppointment = () => {
     },
   };
 
-  // Fetch doctor data 
-  const { data: doctorList} = useQuery({
+  // Fetch doctor data
+  const { data: doctorList } = useQuery({
     queryKey: ["doctors", backendURL, config],
     queryFn: () => PatientService.getDoctorData(backendURL, config),
     staleTime: 200000,
   });
 
   // Fetch center data
-  const { data: centerList} = useQuery({
+  const { data: centerList } = useQuery({
     queryKey: ["centers", backendURL, config],
     queryFn: () => PatientService.getCenterData(backendURL, config),
     staleTime: 200000,
   });
+
+  // Transform doctors with medical center names
+  const transformedDoctorList =
+    doctorList?.map((doctor) => ({
+      ...doctor,
+      medical_center_names: doctor.medical_centers.map(
+        (centerId) =>
+          centerList?.find((center) => center._id === centerId)?.name ||
+          centerId
+      ),
+    })) || [];
 
   const handleItemClick = (list: Doctor | Center) => {
     navigate("/patient/appointment/createappoinmnets/details", {
@@ -71,10 +83,12 @@ const CreateAppointment = () => {
   };
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setDetailType(e.target.value);
+    const value = e.target.value;
+    setDetailType(value as "doctor" | "center");
   };
 
-  const detailsList = detailType === "doctor" ? doctorList || []: centerList || [];
+  const detailsList =
+    detailType === "doctor" ? transformedDoctorList : centerList || [];
 
   return (
     <>
@@ -145,7 +159,7 @@ const CreateAppointment = () => {
       <div>
         {detailsList.map((list, index) => (
           <div
-            key={index}
+            key={list._id || index}
             className="cursor-pointer"
             onClick={() => handleItemClick(list)}
           >
@@ -154,16 +168,26 @@ const CreateAppointment = () => {
               name={list.name}
               topic2Value={
                 detailType === "doctor"
-                  ? (list as Doctor).degree +
-                    " specialized in " +
-                    (list as Doctor).speciality
+                  ? `${(list as Doctor).education.join(", ")} ${
+                      (list as Doctor).specialization
+                        ? `specialized in ${(
+                            list as Doctor
+                          ).specialization?.join(", ")}`
+                        : ""
+                    }`.trim()
                   : (list as Center).address
               }
-              appointmentCategory={list.appointmentCategory}
+              appointmentCategory={
+                detailType === "doctor"
+                  ? (list as Doctor).category
+                  : (list as Center).appointmentCategories
+              }
               topic4Value={
                 detailType === "doctor"
-                  ? (list as Doctor).centers.join(", ")
-                  : (list as Center).noOfDoctors.toString()
+                  ? (
+                      list as Doctor & { medical_center_names: string[] }
+                    ).medical_center_names.join(", ")
+                  : (list as Center).noOfDoctors?.toString()
               }
             />
           </div>
