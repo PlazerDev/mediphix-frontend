@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import DetailCard from "./DetailCard";
 import { Breadcrumb } from "antd";
 const { RangePicker } = DatePicker;
@@ -9,6 +9,7 @@ import { Select } from "antd";
 import { PatientService } from "../../../services/PatientService";
 import TokenService from "../../../services/TokenService";
 import { useQuery } from "@tanstack/react-query";
+import Loading from "../../Loading";
 
 interface Doctor {
   _id: string;
@@ -53,18 +54,40 @@ const CreateAppointment = () => {
   };
 
   // Fetch doctor data
-  const { data: doctorList } = useQuery({
+  const {
+    data: doctorList,
+    isLoading: isDoctorLoading,
+    isError: isDoctorError,
+  } = useQuery({
     queryKey: ["doctors", backendURL, config],
     queryFn: () => PatientService.getDoctorData(backendURL, config),
     staleTime: 200000,
   });
 
   // Fetch center data
-  const { data: centerList } = useQuery({
+  const {
+    data: centerList,
+    isLoading: isCenterLoading,
+    isError: isCenterError,
+  } = useQuery({
     queryKey: ["centers", backendURL, config],
     queryFn: () => PatientService.getCenterData(backendURL, config),
     staleTime: 200000,
   });
+
+  // Check for any errors
+  if (isDoctorError || isCenterError) {
+    return <Navigate to="/patient/appointment" />;
+  }
+
+  // Check if still loading
+  if (isDoctorLoading || isCenterLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[calc(100vh-100px)]">
+        <Loading footer={true} />
+      </div>
+    );
+  }
 
   // Transform doctors with medical center names
   const transformedDoctorList =
@@ -92,7 +115,11 @@ const CreateAppointment = () => {
     detailType === "doctor" ? transformedDoctorList : centerList || [];
 
   return (
-    <>
+    <div
+      className={`flex flex-col p-4 ${
+        !isDoctorLoading && !isCenterLoading ? "fade-in" : ""
+      }`}
+    >
       <div>
         <p className="text-xl font-bold ml-[1%] mt-[1%]">
           Create an Appointment
@@ -194,7 +221,7 @@ const CreateAppointment = () => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

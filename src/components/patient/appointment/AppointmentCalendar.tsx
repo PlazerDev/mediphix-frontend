@@ -8,6 +8,7 @@ import DateAppointmentDetails from "./DateAppointmentDetails";
 import TokenService from "../../../services/TokenService";
 import { useQuery } from "@tanstack/react-query";
 import { PatientService } from "../../../services/PatientService";
+import Loading from "../../Loading";
 
 interface AppointmentCalendarProps {
   detailType: string;
@@ -149,9 +150,13 @@ const AppointmentCalendar = ({
     : "";
 
      // Loading state
-  if (datesLoading || sessionsLoading || centerLoading) {
-    return <div>Loading...</div>;
-  }
+     if (datesLoading || sessionsLoading || centerLoading) {
+      return (
+        <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
+          <Loading footer={true} />
+        </div>
+      );
+    }
 
   return (
     <>
