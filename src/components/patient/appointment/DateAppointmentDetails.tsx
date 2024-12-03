@@ -14,18 +14,21 @@ interface Center {
 }
 
 interface Session {
-  id: string;
-  date: string;
+  _id: string;
+  sessionDate: string;
   time: string;
+  payment:string;
+  location: string;
   category: string;
   doctorId: string;
   doctorName: string;
-  medicalcenterId: string;
-  centerName: string;
+  medicalCenterId: string;
+  medicalCenterName: string;
+  medicalCenterMobile: string;
   doctorNote: string;
-  centerNote: string;
+  medicalCenterNote: string;
   maxPatientCount: number;
-  registeredPatientCount: number;
+  reservedPatientCount: number;
 }
 
 interface DateAppointmentDetailsProps {
@@ -42,24 +45,25 @@ const DateAppointmentDetails = ({
   const {
     time,
     doctorNote,
-    centerNote,
+    medicalCenterNote,
     maxPatientCount,
-    registeredPatientCount,
+    reservedPatientCount,
     category,
+    payment,
     doctorName,
-    centerName,
+    medicalCenterName,
   } = sessionDetails;
 
   const navigate = useNavigate();
 
   // Calculate availability
-  const availability = maxPatientCount > registeredPatientCount;
+  const availability = maxPatientCount > reservedPatientCount;
 
   const handleBookAppointment = () => {
     const path =
       detailType === "doctor"
         ? `/patient/appointment/createappoinmnets/doctor/${doctorName}/bookappointment`
-        : `/patient/appointment/createappoinmnets/center/${centerName}/bookappointment`;
+        : `/patient/appointment/createappoinmnets/center/${medicalCenterName}/bookappointment`;
 
     navigate(path, { state: { sessionDetails } });
   };
@@ -115,10 +119,10 @@ const DateAppointmentDetails = ({
                 />
               </div>
 
-              <div className="mr-20 w-1/3">
+              <div className="mr-10 w-1/4">
                 <p className="text-[#868686] text-sm">Name</p>
                 <a className="mb-2 text-[#FF7300] underline">
-                  {detailType === "doctor" ? centerName : doctorName}
+                  {detailType === "doctor" ? medicalCenterName : doctorName}
                 </a>
                 {/* {detailType === "center" && (
                   <>
@@ -141,7 +145,7 @@ const DateAppointmentDetails = ({
                 )}
               </div>
               {detailType === "doctor" && (
-                <div>
+                <div className="w-1/4 mr-10">
                   <p className="text-[#868686] text-sm">Location</p>
                   <p className="mb-1">
                     {(details as Center).address}
@@ -150,7 +154,16 @@ const DateAppointmentDetails = ({
                   <p className="mb-1">{(details as Center).email}</p>
                 </div>
               )}
+              <div>
+                  <p className="text-[#868686] text-sm">Consultation Fee</p>
+                  <p className="mb-1">
+                    Rs. {payment}
+                  </p>
+                  <p className="text-[#868686] text-sm mt-2"></p>
+                  <p className="mb-1"></p>
+                </div>
             </div>
+            
           </div>
           <div className="ml-4">
             <div className="text-[#363636]">
@@ -165,7 +178,7 @@ const DateAppointmentDetails = ({
                 Special Note From Medical Center
               </p>
             </div>
-            <p>{centerNote  || 'No special notes from medical center.'}</p>
+            <p>{medicalCenterNote  || 'No special notes from medical center.'}</p>
           </div>
         </div>
       </div>

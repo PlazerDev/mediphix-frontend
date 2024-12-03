@@ -96,7 +96,7 @@ const CreateAppointment = () => {
       medical_center_names: doctor.medical_centers.map(
         (centerId) =>
           centerList?.find((center) => center._id === centerId)?.name ||
-          "Asiri Medical Center" //used for dev purposes. Remove this
+          "Nawaloka Hospital" //used for dev purposes. Remove this
       ),
     })) || [];
 
