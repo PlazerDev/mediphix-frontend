@@ -17,6 +17,7 @@ interface Doctor {
   specialization?: string[];
   category: string[];
   medical_centers: string[];
+  medical_center_names: string[];
   description?: string;
 }
 
@@ -72,7 +73,7 @@ const CreateAppointment = () => {
       medical_center_names: doctor.medical_centers.map(
         (centerId) =>
           centerList?.find((center) => center._id === centerId)?.name ||
-          centerId
+          "Asiri Medical Center" //used for dev purposes. Remove this
       ),
     })) || [];
 

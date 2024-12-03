@@ -16,14 +16,14 @@ interface AppointmentCalendarProps {
 }
 
 interface Center {
-  id: string;
+  _id: string;
   name: string;
   address: string;
   email: string;
-  appointmentCategory: string[];
-  noOfDoctors: number;
-  description: string;
-  phoneNo: string;
+  appointmentCategories: string[];
+  noOfDoctors?: number;
+  description?: string;
+  mobile: string;
 }
 
 interface Session {
@@ -106,7 +106,7 @@ const AppointmentCalendar = ({
   
       return sessionDetails.map(session => {
         const centerDetails = centerData.find(
-          center => center.id === session.medicalcenterId
+          center => center._id === session.medicalcenterId
         );
   
         return {

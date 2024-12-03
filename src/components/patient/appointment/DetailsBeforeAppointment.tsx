@@ -9,24 +9,25 @@ import { Breadcrumb } from "antd";
 import { useState } from "react";
 
 interface Doctor {
-  id: string;
+  _id: string;
   name: string;
-  degree: string;
-  speciality: string;
-  appointmentCategory: string[];
-  description: string;
-  centers: string[];
+  education: string[];
+  specialization?: string[];
+  category: string[];
+  medical_centers: string[];
+  medical_center_names: string[];
+  description?: string;
 }
 
 interface Center {
-  id: string;
+  _id: string;
   name: string;
   address: string;
   email: string;
-  appointmentCategory: string[];
-  noOfDoctors: number;
-  description: string;
-  phoneNo: string;
+  appointmentCategories: string[];
+  noOfDoctors?: number;
+  description?: string;
+  mobile: string;
 }
 
 interface DetailsProps {
@@ -53,8 +54,12 @@ const DetailsBeforeAppointment = () => {
     categories.map((category, index) => (
       <div
         key={index}
-        className={`flex col-span-1 ${type === "center" ? "cursor-pointer" : ""}`}
-        onClick={type === "center" ? () => fetchAppointmentDates(category) : undefined}
+        className={`flex col-span-1 ${
+          type === "center" ? "cursor-pointer" : ""
+        }`}
+        onClick={
+          type === "center" ? () => fetchAppointmentDates(category) : undefined
+        }
       >
         <GoDotFill className="text-[10px] mr-2 mt-2" />
         <a className="flex underline w-1/2">{category}</a>
@@ -62,22 +67,20 @@ const DetailsBeforeAppointment = () => {
       </div>
     ));
 
-    if (selectedCategory) {
-      return (
-        <AppointmentCalendar
-          detailType={detailType}
-          id={(list as Doctor | Center).id}
-          category={selectedCategory}
-        />
-      );
-    }
+  if (selectedCategory) {
+    return (
+      <AppointmentCalendar
+        detailType={detailType}
+        id={(list as Doctor | Center)._id}
+        category={selectedCategory}
+      />
+    );
+  }
 
   return (
     <>
       <div>
-        <p className="text-xl font-bold ml-[1%] mt-4">
-          Create an Appointment
-        </p>
+        <p className="text-xl font-bold ml-[1%] mt-4">Create an Appointment</p>
       </div>
       <div>
         <Breadcrumb
@@ -109,7 +112,14 @@ const DetailsBeforeAppointment = () => {
               Available at
             </h3>
             <div className="grid grid-cols-2 gap-4 ml-4">
-              {renderCategory((list as Doctor).centers, "doctor")}
+              {(list as Doctor).medical_center_names &&
+              (list as Doctor).medical_center_names.length > 0 ? (
+                renderCategory((list as Doctor).medical_center_names, "doctor")
+              ) : (
+                <p className="ml-4 text-gray-500">
+                  No medical centers available
+                </p>
+              )}
             </div>
           </>
         ) : (
@@ -121,14 +131,17 @@ const DetailsBeforeAppointment = () => {
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4 ml-4">
-              {renderCategory((list as Center).appointmentCategory, "center")}
+              {renderCategory((list as Center).appointmentCategories, "center")}
             </div>
           </>
         )}
       </div>
 
       {detailType === "doctor" && (
-        <AppointmentCalendar detailType={detailType} id={(list as Doctor).id} />
+        <AppointmentCalendar
+          detailType={detailType}
+          id={(list as Doctor)._id}
+        />
       )}
 
       <Footer />

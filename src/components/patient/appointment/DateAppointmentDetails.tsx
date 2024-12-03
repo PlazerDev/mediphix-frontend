@@ -3,14 +3,14 @@ import profilepic from "./../../../assets/images/patient/appoinment/doctorImage.
 import centerlogo from "./../../../assets/images/patient/appoinment/NawalokaHospitals.jpeg";
 
 interface Center {
-  id: string;
+  _id: string;
   name: string;
   address: string;
   email: string;
-  appointmentCategory: string[];
-  noOfDoctors: number;
-  description: string;
-  phoneNo: string;
+  appointmentCategories: string[];
+  noOfDoctors?: number;
+  description?: string;
+  mobile: string;
 }
 
 interface Session {
@@ -135,7 +135,7 @@ const DateAppointmentDetails = ({
                       Contact Number
                     </p>
                     <p className="mb-1">
-                      {(details as Center).phoneNo}
+                      {(details as Center).mobile}
                     </p>
                   </>
                 )}
