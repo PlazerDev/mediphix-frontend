@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import ErrorService from "./ErrorService";
 
 interface Patient {
+  _id: string;
   mobile_number: string;
   first_name: string;
   last_name: string;
@@ -12,6 +13,54 @@ interface Patient {
   address: string;
   nationality: string;
   gender: string;
+}
+
+interface Doctor {
+  _id: string;
+  name: string;
+  education: string[];
+  category: string[];
+  specialization?: string[];
+  medical_centers: string[];
+  description?: string;
+}
+
+interface Center {
+  _id: string;
+  name: string;
+  address: string;
+  email: string;
+  appointmentCategories: string[];
+  noOfDoctors?: number;
+  description?: string;
+  mobile: string;
+}
+
+interface AppointmentDate {
+  date: string; // Format: YYYY-MM-DD
+}
+
+interface Session {
+  id: string;
+  date: string;
+  time: string;
+  category: string;
+  doctorId: string;
+  doctorName: string;
+  medicalcenterId: string;
+  centerName: string;
+  doctorNote: string;
+  centerNote: string;
+  maxPatientCount: number;
+  registeredPatientCount: number;
+}
+
+interface TimeSlot {
+  id: string;
+  startTime: string;
+  endTime: string;
+  maxPatientCount: number;
+  patientCount: number;
 }
 
 export class PatientService {
@@ -40,6 +89,199 @@ export class PatientService {
         confirmButtonText: "OK",
       });
       return undefined; // Return undefined on error
+    }
+  }
+
+  static async getDoctorData(
+    backendURL: string,
+    config: AxiosRequestConfig
+  ): Promise<Doctor[] | undefined> {
+    try {
+      const response: AxiosResponse<Doctor[]> = await axios.get(
+        `${backendURL}/patient/doctordata`,
+        config
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        ErrorService.handleError(response);
+        return undefined;
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "An unexpected error occurred. Please try again later.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return undefined;
+    }
+  }
+
+  static async getCenterData(
+    backendURL: string,
+    config: AxiosRequestConfig
+  ): Promise<Center[] | undefined> {
+    try {
+      const response: AxiosResponse<Center[]> = await axios.get(
+        `${backendURL}/patient/centerdata`,
+        config
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        ErrorService.handleError(response);
+        return undefined;
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "An unexpected error occurred. Please try again later.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return undefined;
+    }
+  }
+
+  static async getDoctorAppointmentDates(
+    backendURL: string,
+    doctorId: string,
+    config: AxiosRequestConfig
+  ): Promise<AppointmentDate[] | undefined> {
+    try {
+      const response: AxiosResponse<AppointmentDate[]> = await axios.get(
+        `${backendURL}/patient/${doctorId}/appointmentdates`,
+        config
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        ErrorService.handleError(response);
+        return undefined;
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "An unexpected error occurred. Please try again later.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return undefined;
+    }
+  }
+
+  static async getSessionsByDoctorAndDate(
+    backendURL: string,
+    doctorId: string,
+    appointmentDate: string,
+    config: AxiosRequestConfig
+  ): Promise<Session[] | undefined> {
+    try {
+      const response: AxiosResponse<Session[]> = await axios.get(
+        `${backendURL}/patient/${doctorId}/sessions`,
+        {
+          ...config,
+          params: { date: appointmentDate },
+        }
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        ErrorService.handleError(response);
+        return undefined;
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "An unexpected error occurred. Please try again later.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return undefined;
+    }
+  }
+
+  static async getTimeSlotsBySessionId(
+    backendURL: string,
+    sessionId: string,
+    config: AxiosRequestConfig
+  ): Promise<TimeSlot[]> {
+    try {
+      const response: AxiosResponse<TimeSlot[]> = await axios.get(
+        `${backendURL}/patient/${sessionId}/timeslots`,
+        config
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        ErrorService.handleError(response);
+        throw new Error('Failed to fetch time slots');
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "An unexpected error occurred. Please try again later.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      throw error;
+    }
+  }
+
+  static async bookAppointment(
+    backendURL: string, 
+    bookingPayload: {
+      sessionId: string;
+      doctorId: string;
+      patientId: string;
+      timeSlotId: string;
+      medicalCenterId: string;
+      medicalCenterName: string;
+      category: string;
+    }, 
+    config: any
+  ) {
+    try {
+      const response = await axios.post(
+        `${backendURL}/appointment`, 
+        bookingPayload, 
+        config
+      );
+      
+      return response.data;
+    } catch (error: any) {
+      // Handle different types of errors
+      if (axios.isAxiosError(error)) {
+        // Axios-specific error handling
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          throw new Error(
+            error.response.data.message || 
+            'Failed to book appointment. Please try again.'
+          );
+        } else if (error.request) {
+          // The request was made but no response was received
+          throw new Error('No response received from server. Please check your connection.');
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          throw new Error('Error setting up appointment booking request.');
+        }
+      } else {
+        // Generic error handling
+        throw new Error('An unexpected error occurred while booking appointment.');
+      }
     }
   }
 }

@@ -1,17 +1,27 @@
 import { Breadcrumb } from "antd";
 import { Checkbox } from "antd";
 import type { CheckboxProps } from "antd";
-import { Button} from "antd";
+import { Button, message } from "antd";
 import Footer from "../../Footer";
 import TimeSlotCard from "./TimeSlotCard";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
+import { useState } from "react";
+import TokenService from "../../../services/TokenService";
+import { PatientService } from "../../../services/PatientService";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import Loading from "../../Loading";
+import BookingFailed from "./BookingFailed";
 
-interface BookAppointmentProps {
-  doctorName: string;
-  centerName: string;
-  time: string;
-  doctorNote: string;
-  centerNote: string;
-  category: string;
+interface TimeSlot {
+  id: string;
+  startTime: string;
+  endTime: string;
+  maxPatientCount: number;
+  patientCount: number;
 }
 
 const onChange: CheckboxProps["onChange"] = (e) => {
@@ -19,12 +29,132 @@ const onChange: CheckboxProps["onChange"] = (e) => {
 };
 
 const BookAppointment = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { sessionId } = useParams<{ sessionId: string }>();
+  const sessionDetails = location.state?.sessionDetails;
+
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(
+    null
+  );
+  const [isTermsAgreed, setIsTermsAgreed] = useState<boolean>(false);
+
+  // Backend URL from environment variables
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+
+  // Configuration for the API request
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${TokenService.getToken()}`,
+    },
+  };
+
+  // Fetch patient data
+  const { data: patientData, isLoading: isPatientLoading } = useQuery({
+    queryKey: ["patientData", backendURL],
+    queryFn: () => PatientService.getPatientData(backendURL, config),
+    enabled: !!backendURL, // Only run if backendURL exists
+  });
+
+  // Use React Query to fetch time slots
+  const {
+    data: timeSlots,
+    isLoading: isTimeSlotsLoading,
+    isError: isTimeSlotError,
+  } = useQuery<TimeSlot[]>({
+    queryKey: ["timeSlots", sessionId, backendURL, config],
+    queryFn: () => {
+      // Ensure sessionId exists before making the request
+      if (!sessionId) {
+        throw new Error("No session ID provided");
+      }
+      return PatientService.getTimeSlotsBySessionId(
+        backendURL,
+        sessionId,
+        config
+      );
+    },
+    enabled: !!sessionId, // Only run the query if sessionId exists
+    staleTime: 200000, // Cache data for 200 seconds
+  });
+
+  // Mutation for booking appointment
+  const bookAppointmentMutation = useMutation({
+    mutationFn: async () => {
+      // Validate required data
+      if (!sessionId || !selectedTimeSlot || !patientData) {
+        throw new Error("Missing required booking information");
+      }
+
+      // Prepare booking payload
+      const bookingPayload = {
+        sessionId: sessionId,
+        doctorId: sessionDetails.doctorId,
+        patientId: patientData._id, // Use patient ID from fetched patient data
+        timeSlotId: selectedTimeSlot.id,
+        medicalCenterId: sessionDetails.medicalcenterId,
+        medicalCenterName: sessionDetails.centerName,
+        category: sessionDetails.category,
+      };
+
+      // Call the booking service method
+      return PatientService.bookAppointment(backendURL, bookingPayload, config);
+    },
+    onSuccess: (response) => {
+      message.success("Appointment booked successfully!");
+      navigate("/appointments/confirmation", {
+        state: {
+          appointmentDetails: response,
+        },
+      });
+    },
+    onError: (error: any) => {
+      console.error("Booking failed", error);
+      message.error(error.message || "Failed to book appointment");
+    },
+  });
+
+ // Handle loading and error states
+ if (isPatientLoading || isTimeSlotsLoading) {
+  return <Loading footer={true} />;
+}
+
+if (isTimeSlotError || !patientData) {
+  return <BookingFailed />;
+}
+
+  // Handle checkbox change for terms agreement
+  const handleTermsChange = (e: any) => {
+    setIsTermsAgreed(e.target.checked);
+  };
+
+  // Handle time slot selection
+  const handleTimeSlotSelect = (slot: TimeSlot) => {
+    setSelectedTimeSlot(slot);
+  };
+
+  // Handle booking appointment
+  const handleBookAppointment = () => {
+    if (!isTermsAgreed) {
+      message.warning("Please agree to the terms and conditions");
+      return;
+    }
+
+    if (!selectedTimeSlot) {
+      message.warning("Please select a time slot");
+      return;
+    }
+    // Trigger the booking mutation
+    bookAppointmentMutation.mutate();
+  };
+
   return (
     <>
       <div>
         <div>
           <p className="text-xl font-bold ml-[1%] mt-[1%]">
-            Book Appointment - Nawaloka Hospital
+            Book Appointment - {sessionDetails?.centerName}
           </p>
         </div>
         <div>
@@ -38,7 +168,7 @@ const BookAppointment = () => {
                 title: <a href="">Create an appointment</a>,
               },
               {
-                title: "DR_NISHANTHA",
+                title: "{details?.name}",
               },
               {
                 title: <a href=""> Book appointment </a>,
@@ -55,17 +185,17 @@ const BookAppointment = () => {
               <div className="flex gap-4 mt-3">
                 <div>
                   <p className="text-[#868686] text-sm ">Time Frame</p>
-                  <p className="font-bold">08.00 PM - 11.00 PM</p>
+                  <p className="font-bold">{sessionDetails.time}</p>
                 </div>
 
                 <div className="flex flex-col ml-10">
                   <p className="text-[#868686] text-sm">Date</p>
-                  <p className="font-bold">2024/06/15</p>
+                  <p className="font-bold">{sessionDetails.date}</p>
                 </div>
 
                 <div className="flex flex-col ml-10 ">
                   <p className="text-[#868686] text-sm">Appointment Category</p>
-                  <p className="font-bold">OPD</p>
+                  <p className="font-bold">{sessionDetails.category}</p>
                 </div>
               </div>
             </div>
@@ -74,13 +204,13 @@ const BookAppointment = () => {
             <div>
               <p className="text-[#868686] text-sm ">Doctor’s Name</p>
               <a style={{ color: "orange-500" }}>
-                <u>Dr. C.M.K Jayawardana</u>
+                <u>Dr.{sessionDetails.doctorName}</u>
               </a>
             </div>
             <div className="flex flex-col ml-10 justify-center ">
               <p className="text-[#868686] text-sm">Medical Center’s Name</p>
               <a style={{ color: "#F97316" }}>
-                <u>Nawaloka Hospital</u>
+                <u>{sessionDetails.CenterName}</u>
               </a>
             </div>
           </div>
@@ -93,20 +223,21 @@ const BookAppointment = () => {
             <p className="text-[#868686] text-sm mt-3">
               Special Note From Doctor
             </p>
-            <p className="">N/A</p>
+            <p className="">{sessionDetails?.doctorNote}</p>
           </div>
           <div>
             <p className="text-[#868686] text-sm mt-3">
               Special Note From Medical Center
             </p>
-            <p className="">
-              Please arrive at least 15 minutes before your scheduled
-              appointment time for payment.
-            </p>
+            <p className="">{sessionDetails?.centerNote}</p>
           </div>
         </div>
         <div>
-          <TimeSlotCard />
+          <TimeSlotCard
+            timeSlots={timeSlots || []}
+            onTimeSlotSelect={handleTimeSlotSelect}
+            selectedTimeSlot={selectedTimeSlot}
+          />
         </div>
 
         <div className="relative bg-[#ffffff] rounded-[16px] p-3 ml-[1%] mt-3 mb-1 mr-[1%] h-50">
@@ -136,19 +267,20 @@ const BookAppointment = () => {
             </Button>
             <Button
               type="primary"
+              onClick={handleBookAppointment}
               style={{
                 backgroundColor: "orange",
                 borderColor: "orange",
                 width: "200px",
                 height: "40px",
               }}
+              disabled={!isTermsAgreed || !selectedTimeSlot  || bookAppointmentMutation.isPending}
             >
-              Book the Appointment
+              {bookAppointmentMutation.isPending ? 'Booking...' : 'Book the Appointment'}
             </Button>
           </div>
         </div>
         <Footer />
-        <div></div>
       </div>
     </>
   );

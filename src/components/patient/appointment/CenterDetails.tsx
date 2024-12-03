@@ -3,15 +3,16 @@ import bgimage from "../../../assets/images/patient/appoinment/doctordetails.png
 import { BiSolidBadgeCheck } from "react-icons/bi";
 
 interface Center {
+  _id: string;
   name: string;
   address: string;
-  appointmentCategory: string[];
-  noOfDoctors: number;
-  description: string;
-  phoneNo: string;
+  email: string;
+  appointmentCategories: string[];
+  noOfDoctors?: number;
+  description?: string;
+  mobile: string;
 }
-
-const CenterDetails = ({ name, address, description, phoneNo }: Center) => {
+const CenterDetails = ({ name, address, description, mobile }: Center) => {
   return (
     <>
       <div className="bg-[#ffffff] rounded-[16px] m-4 ">
@@ -46,7 +47,7 @@ const CenterDetails = ({ name, address, description, phoneNo }: Center) => {
                   <h6 className="text-sm text-[#868686]">
                     Receptionist Contact Number
                   </h6>
-                  <p>{phoneNo}</p>
+                  <p>{mobile}</p>
                 </div>
               </div>
             </div>
