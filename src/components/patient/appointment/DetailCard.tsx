@@ -2,11 +2,11 @@ import profilepic from "./../../../assets/images/patient/appoinment/doctorImage.
 import centerlogo from "./../../../assets/images/patient/appoinment/NawalokaHospitals.jpeg";
 
 interface DetailCardProps {
-  detailType: string;
+  detailType: "doctor" | "center";
   name: string;
   topic2Value: string;
   appointmentCategory: string[];
-  topic4Value: string;
+  topic4Value?: string;
 }
 
 const DetailCard = ({
@@ -19,8 +19,13 @@ const DetailCard = ({
   const topic2 = detailType === "doctor" ? "Education" : "Location";
   const topic4 = detailType === "doctor" ? "Available at" : "Number of Doctors";
 
-  // display string with "X more"
-  const createDisplayString = (items: string[], maxLength: number) => {
+  // Display string with "X more"
+  const createDisplayString = (
+    items: string[] | undefined,
+    maxLength: number = 150
+  ): string => {
+    if (!items || items.length === 0) return "";
+
     let displayString = "";
     let length = 0;
     let itemCount = 0;
@@ -45,8 +50,9 @@ const DetailCard = ({
     appointmentCategory,
     maxLineLength
   );
-  const topic4Items = topic4Value.split(", ");
-  const displayedItems = createDisplayString(topic4Items, maxLineLength);
+  const displayedItems = topic4Value
+    ? createDisplayString(topic4Value.split(", "), maxLineLength)
+    : "";
 
   return (
     <>
@@ -88,10 +94,12 @@ const DetailCard = ({
               </div>
               <div className="flex flex-col ml-10 "></div>
             </div>
-            <div>
-              <p className="text-[#868686] text-sm">{topic4}</p>
-              <p> {displayedItems}</p>
-            </div>
+            {topic4Value && (
+              <div>
+                <p className="text-[#868686] text-sm">{topic4}</p>
+                <p>{displayedItems}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

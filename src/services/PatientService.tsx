@@ -16,24 +16,24 @@ interface Patient {
 }
 
 interface Doctor {
-  id: string;
+  _id: string;
   name: string;
-  degree: string;
-  speciality: string;
-  appointmentCategory: string[];
-  description: string;
-  centers: string[];
+  education: string[];
+  category: string[];
+  specialization?: string[];
+  medical_centers: string[];
+  description?: string;
 }
 
 interface Center {
-  id: string;
+  _id: string;
   name: string;
   address: string;
   email: string;
-  appointmentCategory: string[];
-  noOfDoctors: number;
-  description: string;
-  phoneNo: string;
+  appointmentCategories: string[];
+  noOfDoctors?: number;
+  description?: string;
+  mobile: string;
 }
 
 interface AppointmentDate {

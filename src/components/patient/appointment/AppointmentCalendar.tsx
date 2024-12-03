@@ -8,6 +8,7 @@ import DateAppointmentDetails from "./DateAppointmentDetails";
 import TokenService from "../../../services/TokenService";
 import { useQuery } from "@tanstack/react-query";
 import { PatientService } from "../../../services/PatientService";
+import Loading from "../../Loading";
 
 interface AppointmentCalendarProps {
   detailType: string;
@@ -16,14 +17,14 @@ interface AppointmentCalendarProps {
 }
 
 interface Center {
-  id: string;
+  _id: string;
   name: string;
   address: string;
   email: string;
-  appointmentCategory: string[];
-  noOfDoctors: number;
-  description: string;
-  phoneNo: string;
+  appointmentCategories: string[];
+  noOfDoctors?: number;
+  description?: string;
+  mobile: string;
 }
 
 interface Session {
@@ -106,7 +107,7 @@ const AppointmentCalendar = ({
   
       return sessionDetails.map(session => {
         const centerDetails = centerData.find(
-          center => center.id === session.medicalcenterId
+          center => center._id === session.medicalcenterId
         );
   
         return {
@@ -149,9 +150,13 @@ const AppointmentCalendar = ({
     : "";
 
      // Loading state
-  if (datesLoading || sessionsLoading || centerLoading) {
-    return <div>Loading...</div>;
-  }
+     if (datesLoading || sessionsLoading || centerLoading) {
+      return (
+        <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
+          <Loading footer={true} />
+        </div>
+      );
+    }
 
   return (
     <>
