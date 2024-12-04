@@ -549,7 +549,7 @@ function PatientNavigationSteps({ stepNumber, titleName, role }: Props) {
                 },
                 {
                   status: status2,
-                  title: titleName,
+                  title: "Additional Details",
                 },
                 {
                   status: status3,

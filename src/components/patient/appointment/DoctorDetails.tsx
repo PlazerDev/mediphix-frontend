@@ -2,21 +2,24 @@ import doctorImage from "../../../assets/images/patient/appoinment/doctorImage.j
 import bgimage from "../../../assets/images/patient/appoinment/doctordetails.png";
 import { BiSolidBadgeCheck } from "react-icons/bi";
 
-interface DoctorDetailsProps {
+interface Doctor {
+  _id: string;
   name: string;
-  degree: string;
-  speciality: string;
-  appointmentCategory: string[];
-  description: string;
+  education: string[];
+  specialization?: string[];
+  category: string[];
+  medical_centers: string[];
+  medical_center_names: string[];
+  description?: string;
 }
 
 const DoctorDetails = ({
   name,
-  degree,
-  speciality,
-  appointmentCategory,
+  education,
+  specialization = [],
+  category,
   description,
-}: DoctorDetailsProps) => {
+}: Doctor) => {
   return (
     <>
       <div className="bg-[#ffffff] rounded-[16px] m-4 ">
@@ -40,26 +43,28 @@ const DoctorDetails = ({
                 <h6 className=" font-semibold">Dr. {name}</h6>
                 <BiSolidBadgeCheck className="text-[#FF7300] mt-1 ml-1" />
               </div>
-              <p>{degree}</p>
+              <p>{education.join(", ")}</p>
             </div>
           </div>
           <div className="flex flex-col ">
             <div className="flex gap-x-20">
               <div className="w-fit">
                 <h6 className="text-sm text-[#868686]">Specialization</h6>
-                <p>{speciality}</p>
+                <p>{specialization.join(", ")}</p>
               </div>
               <div>
                 <h6 className="text-sm text-[#868686]">
                   Supported Appointment Categories
                 </h6>
-                <p>{appointmentCategory.join(", ")}</p>
+                <p>{category.join(", ")}</p>
               </div>
             </div>
-            <div className="text-justify mt-4">
-              <h6 className="text-sm text-[#868686]">Description</h6>
-              <p>{description}</p>
-            </div>
+            {description && (
+              <div className="text-justify mt-4">
+                <h6 className="text-sm text-[#868686]">Description</h6>
+                <p>{description}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

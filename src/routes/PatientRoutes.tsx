@@ -20,6 +20,7 @@ import Navigation from "../components/patient/navigation/Navigation.tsx";
 import CreateAppointment from "../components/patient/appointment/CreateAppointment";
 import DetailsBeforeAppointment from "../components/patient/appointment/DetailsBeforeAppointment";
 import BookAppointment from "../components/patient/appointment/BookAppointment";
+import AppointmentCalendar from "../components/patient/appointment/AppointmentCalendar.tsx";
 
 function PatientRoutes() {
   return (
@@ -55,7 +56,7 @@ function PatientRoutes() {
               // must be same order as buttontiles
               navigations={[
                 "/patient/appointment/upcomingappointments",
-                "/patient/appoinment/createappoinmnets",
+                "/patient/appointment/createappoinmnets",
                 "/patient/appointment/previousappointments",
               ]}
             />
@@ -66,7 +67,7 @@ function PatientRoutes() {
           element={<AppointmentDetails />}
         />
         <Route
-          path="/appoinment/createappoinmnets"
+          path="/appointment/createappoinmnets"
           element={<CreateAppointment />}
         />
         <Route
@@ -75,8 +76,12 @@ function PatientRoutes() {
         />
 
         <Route
-          path="/appointment/details"
+          path="/appointment/createappoinmnets/details"
           element={<DetailsBeforeAppointment />}
+        />
+        <Route
+          path="/appointment/bookappointment"
+          element={<BookAppointment />}
         />
         <Route path="/appointment/bookingfailed" element={<BookingFailed />} />
 
@@ -91,10 +96,19 @@ function PatientRoutes() {
         />
 
         <Route
-          path="/appointment/bookappointment"
+          path="/appointment/createappoinmnets/doctor/:name/bookappointment"
           element={<BookAppointment />}
         />
 
+        <Route
+          path="/appointment/createappoinmnets/center/:name/bookappointment"
+          element={<BookAppointment />}
+        />
+
+        {/* <Route
+          path="/appointment/createappoinmnets/bookappointment"
+          element={<BookAppointment />}
+        /> */}
         <Route path="/appointment/bookingfailed" element={<BookingFailed />} />
 
         <Route path="/recordbook" element={<RecordBookList />} />

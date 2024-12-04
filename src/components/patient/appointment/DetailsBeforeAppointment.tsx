@@ -9,22 +9,25 @@ import { Breadcrumb } from "antd";
 import { useState } from "react";
 
 interface Doctor {
+  _id: string;
   name: string;
-  degree: string;
-  speciality: string;
-  appointmentCategory: string[];
-  description: string;
-  centers: string[];
-  appointmentDates: string[];
+  education: string[];
+  specialization?: string[];
+  category: string[];
+  medical_centers: string[];
+  medical_center_names: string[];
+  description?: string;
 }
 
 interface Center {
+  _id: string;
   name: string;
   address: string;
-  appointmentCategory: string[];
-  noOfDoctors: number;
-  description: string;
-  phoneNo: string;
+  email: string;
+  appointmentCategories: string[];
+  noOfDoctors?: number;
+  description?: string;
+  mobile: string;
 }
 
 interface DetailsProps {
@@ -37,15 +40,13 @@ const DetailsBeforeAppointment = () => {
   const { detailType, list } = location.state as DetailsProps;
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [appointmentDates, setAppointmentDates] = useState<string[]>([]);
 
-  const hardcodedAppointmentDates : Record<string, string[]> = {
-    OPD: ["2024-07-20", "2024-07-25", "2024-07-30"],
-    "Heart Health": ["2024-08-01", "2024-08-05", "2024-08-10"],
-  };
+  // const hardcodedAppointmentDates : Record<string, string[]> = {
+  //   "OPD": ["2024-11-30", "2024-12-25", "2024-12-30"],
+  //   "Heart Health": ["2024-12-01", "2024-12-05", "2024-12-10"],
+  // };
 
   const fetchAppointmentDates = (category: string) => {
-    setAppointmentDates(hardcodedAppointmentDates[category] || []);
     setSelectedCategory(category);
   };
 
@@ -53,8 +54,12 @@ const DetailsBeforeAppointment = () => {
     categories.map((category, index) => (
       <div
         key={index}
-        className={`flex col-span-1 ${type === "center" ? "cursor-pointer" : ""}`}
-        onClick={type === "center" ? () => fetchAppointmentDates(category) : undefined}
+        className={`flex col-span-1 ${
+          type === "center" ? "cursor-pointer" : ""
+        }`}
+        onClick={
+          type === "center" ? () => fetchAppointmentDates(category) : undefined
+        }
       >
         <GoDotFill className="text-[10px] mr-2 mt-2" />
         <a className="flex underline w-1/2">{category}</a>
@@ -63,15 +68,19 @@ const DetailsBeforeAppointment = () => {
     ));
 
   if (selectedCategory) {
-    return <AppointmentCalendar detailType={detailType} appointmentDates={appointmentDates} />;
+    return (
+      <AppointmentCalendar
+        detailType={detailType}
+        id={(list as Doctor | Center)._id}
+        category={selectedCategory}
+      />
+    );
   }
 
   return (
     <>
       <div>
-        <p className="text-xl font-bold ml-[1%] mt-4">
-          Create an Appointment
-        </p>
+        <p className="text-xl font-bold ml-[1%] mt-4">Create an Appointment</p>
       </div>
       <div>
         <Breadcrumb
@@ -103,7 +112,14 @@ const DetailsBeforeAppointment = () => {
               Available at
             </h3>
             <div className="grid grid-cols-2 gap-4 ml-4">
-              {renderCategory((list as Doctor).centers, "doctor")}
+              {(list as Doctor).medical_center_names &&
+              (list as Doctor).medical_center_names.length > 0 ? (
+                renderCategory((list as Doctor).medical_center_names, "doctor")
+              ) : (
+                <p className="ml-4 text-gray-500">
+                  No medical centers available
+                </p>
+              )}
             </div>
           </>
         ) : (
@@ -115,14 +131,17 @@ const DetailsBeforeAppointment = () => {
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4 ml-4">
-              {renderCategory((list as Center).appointmentCategory, "center")}
+              {renderCategory((list as Center).appointmentCategories, "center")}
             </div>
           </>
         )}
       </div>
 
       {detailType === "doctor" && (
-        <AppointmentCalendar detailType={detailType} appointmentDates={(list as Doctor).appointmentDates} />
+        <AppointmentCalendar
+          detailType={detailType}
+          id={(list as Doctor)._id}
+        />
       )}
 
       <Footer />

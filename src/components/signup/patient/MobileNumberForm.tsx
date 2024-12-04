@@ -1,3 +1,10 @@
+import React from "react";
+import { InboxOutlined } from "@ant-design/icons";
+import type { UploadProps } from "antd";
+import { message, Upload } from "antd";
+
+const { Dragger } = Upload;
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 interface MobileNumberFormProps {
   formData: any;
@@ -14,11 +21,32 @@ function MobileNumberForm({
   handleClick,
   validationErrors,
 }: MobileNumberFormProps) {
+  const email = formData.email;
+  // handle profile photo uploading
+  const props: UploadProps = {
+    name: "file",
+    multiple: false,
+    action: "https://justExample/" + { email },
+    onChange(info) {
+      const { status } = info.file;
+      if (status !== "uploading") {
+        console.log(info.file, info.fileList);
+      }
+      if (status === "done") {
+        message.success(`${info.file.name} file uploaded successfully.`);
+      } else if (status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+    onDrop(e) {
+      console.log("Dropped files", e.dataTransfer.files);
+    },
+  };
+
   return (
     <div className="">
       <p className="text-[var(--text-c)] mt-5">
-        Enter your mobile phone number. During the verification phase, you will
-        receive an OTP code for this mobile number.
+        Enter your mobile phone number, Passwords and a Profile Photo.
       </p>
 
       <div className="mt-10 flex flex-col flex-wrap">
@@ -77,6 +105,18 @@ function MobileNumberForm({
             </div>
           </div>
         </form>
+        <div className="mt-4">
+          <p>Upload a Profile Photo</p>
+          <Dragger {...props}>
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined />
+            </p>
+            <p className="ant-upload-text">
+              Click or drag file to this area to upload
+            </p>
+            <p className="ant-upload-hint">Upload a photo of youself</p>
+          </Dragger>
+        </div>
       </div>
     </div>
   );

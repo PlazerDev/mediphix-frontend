@@ -2,43 +2,70 @@ import { useNavigate } from "react-router-dom";
 import profilepic from "./../../../assets/images/patient/appoinment/doctorImage.jpeg";
 import centerlogo from "./../../../assets/images/patient/appoinment/NawalokaHospitals.jpeg";
 
-interface CenterDetailsCard {
-  time: string;
+interface Center {
+  _id: string;
   name: string;
-  phoneNo: string;
-  location: string;
+  address: string;
   email: string;
-  category: string;
-  doctorNote: string;
-  centerNote: string;
-  availability: boolean;
+  appointmentCategories: string[];
+  noOfDoctors?: number;
+  description?: string;
+  mobile: string;
 }
 
-interface DoctorDetailsCard {
+interface Session {
+  _id: string;
+  sessionDate: string;
   time: string;
-  name: string;
-  degree: string;
-  speciality: string;
+  payment:string;
+  location: string;
+  category: string;
+  doctorId: string;
+  doctorName: string;
+  medicalCenterId: string;
+  medicalCenterName: string;
+  medicalCenterMobile: string;
   doctorNote: string;
-  centerNote: string;
-  availability: boolean;
+  medicalCenterNote: string;
+  maxPatientCount: number;
+  reservedPatientCount: number;
 }
 
 interface DateAppointmentDetailsProps {
-  details: DoctorDetailsCard | CenterDetailsCard;
+  details: Center;
+  sessionDetails: Session;
   detailType: string;
 }
 
 const DateAppointmentDetails = ({
   details,
+  sessionDetails,
   detailType,
 }: DateAppointmentDetailsProps) => {
-  const { time, doctorNote, centerNote, availability } = details;
+  const {
+    time,
+    doctorNote,
+    medicalCenterNote,
+    maxPatientCount,
+    reservedPatientCount,
+    category,
+    payment,
+    doctorName,
+    medicalCenterName,
+  } = sessionDetails;
 
   const navigate = useNavigate();
 
+  // Calculate availability
+  const availability = maxPatientCount > reservedPatientCount;
+
   const handleBookAppointment = () => {
-    navigate("/patient/appointment/bookappointment");
+    const path =
+      detailType === "doctor"
+        ? `/patient/appointment/createappoinmnets/doctor/${doctorName}/bookappointment`
+        : `/patient/appointment/createappoinmnets/center/${medicalCenterName}/bookappointment`;
+
+    navigate(path, { state: { sessionDetails } });
   };
 
   return (
@@ -65,9 +92,7 @@ const DateAppointmentDetails = ({
             <p className="text-[#868686] text-sm mt-3 ">
               Appointment Category{" "}
             </p>
-            <p className="font-semibold">
-              {(details as CenterDetailsCard).category}
-            </p>
+            <p className="font-semibold">{category}</p>
           </div>
         )}
 
@@ -94,49 +119,58 @@ const DateAppointmentDetails = ({
                 />
               </div>
 
-              <div className="mr-20 w-1/3">
+              <div className="mr-10 w-1/4">
                 <p className="text-[#868686] text-sm">Name</p>
                 <a className="mb-2 text-[#FF7300] underline">
-                  {(details as CenterDetailsCard).name}
+                  {detailType === "doctor" ? medicalCenterName : doctorName}
                 </a>
-                {detailType === "center" && (
+                {/* {detailType === "center" && (
                   <>
                     <p className="text-[#868686] text-sm mt-2">Education</p>
                     <p className="mb-1">
-                      {(details as DoctorDetailsCard).degree} specialized in{" "}
-                      {(details as DoctorDetailsCard).speciality}
+                      {(details as Doctor).degree} specialized in{" "}
+                      {(details as Doctor).speciality}
                     </p>
                   </>
-                )}
+                )} */}
                 {detailType === "doctor" && (
                   <>
                     <p className="text-[#868686] text-sm mt-2">
                       Contact Number
                     </p>
                     <p className="mb-1">
-                      {(details as CenterDetailsCard).phoneNo}
+                      {(details as Center).mobile}
                     </p>
                   </>
                 )}
               </div>
               {detailType === "doctor" && (
-                <div>
+                <div className="w-1/4 mr-10">
                   <p className="text-[#868686] text-sm">Location</p>
                   <p className="mb-1">
-                    {(details as CenterDetailsCard).location}
+                    {(details as Center).address}
                   </p>
                   <p className="text-[#868686] text-sm mt-2">E-mail</p>
-                  <p className="mb-1">{(details as CenterDetailsCard).email}</p>
+                  <p className="mb-1">{(details as Center).email}</p>
                 </div>
               )}
+              <div>
+                  <p className="text-[#868686] text-sm">Consultation Fee</p>
+                  <p className="mb-1">
+                    Rs. {payment}
+                  </p>
+                  <p className="text-[#868686] text-sm mt-2"></p>
+                  <p className="mb-1"></p>
+                </div>
             </div>
+            
           </div>
           <div className="ml-4">
             <div className="text-[#363636]">
               <p className=" font-semibold mb-2">Additional Details</p>
             </div>
             <p className="text-[#868686] text-sm">Special Note From Doctor</p>
-            <p>{doctorNote}</p>
+            <p>{doctorNote || 'No special notes from doctor.'}</p>
           </div>
           <div className="ml-4 pb-4">
             <div className="text-[#363636]">
@@ -144,7 +178,7 @@ const DateAppointmentDetails = ({
                 Special Note From Medical Center
               </p>
             </div>
-            <p>{centerNote}</p>
+            <p>{medicalCenterNote  || 'No special notes from medical center.'}</p>
           </div>
         </div>
       </div>
