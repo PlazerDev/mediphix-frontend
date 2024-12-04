@@ -20,6 +20,7 @@ import Navigation from "../components/patient/navigation/Navigation.tsx";
 import CreateAppointment from "../components/patient/appointment/CreateAppointment";
 import DetailsBeforeAppointment from "../components/patient/appointment/DetailsBeforeAppointment";
 import BookAppointment from "../components/patient/appointment/BookAppointment";
+import AppointmentCalendar from "../components/patient/appointment/AppointmentCalendar.tsx";
 
 function PatientRoutes() {
   return (
