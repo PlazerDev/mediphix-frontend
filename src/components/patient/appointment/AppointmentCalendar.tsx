@@ -27,26 +27,22 @@ interface Center {
   mobile: string;
 }
 
-interface QueueOperations {
-  defaultIncrementQueueNumber: number;
-  ongoing: number;
-  nextPatient1: number;
-  nextPatient2: number;
-  finished: number[];
-  absent: number[];
-}
-
-interface Queue {
-  appointments: number[];
-  queueOperations?: QueueOperations;
-}
-
 interface TimeSlot {
   slotId: number;
   startTime: string;
   maxNoOfPatients: number;
   status: string;
-  queue?: Queue;
+  queue?: {
+    appointments: number[];
+    queueOperations?: {
+      defaultIncrementQueueNumber: number;
+      ongoing: number;
+      nextPatient1: number;
+      nextPatient2: number;
+      finished: number[];
+      absent: number[];
+    };
+  };
 }
 
 interface FormattedSession {
@@ -64,11 +60,6 @@ interface FormattedSession {
     sessionDate: string;    // Format: "YYYY-MM-DD"
     time: string;          // Format: "HH:MM AM - HH:MM PM"
   };
-}
-
-interface SessionWithCenterDetails {
-  session: FormattedSession;
-  centerDetails: Center;
 }
 
 const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>["mode"]) => {
