@@ -30,24 +30,6 @@ interface TimeSlot {
   };
 }
 
-interface FormattedSession {
-  _id: string;
-  doctorId: string;
-  medicalCenterId: string;
-  aptCategories: string[];
-  payment: number;
-  hallNumber: string;
-  noteFromCenter?: string;
-  noteFromDoctor?: string;
-  overallSessionStatus: string;
-  timeSlots: TimeSlot[];
-  formattedDateTime: {
-    sessionDate: string;    // Format: "YYYY-MM-DD"
-    time: string;          // Format: "HH:MM AM - HH:MM PM"
-  };
-}
-
-
 const onChange: CheckboxProps["onChange"] = (e) => {
   console.log(`checked = ${e.target.checked}`);
 };
@@ -56,17 +38,17 @@ const BookAppointment = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { sessionId } = useParams<{ sessionId: string }>();
+
   const sessionDetails = location.state.sessionDetails;
+  const centerDetails = location.state.details;
 
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(
     null
   );
   const [isTermsAgreed, setIsTermsAgreed] = useState<boolean>(false);
 
-  // Backend URL from environment variables
   const backendURL = import.meta.env.VITE_BACKEND_URL;
 
-  // Configuration for the API request
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -74,73 +56,69 @@ const BookAppointment = () => {
     },
   };
 
-  // // Fetch patient data
-  // const { data: patientData, isLoading: isPatientLoading } = useQuery({
-  //   queryKey: ["patientData", backendURL],
-  //   queryFn: () => PatientService.getPatientData(backendURL, config),
-  //   enabled: !!backendURL, // Only run if backendURL exists
-  // });
+  // Fetch patient data
+  const { data: patientData, isLoading: isPatientLoading } = useQuery({
+    queryKey: ["patientData", backendURL],
+    queryFn: () => PatientService.getPatientData(backendURL, config),
+    enabled: !!backendURL,
+  });
 
-  // // Mutation for booking appointment
-  // const bookAppointmentMutation = useMutation({
-  //   mutationFn: async () => {
-  //     // Validate required data
-  //     if (!sessionId || !selectedTimeSlot || !patientData) {
-  //       throw new Error("Missing required booking information");
-  //     }
 
-  //     // Prepare booking payload
-  //     const bookingPayload = {
-  //       sessionId: sessionId,
-  //       doctorId: sessionDetails.doctorId,
-  //       patientId: patientData._id, // Use patient ID from fetched patient data
-  //       timeSlotId: selectedTimeSlot.slotId.toString(),
-  //       medicalCenterId: sessionDetails.medicalcenterId,
-  //       medicalCenterName: sessionDetails.centerName,
-  //       category: sessionDetails.category,
-  //     };
+  const bookAppointmentMutation = useMutation({
+    mutationFn: async () => {
 
-  //     // Call the booking service method
-  //     return PatientService.bookAppointment(backendURL, bookingPayload, config);
-  //   },
-  //   onSuccess: (response) => {
-  //     message.success("Appointment booked successfully!");
-  //     navigate("/appointments/confirmation", {
-  //       state: {
-  //         appointmentDetails: response,
-  //       },
-  //     });
-  //   },
-  //   onError: (error: any) => {
-  //     console.error("Booking failed", error);
-  //     message.error(error.message || "Failed to book appointment");
-  //   },
-  // });
+      if (!sessionId || !selectedTimeSlot || !patientData) {
+        throw new Error("Missing required booking information");
+      }
 
-  // // Handle loading and error states
-  // if (isPatientLoading) {
-  //   return (
-  //     <div className="flex items-center justify-center min-h-[calc(100vh-100px)]">
-  //       <Loading footer={true} />
-  //     </div>
-  //   );
-  // }
+      const bookingPayload = {
+        sessionId: sessionId,
+        timeSlot: selectedTimeSlot.slotId,
+        patientId: patientData._id,
+        patientName: `${patientData.first_name} ${patientData.last_name}`,
+        queueNumber: selectedTimeSlot.queue?.appointments?.length 
+        ? selectedTimeSlot.queue.appointments.length + 1 
+        : 1,
+        aptCategories: sessionDetails.aptCategories,
+        doctorId: sessionDetails.doctorId,
+        doctorName: sessionDetails.doctorName,
+        medicalCenterId: sessionDetails.medicalcenterId,
+        medicalCenterName: sessionDetails.medicalCenterName,
+        paymentAmount: Number(sessionDetails.payment)
+      };
 
-  // if (!patientData) {
-  //   return <BookingFailed />;
-  // }
+      return PatientService.bookAppointment(backendURL, bookingPayload, config);
+    },
+    onSuccess: (response) => {
+      message.success("Appointment booked successfully!");
+      navigate("/appointments/confirmation", {
+        state: {
+          appointmentDetails: response,
+        },
+      });
+    },
+    onError: (error: any) => {
+      console.error("Booking failed", error);
+      message.error(error.message || "Failed to book appointment");
+    },
+  });
 
-  // Handle checkbox change for terms agreement
+  if (isPatientLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[calc(100vh-100px)]">
+        <Loading footer={true} />
+      </div>
+    );
+  }
+
   const handleTermsChange = (e: any) => {
     setIsTermsAgreed(e.target.checked);
   };
 
-  // Handle time slot selection
   const handleTimeSlotSelect = (slot: TimeSlot) => {
     setSelectedTimeSlot(slot);
   };
 
-  // Handle booking appointment
   const handleBookAppointment = () => {
     if (!isTermsAgreed) {
       message.warning("Please agree to the terms and conditions");
@@ -151,17 +129,8 @@ const BookAppointment = () => {
       message.warning("Please select a time slot");
       return;
     }
-    // // Trigger the booking mutation
-    // bookAppointmentMutation.mutate();
 
-    // Navigate to AppointmentSuccessful with necessary details
-    navigate("/patient/appointment/appointmentsuccessful", {
-      state: {
-        payment: sessionDetails.payment,
-        location: sessionDetails.location,
-        startTime: selectedTimeSlot.startTime,
-      },
-    });
+    bookAppointmentMutation.mutate();
   };
 
   return (
@@ -198,19 +167,19 @@ const BookAppointment = () => {
 
             <div className="flex flex-col items-start">
               <p className="text-[#868686] text-sm mb-1">Time Frame</p>
-              <p className="font-semibold">{sessionDetails.time}</p>
+              <p className="font-semibold">{sessionDetails.formattedDateTime.time}</p>
             </div>
 
             <div className="flex flex-col items-start">
               <p className="text-[#868686] text-sm mb-1">Date</p>
-              <p className="font-semibold">{sessionDetails.sessionDate}</p>
+              <p className="font-semibold">{sessionDetails.formattedDateTime.sessionDate}</p>
             </div>
 
             <div className="flex flex-col items-start">
               <p className="text-[#868686] text-sm mb-1">
                 Appointment Category
               </p>
-              <p className="font-semibold">{sessionDetails.category}</p>
+              <p className="font-semibold">{sessionDetails.aptCategories.join(", ")}</p>
             </div>
 
             <div className="flex flex-col items-start">
@@ -225,7 +194,7 @@ const BookAppointment = () => {
                 Medical Center's Name
               </p>
               <a className="text-orange-500">
-                <u>{sessionDetails.medicalCenterName}</u>
+                <u>{centerDetails.name}</u>
               </a>
             </div>
             <div></div>
@@ -238,7 +207,7 @@ const BookAppointment = () => {
               <p className="text-[#868686] text-sm mb-1">
                 Consultation Room No.
               </p>
-              <p>{sessionDetails.location}</p>
+              <p>{sessionDetails.hallNumber}</p>
             </div>
 
             {/* Optional: Empty cell to complete the 3x3 grid */}
@@ -252,13 +221,13 @@ const BookAppointment = () => {
             <p className="text-[#868686] text-sm mt-3">
               Special Note From Doctor
             </p>
-            <p className="">{sessionDetails?.doctorNote}</p>
+            <p className="">{sessionDetails?.noteFromDoctor}</p>
           </div>
           <div>
             <p className="text-[#868686] text-sm mt-3">
               Special Note From Medical Center
             </p>
-            <p className="">{sessionDetails?.medicalCenterNote}</p>
+            <p className="">{sessionDetails?.noteFromCenter}</p>
           </div>
         </div>
         <div>

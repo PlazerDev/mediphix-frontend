@@ -13,6 +13,13 @@ interface Patient {
   address: string;
   nationality: string;
   gender: string;
+  allergies: string[];
+  special_notes: string[];
+  doctors: string[];
+  medical_centers: string[];
+  appointments: string[];
+  medical_records: string[];
+  lab_reports: string[];
 }
 
 interface Doctor {
@@ -64,8 +71,8 @@ interface AppointmentDate {
 // }
 
 interface FormattedDateTime {
-  sessionDate: string;    // Format: "YYYY-MM-DD"
-  time: string;          // Format: "HH:MM AM - HH:MM PM"
+  sessionDate: string; // Format: "YYYY-MM-DD"
+  time: string; // Format: "HH:MM AM - HH:MM PM"
 }
 
 interface Timestamp {
@@ -101,7 +108,7 @@ interface TimeSlot {
   queue?: Queue;
 }
 
-interface Session { 
+interface Session {
   _id: string;
   endTimestamp: Timestamp;
   startTimestamp: Timestamp;
@@ -159,7 +166,7 @@ export class PatientService {
         return response.data;
       } else {
         ErrorService.handleError(response);
-        return undefined; 
+        return undefined;
       }
     } catch (error) {
       console.error("An unexpected error occurred:", error);
@@ -327,12 +334,16 @@ export class PatientService {
     backendURL: string,
     bookingPayload: {
       sessionId: string;
-      doctorId: string;
+      timeSlot: number;
       patientId: string;
-      timeSlotId: string;
+      patientName: string;
+      queueNumber: number;
+      aptCategories: string[];
+      doctorId: string;
+      doctorName: string;
       medicalCenterId: string;
       medicalCenterName: string;
-      category: string;
+      paymentAmount: number;
     },
     config: any
   ) {
@@ -345,27 +356,20 @@ export class PatientService {
 
       return response.data;
     } catch (error: any) {
-      // Handle different types of errors
       if (axios.isAxiosError(error)) {
-        // Axios-specific error handling
         if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
           throw new Error(
             error.response.data.message ||
               "Failed to book appointment. Please try again."
           );
         } else if (error.request) {
-          // The request was made but no response was received
           throw new Error(
             "No response received from server. Please check your connection."
           );
         } else {
-          // Something happened in setting up the request that triggered an Error
           throw new Error("Error setting up appointment booking request.");
         }
       } else {
-        // Generic error handling
         throw new Error(
           "An unexpected error occurred while booking appointment."
         );
