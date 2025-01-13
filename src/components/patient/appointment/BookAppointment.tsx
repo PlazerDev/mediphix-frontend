@@ -30,24 +30,6 @@ interface TimeSlot {
   };
 }
 
-interface FormattedSession {
-  _id: string;
-  doctorId: string;
-  medicalCenterId: string;
-  aptCategories: string[];
-  payment: number;
-  hallNumber: string;
-  noteFromCenter?: string;
-  noteFromDoctor?: string;
-  overallSessionStatus: string;
-  timeSlots: TimeSlot[];
-  formattedDateTime: {
-    sessionDate: string;    // Format: "YYYY-MM-DD"
-    time: string;          // Format: "HH:MM AM - HH:MM PM"
-  };
-}
-
-
 const onChange: CheckboxProps["onChange"] = (e) => {
   console.log(`checked = ${e.target.checked}`);
 };
@@ -56,7 +38,9 @@ const BookAppointment = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { sessionId } = useParams<{ sessionId: string }>();
+
   const sessionDetails = location.state.sessionDetails;
+  const centerDetails = location.state.details;
 
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(
     null
@@ -198,19 +182,19 @@ const BookAppointment = () => {
 
             <div className="flex flex-col items-start">
               <p className="text-[#868686] text-sm mb-1">Time Frame</p>
-              <p className="font-semibold">{sessionDetails.time}</p>
+              <p className="font-semibold">{sessionDetails.formattedDateTime.time}</p>
             </div>
 
             <div className="flex flex-col items-start">
               <p className="text-[#868686] text-sm mb-1">Date</p>
-              <p className="font-semibold">{sessionDetails.sessionDate}</p>
+              <p className="font-semibold">{sessionDetails.formattedDateTime.sessionDate}</p>
             </div>
 
             <div className="flex flex-col items-start">
               <p className="text-[#868686] text-sm mb-1">
                 Appointment Category
               </p>
-              <p className="font-semibold">{sessionDetails.category}</p>
+              <p className="font-semibold">{sessionDetails.aptCategories.join(", ")}</p>
             </div>
 
             <div className="flex flex-col items-start">
@@ -225,7 +209,7 @@ const BookAppointment = () => {
                 Medical Center's Name
               </p>
               <a className="text-orange-500">
-                <u>{sessionDetails.medicalCenterName}</u>
+                <u>{centerDetails.name}</u>
               </a>
             </div>
             <div></div>
@@ -238,7 +222,7 @@ const BookAppointment = () => {
               <p className="text-[#868686] text-sm mb-1">
                 Consultation Room No.
               </p>
-              <p>{sessionDetails.location}</p>
+              <p>{sessionDetails.hallNumber}</p>
             </div>
 
             {/* Optional: Empty cell to complete the 3x3 grid */}
@@ -252,13 +236,13 @@ const BookAppointment = () => {
             <p className="text-[#868686] text-sm mt-3">
               Special Note From Doctor
             </p>
-            <p className="">{sessionDetails?.doctorNote}</p>
+            <p className="">{sessionDetails?.noteFromDoctor}</p>
           </div>
           <div>
             <p className="text-[#868686] text-sm mt-3">
               Special Note From Medical Center
             </p>
-            <p className="">{sessionDetails?.medicalCenterNote}</p>
+            <p className="">{sessionDetails?.noteFromCenter}</p>
           </div>
         </div>
         <div>
