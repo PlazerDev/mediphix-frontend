@@ -62,11 +62,11 @@ const DateAppointmentDetails = ({
 
   const navigate = useNavigate();
 
-  // Get the first time slot to check availability
-  const firstTimeSlot = sessionDetails.timeSlots[0];
-  const maxPatientCount = firstTimeSlot?.maxNoOfPatients || 0;
-  const reservedPatientCount = firstTimeSlot?.queue?.appointments.length || 0;
-  const availability = maxPatientCount > reservedPatientCount;
+  // Check if any time slot is available
+  const availability = sessionDetails.timeSlots.some(slot => {
+    const reservedPatientCount = slot.queue?.appointments.length || 0;
+    return slot.maxNoOfPatients > reservedPatientCount;
+  });
 
   const handleBookAppointment = () => {
     const path =
