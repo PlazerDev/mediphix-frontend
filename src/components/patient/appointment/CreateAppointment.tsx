@@ -75,12 +75,10 @@ const CreateAppointment = () => {
     staleTime: 200000,
   });
 
-  // Check for any errors
   if (isDoctorError || isCenterError) {
     return <Navigate to="/patient/appointment" />;
   }
 
-  // Check if still loading
   if (isDoctorLoading || isCenterLoading) {
     return (
       <div className="flex items-center justify-center min-h-[calc(100vh-100px)]">
@@ -89,7 +87,6 @@ const CreateAppointment = () => {
     );
   }
 
-  // Transform doctors with medical center names
   const transformedDoctorList =
     doctorList?.map((doctor) => ({
       ...doctor,
