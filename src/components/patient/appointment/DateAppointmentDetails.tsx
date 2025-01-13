@@ -13,27 +13,44 @@ interface Center {
   mobile: string;
 }
 
-interface Session {
+interface TimeSlot {
+  slotId: number;
+  startTime: string;
+  maxNoOfPatients: number;
+  status: string;
+  queue?: {
+    appointments: number[];
+    queueOperations?: {
+      defaultIncrementQueueNumber: number;
+      ongoing: number;
+      nextPatient1: number;
+      nextPatient2: number;
+      finished: number[];
+      absent: number[];
+    };
+  };
+}
+
+interface FormattedSession {
   _id: string;
-  sessionDate: string;
-  time: string;
-  payment:string;
-  location: string;
-  category: string;
   doctorId: string;
-  doctorName: string;
   medicalCenterId: string;
-  medicalCenterName: string;
-  medicalCenterMobile: string;
-  doctorNote: string;
-  medicalCenterNote: string;
-  maxPatientCount: number;
-  reservedPatientCount: number;
+  aptCategories: string[];
+  payment: number;
+  hallNumber: string;
+  noteFromCenter?: string;
+  noteFromDoctor?: string;
+  overallSessionStatus: string;
+  timeSlot: TimeSlot[];
+  formattedDateTime: {
+    sessionDate: string;
+    time: string;
+  };
 }
 
 interface DateAppointmentDetailsProps {
   details: Center;
-  sessionDetails: Session;
+  sessionDetails: FormattedSession;
   detailType: string;
 }
 
@@ -42,28 +59,20 @@ const DateAppointmentDetails = ({
   sessionDetails,
   detailType,
 }: DateAppointmentDetailsProps) => {
-  const {
-    time,
-    doctorNote,
-    medicalCenterNote,
-    maxPatientCount,
-    reservedPatientCount,
-    category,
-    payment,
-    doctorName,
-    medicalCenterName,
-  } = sessionDetails;
 
   const navigate = useNavigate();
 
-  // Calculate availability
+  // Get the first time slot to check availability
+  const firstTimeSlot = sessionDetails.timeSlot[0];
+  const maxPatientCount = firstTimeSlot?.maxNoOfPatients || 0;
+  const reservedPatientCount = firstTimeSlot?.queue?.appointments.length || 0;
   const availability = maxPatientCount > reservedPatientCount;
 
   const handleBookAppointment = () => {
     const path =
       detailType === "doctor"
-        ? `/patient/appointment/createappoinmnets/doctor/${doctorName}/bookappointment`
-        : `/patient/appointment/createappoinmnets/center/${medicalCenterName}/bookappointment`;
+        ? `/patient/appointment/createappoinmnets/doctor/${details.name}/bookappointment`
+        : `/patient/appointment/createappoinmnets/center/${details.name}/bookappointment`;
 
     navigate(path, { state: { sessionDetails } });
   };
@@ -73,7 +82,7 @@ const DateAppointmentDetails = ({
       <div className="bg-[#DCDCDC] rounded-[16px] m-4">
         <div className=" flex justify-between">
           <div className=" text-[#FFFFFF] bg-[#363636] rounded-tl-lg rounded-br-lg p-3 w-fit flex items-center">
-            <p className="mx-2">{time}</p>
+            <p className="mx-2">{sessionDetails.formattedDateTime.time}</p>
           </div>
           <div
             className={`rounded-md py-4 w-52 flex justify-center mt-4 mr-4 ${
@@ -92,7 +101,7 @@ const DateAppointmentDetails = ({
             <p className="text-[#868686] text-sm mt-3 ">
               Appointment Category{" "}
             </p>
-            <p className="font-semibold">{category}</p>
+            <p className="font-semibold">{sessionDetails.aptCategories.join(", ")}</p>
           </div>
         )}
 
@@ -122,7 +131,7 @@ const DateAppointmentDetails = ({
               <div className="mr-10 w-1/4">
                 <p className="text-[#868686] text-sm">Name</p>
                 <a className="mb-2 text-[#FF7300] underline">
-                  {detailType === "doctor" ? medicalCenterName : doctorName}
+                {details.name}
                 </a>
                 {/* {detailType === "center" && (
                   <>
@@ -139,7 +148,7 @@ const DateAppointmentDetails = ({
                       Contact Number
                     </p>
                     <p className="mb-1">
-                      {(details as Center).mobile}
+                    {details.mobile}
                     </p>
                   </>
                 )}
@@ -148,16 +157,16 @@ const DateAppointmentDetails = ({
                 <div className="w-1/4 mr-10">
                   <p className="text-[#868686] text-sm">Location</p>
                   <p className="mb-1">
-                    {(details as Center).address}
+                    {details.address}
                   </p>
                   <p className="text-[#868686] text-sm mt-2">E-mail</p>
-                  <p className="mb-1">{(details as Center).email}</p>
+                  <p className="mb-1">{details.email}</p>
                 </div>
               )}
               <div>
                   <p className="text-[#868686] text-sm">Consultation Fee</p>
                   <p className="mb-1">
-                    Rs. {payment}
+                    Rs. {sessionDetails.payment}
                   </p>
                   <p className="text-[#868686] text-sm mt-2"></p>
                   <p className="mb-1"></p>
@@ -170,7 +179,7 @@ const DateAppointmentDetails = ({
               <p className=" font-semibold mb-2">Additional Details</p>
             </div>
             <p className="text-[#868686] text-sm">Special Note From Doctor</p>
-            <p>{doctorNote || 'No special notes from doctor.'}</p>
+            <p>{sessionDetails.noteFromDoctor || 'No special notes from doctor.'}</p>
           </div>
           <div className="ml-4 pb-4">
             <div className="text-[#363636]">
@@ -178,7 +187,7 @@ const DateAppointmentDetails = ({
                 Special Note From Medical Center
               </p>
             </div>
-            <p>{medicalCenterNote  || 'No special notes from medical center.'}</p>
+            <p>{sessionDetails.noteFromCenter   || 'No special notes from medical center.'}</p>
           </div>
         </div>
       </div>
