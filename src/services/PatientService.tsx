@@ -25,11 +25,22 @@ interface Patient {
 interface Doctor {
   _id: string;
   name: string;
+  slmc: string;
+  nic: string;
   education: string[];
+  mobile: string;
+  specialization: string[];
+  email: string;
   category: string[];
-  specialization?: string[];
+  availability: string[];
+  verified: boolean;
+  patients: string[];
   medical_centers: string[];
-  description?: string;
+  sessions: string[];
+  channellings: string[];
+  medical_records: string[];
+  lab_reports: string[];
+  profileImage: string;
 }
 
 interface Center {
@@ -268,67 +279,35 @@ export class PatientService {
     }
   }
 
-  // static async getSessionsByDoctorAndDate(
-  //   backendURL: string,
-  //   doctorId: string,
-  //   appointmentDate: string,
-  //   config: AxiosRequestConfig
-  // ): Promise<Session[] | undefined> {
-  //   try {
-  //     const response: AxiosResponse<Session[]> = await axios.get(
-  //       `${backendURL}/patient/${doctorId}/sessions`,
-  //       {
-  //         ...config,
-  //         params: { date: appointmentDate },
-  //       }
-  //     );
+  static async getDoctorDetailsByDoctorId(
+    backendURL: string,
+    doctorId: string,
+    config: AxiosRequestConfig
+  ): Promise<Doctor | undefined> {
+    try {
+      const response: AxiosResponse<Doctor> = await axios.get(
+        `${backendURL}/patient/getDoctorDetails/${doctorId}`,
+        config
+      );
 
-  //     if (response.status === 200) {
-  //       return response.data;
-  //     } else {
-  //       ErrorService.handleError(response);
-  //       return undefined;
-  //     }
-  //   } catch (error) {
-  //     console.error("An unexpected error occurred:", error);
-  //     Swal.fire({
-  //       title: "Error!",
-  //       text: "An unexpected error occurred. Please try again later.",
-  //       icon: "error",
-  //       confirmButtonText: "OK",
-  //     });
-  //     return undefined;
-  //   }
-  // }
-
-  // static async getTimeSlotsBySessionId(
-  //   backendURL: string,
-  //   sessionId: string,
-  //   config: AxiosRequestConfig
-  // ): Promise<TimeSlot[]> {
-  //   try {
-  //     const response: AxiosResponse<TimeSlot[]> = await axios.get(
-  //       `${backendURL}/patient/${sessionId}/timeslots`,
-  //       config
-  //     );
-
-  //     if (response.status === 200) {
-  //       return response.data;
-  //     } else {
-  //       ErrorService.handleError(response);
-  //       throw new Error("Failed to fetch time slots");
-  //     }
-  //   } catch (error) {
-  //     console.error("An unexpected error occurred:", error);
-  //     Swal.fire({
-  //       title: "Error!",
-  //       text: "An unexpected error occurred. Please try again later.",
-  //       icon: "error",
-  //       confirmButtonText: "OK",
-  //     });
-  //     throw error;
-  //   }
-  // }
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        ErrorService.handleError(response);
+        return undefined;
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "An unexpected error occurred. Please try again later.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return undefined;
+    }
+  }
+ 
 
   static async bookAppointment(
     backendURL: string,

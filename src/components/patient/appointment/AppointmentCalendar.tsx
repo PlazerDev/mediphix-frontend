@@ -45,23 +45,6 @@ interface TimeSlot {
   };
 }
 
-interface FormattedSession {
-  _id: string;
-  doctorId: string;
-  medicalCenterId: string;
-  aptCategories: string[];
-  payment: number;
-  hallNumber: string;
-  noteFromCenter?: string;
-  noteFromDoctor?: string;
-  overallSessionStatus: string;
-  timeSlots: TimeSlot[];
-  formattedDateTime: {
-    sessionDate: string;    // Format: "YYYY-MM-DD"
-    time: string;          // Format: "HH:MM AM - HH:MM PM"
-  };
-}
-
 const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>["mode"]) => {
   console.log(value.format("YYYY-MM-DD"), mode);
 };
@@ -82,7 +65,6 @@ const AppointmentCalendar = ({
     },
   };
 
-  // Fetch session details if detailType is "doctor"
   const { data: sessionDetails, isLoading: sessionsLoading } = useQuery({
     queryKey: ["sessionDetails", id],
     queryFn: () =>

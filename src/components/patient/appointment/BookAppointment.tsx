@@ -63,16 +63,23 @@ const BookAppointment = () => {
     enabled: !!backendURL,
   });
 
+  // Fetch doctor data
+  const { data: doctorData, isLoading: isdoctorLoading } = useQuery({
+    queryKey: ["doctorData", sessionDetails.doctorId],
+    queryFn: () => PatientService.getDoctorDetailsByDoctorId(backendURL, sessionDetails.doctorId, config),
+    enabled: !!backendURL,
+  });
+
 
   const bookAppointmentMutation = useMutation({
     mutationFn: async () => {
 
-      if (!sessionId || !selectedTimeSlot || !patientData) {
+      if (!sessionId || !selectedTimeSlot || !patientData || !doctorData) {
         throw new Error("Missing required booking information");
       }
 
       const bookingPayload = {
-        sessionId: sessionId,
+        sessionId: sessionDetails.sessionId,
         timeSlot: selectedTimeSlot.slotId,
         patientId: patientData._id,
         patientName: `${patientData.first_name} ${patientData.last_name}`,
@@ -81,9 +88,9 @@ const BookAppointment = () => {
         : 1,
         aptCategories: sessionDetails.aptCategories,
         doctorId: sessionDetails.doctorId,
-        doctorName: sessionDetails.doctorName,
-        medicalCenterId: sessionDetails.medicalcenterId,
-        medicalCenterName: sessionDetails.medicalCenterName,
+        doctorName: doctorData.name,
+        medicalCenterId: sessionDetails.medicalCenterId,
+        medicalCenterName: centerDetails.name,
         paymentAmount: Number(sessionDetails.payment)
       };
 
@@ -103,7 +110,7 @@ const BookAppointment = () => {
     },
   });
 
-  if (isPatientLoading) {
+  if (isPatientLoading || isdoctorLoading) {
     return (
       <div className="flex items-center justify-center min-h-[calc(100vh-100px)]">
         <Loading footer={true} />
@@ -185,7 +192,7 @@ const BookAppointment = () => {
             <div className="flex flex-col items-start">
               <p className="text-[#868686] text-sm mb-1">Doctor's Name</p>
               <a className="text-orange-500">
-                <u>Dr. {sessionDetails.doctorName}</u>
+                <u>Dr. {doctorData?.name}</u>
               </a>
             </div>
 
