@@ -41,7 +41,7 @@ interface FormattedSession {
   noteFromCenter?: string;
   noteFromDoctor?: string;
   overallSessionStatus: string;
-  timeSlot: TimeSlot[];
+  timeSlots: TimeSlot[];
   formattedDateTime: {
     sessionDate: string;
     time: string;
@@ -63,7 +63,7 @@ const DateAppointmentDetails = ({
   const navigate = useNavigate();
 
   // Get the first time slot to check availability
-  const firstTimeSlot = sessionDetails.timeSlot[0];
+  const firstTimeSlot = sessionDetails.timeSlots[0];
   const maxPatientCount = firstTimeSlot?.maxNoOfPatients || 0;
   const reservedPatientCount = firstTimeSlot?.queue?.appointments.length || 0;
   const availability = maxPatientCount > reservedPatientCount;

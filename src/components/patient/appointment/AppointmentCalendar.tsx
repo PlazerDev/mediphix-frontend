@@ -59,7 +59,7 @@ interface FormattedSession {
   noteFromCenter?: string;
   noteFromDoctor?: string;
   overallSessionStatus: string;
-  timeSlot: TimeSlot[];
+  timeSlots: TimeSlot[];
   formattedDateTime: {
     sessionDate: string;    // Format: "YYYY-MM-DD"
     time: string;          // Format: "HH:MM AM - HH:MM PM"

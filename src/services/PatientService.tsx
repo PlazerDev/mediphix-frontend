@@ -113,7 +113,7 @@ interface Session {
   noteFromCenter?: string;
   noteFromDoctor?: string;
   overallSessionStatus: string;
-  timeSlot: TimeSlot[];
+  timeSlots: TimeSlot[];
   formattedDateTime: FormattedDateTime;
 }
 
