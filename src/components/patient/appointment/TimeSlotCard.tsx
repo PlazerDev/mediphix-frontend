@@ -113,7 +113,7 @@ const TimeslotCard: React.FC<TimeSlotCardProps> = ({
                         isSelected ? "text-gray-300" : "text-gray-500"
                       }`}
                     >
-                      Current Queue Number
+                      Current Last Queue Number
                     </p>
                     <button
                       className={`

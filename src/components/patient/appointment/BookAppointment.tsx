@@ -47,10 +47,8 @@ const BookAppointment = () => {
   );
   const [isTermsAgreed, setIsTermsAgreed] = useState<boolean>(false);
 
-  // Backend URL from environment variables
   const backendURL = import.meta.env.VITE_BACKEND_URL;
 
-  // Configuration for the API request
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -58,73 +56,69 @@ const BookAppointment = () => {
     },
   };
 
-  // // Fetch patient data
-  // const { data: patientData, isLoading: isPatientLoading } = useQuery({
-  //   queryKey: ["patientData", backendURL],
-  //   queryFn: () => PatientService.getPatientData(backendURL, config),
-  //   enabled: !!backendURL, // Only run if backendURL exists
-  // });
+  // Fetch patient data
+  const { data: patientData, isLoading: isPatientLoading } = useQuery({
+    queryKey: ["patientData", backendURL],
+    queryFn: () => PatientService.getPatientData(backendURL, config),
+    enabled: !!backendURL,
+  });
 
-  // // Mutation for booking appointment
-  // const bookAppointmentMutation = useMutation({
-  //   mutationFn: async () => {
-  //     // Validate required data
-  //     if (!sessionId || !selectedTimeSlot || !patientData) {
-  //       throw new Error("Missing required booking information");
-  //     }
 
-  //     // Prepare booking payload
-  //     const bookingPayload = {
-  //       sessionId: sessionId,
-  //       doctorId: sessionDetails.doctorId,
-  //       patientId: patientData._id, // Use patient ID from fetched patient data
-  //       timeSlotId: selectedTimeSlot.slotId.toString(),
-  //       medicalCenterId: sessionDetails.medicalcenterId,
-  //       medicalCenterName: sessionDetails.centerName,
-  //       category: sessionDetails.category,
-  //     };
+  const bookAppointmentMutation = useMutation({
+    mutationFn: async () => {
 
-  //     // Call the booking service method
-  //     return PatientService.bookAppointment(backendURL, bookingPayload, config);
-  //   },
-  //   onSuccess: (response) => {
-  //     message.success("Appointment booked successfully!");
-  //     navigate("/appointments/confirmation", {
-  //       state: {
-  //         appointmentDetails: response,
-  //       },
-  //     });
-  //   },
-  //   onError: (error: any) => {
-  //     console.error("Booking failed", error);
-  //     message.error(error.message || "Failed to book appointment");
-  //   },
-  // });
+      if (!sessionId || !selectedTimeSlot || !patientData) {
+        throw new Error("Missing required booking information");
+      }
 
-  // // Handle loading and error states
-  // if (isPatientLoading) {
-  //   return (
-  //     <div className="flex items-center justify-center min-h-[calc(100vh-100px)]">
-  //       <Loading footer={true} />
-  //     </div>
-  //   );
-  // }
+      const bookingPayload = {
+        sessionId: sessionId,
+        timeSlot: selectedTimeSlot.slotId,
+        patientId: patientData._id,
+        patientName: `${patientData.first_name} ${patientData.last_name}`,
+        queueNumber: selectedTimeSlot.queue?.appointments?.length 
+        ? selectedTimeSlot.queue.appointments.length + 1 
+        : 1,
+        aptCategories: sessionDetails.aptCategories,
+        doctorId: sessionDetails.doctorId,
+        doctorName: sessionDetails.doctorName,
+        medicalCenterId: sessionDetails.medicalcenterId,
+        medicalCenterName: sessionDetails.medicalCenterName,
+        paymentAmount: Number(sessionDetails.payment)
+      };
 
-  // if (!patientData) {
-  //   return <BookingFailed />;
-  // }
+      return PatientService.bookAppointment(backendURL, bookingPayload, config);
+    },
+    onSuccess: (response) => {
+      message.success("Appointment booked successfully!");
+      navigate("/appointments/confirmation", {
+        state: {
+          appointmentDetails: response,
+        },
+      });
+    },
+    onError: (error: any) => {
+      console.error("Booking failed", error);
+      message.error(error.message || "Failed to book appointment");
+    },
+  });
 
-  // Handle checkbox change for terms agreement
+  if (isPatientLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[calc(100vh-100px)]">
+        <Loading footer={true} />
+      </div>
+    );
+  }
+
   const handleTermsChange = (e: any) => {
     setIsTermsAgreed(e.target.checked);
   };
 
-  // Handle time slot selection
   const handleTimeSlotSelect = (slot: TimeSlot) => {
     setSelectedTimeSlot(slot);
   };
 
-  // Handle booking appointment
   const handleBookAppointment = () => {
     if (!isTermsAgreed) {
       message.warning("Please agree to the terms and conditions");
@@ -135,17 +129,8 @@ const BookAppointment = () => {
       message.warning("Please select a time slot");
       return;
     }
-    // // Trigger the booking mutation
-    // bookAppointmentMutation.mutate();
 
-    // Navigate to AppointmentSuccessful with necessary details
-    navigate("/patient/appointment/appointmentsuccessful", {
-      state: {
-        payment: sessionDetails.payment,
-        location: sessionDetails.location,
-        startTime: selectedTimeSlot.startTime,
-      },
-    });
+    bookAppointmentMutation.mutate();
   };
 
   return (
