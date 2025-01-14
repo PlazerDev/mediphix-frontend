@@ -328,7 +328,7 @@ export class PatientService {
   ) {
     try {
       const response = await axios.post(
-        `${backendURL}/appointment`,
+        `${backendURL}/patient/appointment`,
         bookingPayload,
         config
       );

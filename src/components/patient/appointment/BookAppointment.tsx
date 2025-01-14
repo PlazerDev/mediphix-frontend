@@ -37,14 +37,12 @@ const onChange: CheckboxProps["onChange"] = (e) => {
 const BookAppointment = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { sessionId } = useParams<{ sessionId: string }>();
-
+ 
   const sessionDetails = location.state.sessionDetails;
+  const sessionId = sessionDetails?._id;
   const centerDetails = location.state.details;
 
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(
-    null
-  );
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(null);
   const [isTermsAgreed, setIsTermsAgreed] = useState<boolean>(false);
 
   const backendURL = import.meta.env.VITE_BACKEND_URL;
@@ -56,45 +54,66 @@ const BookAppointment = () => {
     },
   };
 
-  // Fetch patient data
+  const validateBookingData = () => {
+    if (!sessionId) {
+      throw new Error("Session ID is missing");
+    }
+    if (!selectedTimeSlot) {
+      throw new Error("Please select a time slot");
+    }
+    if (!patientData) {
+      throw new Error("Patient information is not available");
+    }
+    if (!doctorData) {
+      throw new Error("Doctor information is not available");
+    }
+    if (!sessionDetails) {
+      throw new Error("Session details are missing");
+    }
+    if (!centerDetails) {
+      throw new Error("Medical center details are missing");
+    }
+  };
+
   const { data: patientData, isLoading: isPatientLoading } = useQuery({
     queryKey: ["patientData", backendURL],
-    queryFn: () => PatientService.getPatientData(backendURL, config),
-    enabled: !!backendURL,
+    queryFn: () => PatientService.getPatientData(backendURL, config)
   });
 
-  // Fetch doctor data
   const { data: doctorData, isLoading: isdoctorLoading } = useQuery({
     queryKey: ["doctorData", sessionDetails.doctorId],
-    queryFn: () => PatientService.getDoctorDetailsByDoctorId(backendURL, sessionDetails.doctorId, config),
-    enabled: !!backendURL,
+    queryFn: () => PatientService.getDoctorDetailsByDoctorId(backendURL, sessionDetails.doctorId, config)
   });
-
 
   const bookAppointmentMutation = useMutation({
     mutationFn: async () => {
+      try {
+        validateBookingData();
 
-      if (!sessionId || !selectedTimeSlot || !patientData || !doctorData) {
-        throw new Error("Missing required booking information");
+        if (!selectedTimeSlot || !patientData || !doctorData) {
+          throw new Error("Missing required booking information");
+        }
+
+        const bookingPayload = {
+          sessionId: sessionDetails._id, 
+          timeSlot: selectedTimeSlot.slotId,
+          patientId: patientData._id,
+          patientName: `${patientData.first_name} ${patientData.last_name}`,
+          queueNumber: selectedTimeSlot.queue?.appointments?.length 
+            ? selectedTimeSlot.queue.appointments.length + 1 
+            : 1,
+          aptCategories: sessionDetails.aptCategories,
+          doctorId: sessionDetails.doctorId,
+          doctorName: doctorData.name,
+          medicalCenterId: sessionDetails.medicalCenterId,
+          medicalCenterName: centerDetails.name,
+          paymentAmount: Number(sessionDetails.payment)
+        };
+
+        return await PatientService.bookAppointment(backendURL, bookingPayload, config);
+      } catch (error: any) {
+        throw new Error(`Booking failed: ${error.message}`);
       }
-
-      const bookingPayload = {
-        sessionId: sessionDetails.sessionId,
-        timeSlot: selectedTimeSlot.slotId,
-        patientId: patientData._id,
-        patientName: `${patientData.first_name} ${patientData.last_name}`,
-        queueNumber: selectedTimeSlot.queue?.appointments?.length 
-        ? selectedTimeSlot.queue.appointments.length + 1 
-        : 1,
-        aptCategories: sessionDetails.aptCategories,
-        doctorId: sessionDetails.doctorId,
-        doctorName: doctorData.name,
-        medicalCenterId: sessionDetails.medicalCenterId,
-        medicalCenterName: centerDetails.name,
-        paymentAmount: Number(sessionDetails.payment)
-      };
-
-      return PatientService.bookAppointment(backendURL, bookingPayload, config);
     },
     onSuccess: (response) => {
       message.success("Appointment booked successfully!");
@@ -137,8 +156,30 @@ const BookAppointment = () => {
       return;
     }
 
+    if (!sessionDetails || !centerDetails) {
+      message.error("Missing session or medical center details. Please try again.");
+      return;
+    }
+
     bookAppointmentMutation.mutate();
   };
+
+  if (!sessionDetails || !centerDetails) {
+    return (
+      <div className="p-6">
+        <h2 className="text-xl text-red-600">Error: Missing Required Data</h2>
+        <p className="mt-4">Unable to load booking page. Required details are missing.</p>
+        <Button 
+          type="primary"
+          onClick={() => navigate(-1)}
+          className="mt-4"
+          style={{ backgroundColor: "#FF7300" }}
+        >
+          Go Back
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <>
