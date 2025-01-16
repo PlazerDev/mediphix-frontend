@@ -4,7 +4,7 @@ import type { CheckboxProps } from "antd";
 import { Button, message } from "antd";
 import Footer from "../../Footer";
 import TimeSlotCard from "./TimeSlotCard";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import TokenService from "../../../services/TokenService";
 import { PatientService } from "../../../services/PatientService";
@@ -30,6 +30,15 @@ interface TimeSlot {
   };
 }
 
+interface AppointmentSuccessDetails {
+  appointmentNumber: number;
+  queueNumber: number;
+  startTime: string;
+  payment: number;
+  hallNo: string;
+  message: string;
+}
+
 const onChange: CheckboxProps["onChange"] = (e) => {
   console.log(`checked = ${e.target.checked}`);
 };
@@ -37,12 +46,14 @@ const onChange: CheckboxProps["onChange"] = (e) => {
 const BookAppointment = () => {
   const navigate = useNavigate();
   const location = useLocation();
- 
+
   const sessionDetails = location.state.sessionDetails;
   const sessionId = sessionDetails?._id;
   const centerDetails = location.state.details;
 
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(null);
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(
+    null
+  );
   const [isTermsAgreed, setIsTermsAgreed] = useState<boolean>(false);
 
   const backendURL = import.meta.env.VITE_BACKEND_URL;
@@ -77,12 +88,17 @@ const BookAppointment = () => {
 
   const { data: patientData, isLoading: isPatientLoading } = useQuery({
     queryKey: ["patientData", backendURL],
-    queryFn: () => PatientService.getPatientData(backendURL, config)
+    queryFn: () => PatientService.getPatientData(backendURL, config),
   });
 
   const { data: doctorData, isLoading: isdoctorLoading } = useQuery({
     queryKey: ["doctorData", sessionDetails.doctorId],
-    queryFn: () => PatientService.getDoctorDetailsByDoctorId(backendURL, sessionDetails.doctorId, config)
+    queryFn: () =>
+      PatientService.getDoctorDetailsByDoctorId(
+        backendURL,
+        sessionDetails.doctorId,
+        config
+      ),
   });
 
   const bookAppointmentMutation = useMutation({
@@ -95,37 +111,53 @@ const BookAppointment = () => {
         }
 
         const bookingPayload = {
-          sessionId: sessionDetails._id, 
+          sessionId: sessionDetails._id,
           timeSlot: selectedTimeSlot.slotId,
           patientId: patientData._id,
           patientName: `${patientData.first_name} ${patientData.last_name}`,
-          queueNumber: selectedTimeSlot.queue?.appointments?.length 
-            ? selectedTimeSlot.queue.appointments.length + 1 
+          queueNumber: selectedTimeSlot.queue?.appointments?.length
+            ? selectedTimeSlot.queue.appointments.length + 1
             : 1,
           aptCategories: sessionDetails.aptCategories,
           doctorId: sessionDetails.doctorId,
           doctorName: doctorData.name,
           medicalCenterId: sessionDetails.medicalCenterId,
           medicalCenterName: centerDetails.name,
-          paymentAmount: Number(sessionDetails.payment)
+          paymentAmount: Number(sessionDetails.payment),
         };
 
-        return await PatientService.bookAppointment(backendURL, bookingPayload, config);
+        return await PatientService.bookAppointment(
+          backendURL,
+          bookingPayload,
+          config
+        );
       } catch (error: any) {
         throw new Error(`Booking failed: ${error.message}`);
       }
     },
     onSuccess: (response) => {
       message.success("Appointment booked successfully!");
-      navigate("/appointments/confirmation", {
+      const appointmentDetails: AppointmentSuccessDetails = {
+        appointmentNumber: response.appointmentNumber,
+        queueNumber: selectedTimeSlot!.queue?.appointments?.length
+          ? selectedTimeSlot!.queue.appointments.length + 1
+          : 1,
+        startTime: selectedTimeSlot!.startTime,
+        payment: Number(sessionDetails.payment),
+        hallNo: sessionDetails.hallNumber,
+        message: response.message,
+      };
+
+      navigate("/patient/appointment/appointmentsuccessful", {
         state: {
-          appointmentDetails: response,
+          appointmentDetails,
         },
       });
     },
     onError: (error: any) => {
       console.error("Booking failed", error);
       message.error(error.message || "Failed to book appointment");
+      navigate("/appointment/bookingfailed");
     },
   });
 
@@ -157,7 +189,9 @@ const BookAppointment = () => {
     }
 
     if (!sessionDetails || !centerDetails) {
-      message.error("Missing session or medical center details. Please try again.");
+      message.error(
+        "Missing session or medical center details. Please try again."
+      );
       return;
     }
 
@@ -168,8 +202,10 @@ const BookAppointment = () => {
     return (
       <div className="p-6">
         <h2 className="text-xl text-red-600">Error: Missing Required Data</h2>
-        <p className="mt-4">Unable to load booking page. Required details are missing.</p>
-        <Button 
+        <p className="mt-4">
+          Unable to load booking page. Required details are missing.
+        </p>
+        <Button
           type="primary"
           onClick={() => navigate(-1)}
           className="mt-4"
@@ -215,19 +251,25 @@ const BookAppointment = () => {
 
             <div className="flex flex-col items-start">
               <p className="text-[#868686] text-sm mb-1">Time Frame</p>
-              <p className="font-semibold">{sessionDetails.formattedDateTime.time}</p>
+              <p className="font-semibold">
+                {sessionDetails.formattedDateTime.time}
+              </p>
             </div>
 
             <div className="flex flex-col items-start">
               <p className="text-[#868686] text-sm mb-1">Date</p>
-              <p className="font-semibold">{sessionDetails.formattedDateTime.sessionDate}</p>
+              <p className="font-semibold">
+                {sessionDetails.formattedDateTime.sessionDate}
+              </p>
             </div>
 
             <div className="flex flex-col items-start">
               <p className="text-[#868686] text-sm mb-1">
                 Appointment Category
               </p>
-              <p className="font-semibold">{sessionDetails.aptCategories.join(", ")}</p>
+              <p className="font-semibold">
+                {sessionDetails.aptCategories.join(", ")}
+              </p>
             </div>
 
             <div className="flex flex-col items-start">
