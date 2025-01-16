@@ -1,6 +1,5 @@
 import { Breadcrumb } from "antd";
 import { Checkbox } from "antd";
-import type { CheckboxProps } from "antd";
 import { Button, message } from "antd";
 import Footer from "../../Footer";
 import TimeSlotCard from "./TimeSlotCard";
@@ -10,8 +9,6 @@ import TokenService from "../../../services/TokenService";
 import { PatientService } from "../../../services/PatientService";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Loading from "../../Loading";
-import BookingFailed from "./BookingFailed";
-
 interface TimeSlot {
   slotId: number;
   startTime: string;
@@ -39,16 +36,11 @@ interface AppointmentSuccessDetails {
   message: string;
 }
 
-const onChange: CheckboxProps["onChange"] = (e) => {
-  console.log(`checked = ${e.target.checked}`);
-};
-
 const BookAppointment = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const sessionDetails = location.state.sessionDetails;
-  const sessionId = sessionDetails?._id;
   const centerDetails = location.state.details;
 
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(
@@ -63,27 +55,6 @@ const BookAppointment = () => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${TokenService.getToken()}`,
     },
-  };
-
-  const validateBookingData = () => {
-    if (!sessionId) {
-      throw new Error("Session ID is missing");
-    }
-    if (!selectedTimeSlot) {
-      throw new Error("Please select a time slot");
-    }
-    if (!patientData) {
-      throw new Error("Patient information is not available");
-    }
-    if (!doctorData) {
-      throw new Error("Doctor information is not available");
-    }
-    if (!sessionDetails) {
-      throw new Error("Session details are missing");
-    }
-    if (!centerDetails) {
-      throw new Error("Medical center details are missing");
-    }
   };
 
   const { data: patientData, isLoading: isPatientLoading } = useQuery({
@@ -104,10 +75,9 @@ const BookAppointment = () => {
   const bookAppointmentMutation = useMutation({
     mutationFn: async () => {
       try {
-        validateBookingData();
-
-        if (!selectedTimeSlot || !patientData || !doctorData) {
-          throw new Error("Missing required booking information");
+       
+        if (!selectedTimeSlot || !patientData || !doctorData || !sessionDetails || !centerDetails) {
+          throw new Error("Error Occured, Please Try again later.");
         }
 
         const bookingPayload = {
@@ -157,7 +127,7 @@ const BookAppointment = () => {
     onError: (error: any) => {
       console.error("Booking failed", error);
       message.error(error.message || "Failed to book appointment");
-      navigate("/appointment/bookingfailed");
+      navigate("patient/appointment/bookingfailed");
     },
   });
 
@@ -188,34 +158,8 @@ const BookAppointment = () => {
       return;
     }
 
-    if (!sessionDetails || !centerDetails) {
-      message.error(
-        "Missing session or medical center details. Please try again."
-      );
-      return;
-    }
-
     bookAppointmentMutation.mutate();
   };
-
-  if (!sessionDetails || !centerDetails) {
-    return (
-      <div className="p-6">
-        <h2 className="text-xl text-red-600">Error: Missing Required Data</h2>
-        <p className="mt-4">
-          Unable to load booking page. Required details are missing.
-        </p>
-        <Button
-          type="primary"
-          onClick={() => navigate(-1)}
-          className="mt-4"
-          style={{ backgroundColor: "#FF7300" }}
-        >
-          Go Back
-        </Button>
-      </div>
-    );
-  }
 
   return (
     <>
