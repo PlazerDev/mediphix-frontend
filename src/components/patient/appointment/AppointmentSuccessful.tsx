@@ -1,17 +1,43 @@
 import Footer from "./../../Footer";
 import BookingSuccessful from "./../../../assets/images/patient/appoinment/BookingSuccessful.png";
 import { Link, useLocation } from "react-router-dom";
+interface AppointmentSuccessDetails {
+  appointmentNumber: number;
+  queueNumber: number;
+  startTime: string;
+  payment: number;
+  hallNo: string;
+  message: string;
+}
 
 const AppointmentSuccessful = () => {
-
   const location = useLocation();
-  const {
-    patientCount = 0, 
-    payment = 'N/A', 
-    location: consultationLocation = 'N/A', 
-    startTime = 'N/A', 
-    endTime = 'N/A'
-  } = location.state || {};
+  const appointmentDetails: AppointmentSuccessDetails = location.state
+    ?.appointmentDetails || {
+    appointmentNumber: 0,
+    queueNumber: 0,
+    startTime: "N/A",
+    payment: 0,
+    hallNo: "N/A",
+    message: "",
+  };
+
+  const formatTime = (time: string) => {
+    if (time === "N/A") return "N/A";
+    const timeObj = new Date(`2000-01-01T${time}`);
+    return timeObj.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
+
+  const formatPayment = (amount: number) => {
+    return amount.toLocaleString("en-US", {
+      style: "currency",
+      currency: "LKR",
+    });
+  };
 
   return (
     <>
@@ -22,10 +48,10 @@ const AppointmentSuccessful = () => {
         <p className="mb-6">Appointments</p>
       </div>
 
-      <div className="ml-4 mr-4 p-8 bg-[#ffffff] rounded-[16px]">
+      <div className="ml-4 mr-4 p-6 bg-[#ffffff] rounded-[16px]">
         <div className="flex flex-col justify-center items-center">
           <img
-            className="w-32 h-28 mb-2"
+            className="w-32 h-28"
             src={BookingSuccessful}
             alt="BookingSuccessful"
           />
@@ -39,32 +65,34 @@ const AppointmentSuccessful = () => {
         <div className="flex justify-center gap-12">
           <div>
             <p className="text-[#868686]">Reference Number</p>
-            <p>REF_2003</p>
+            <p>
+              REF_
+              {appointmentDetails.appointmentNumber.toString().padStart(4, "0")}
+            </p>
           </div>
 
           <div>
             <p className="text-[#868686]">Your Queue Number</p>
-            <p>{patientCount + 1}</p>
+            <p>{appointmentDetails.queueNumber}</p>
           </div>
         </div>
-        <div className="flex justify-center gap-12 mt-6">
+        <div className="flex justify-center gap-12 mt-4">
           <div>
             <p className="text-[#868686]">Appointment Time</p>
-            <p>{startTime} - {endTime}</p>
+            <p>{formatTime(appointmentDetails.startTime)}</p>
           </div>
 
-          <div>
-          </div>
+          <div></div>
         </div>
-        <div className="flex justify-center gap-12 mt-6">
+        <div className="flex justify-center gap-12 mt-4">
           <div>
             <p className="text-[#868686]">Consultation Fee</p>
-            <p>{payment}</p>
+            <p>{formatPayment(appointmentDetails.payment)}</p>
           </div>
 
           <div>
             <p className="text-[#868686]">Consultation Room No.</p>
-            <p>{consultationLocation}</p>
+            <p>{appointmentDetails.hallNo}</p>
           </div>
         </div>
         <div className="text-center">
@@ -74,7 +102,7 @@ const AppointmentSuccessful = () => {
           </p>
           <p>Thank you for choosing our services.</p>
         </div>
-        <div className="flex justify-center items-center mt-4 mr-4">
+        <div className="flex justify-center items-center mr-4">
           <div className="flex justify-center items-center mt-4 mr-4">
             <Link to="/patienthome">
               <div className="bg-[#FFFFFF] text-[black] border-2 border-black rounded-md p-2 w-40 flex justify-center items-center">

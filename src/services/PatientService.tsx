@@ -54,33 +54,6 @@ interface Center {
   mobile: string;
 }
 
-interface AppointmentDate {
-  date: string; // Format: YYYY-MM-DD
-}
-
-// interface Session {
-//   id: string;
-//   date: string;
-//   time: string;
-//   category: string;
-//   doctorId: string;
-//   doctorName: string;
-//   medicalcenterId: string;
-//   centerName: string;
-//   doctorNote: string;
-//   centerNote: string;
-//   maxPatientCount: number;
-//   registeredPatientCount: number;
-// }
-
-// interface TimeSlot {
-//   id: string;
-//   startTime: string;
-//   endTime: string;
-//   maxPatientCount: number;
-//   patientCount: number;
-// }
-
 interface FormattedDateTime {
   sessionDate: string; // Format: "YYYY-MM-DD"
   time: string; // Format: "HH:MM AM - HH:MM PM"
@@ -133,6 +106,25 @@ interface Session {
   overallSessionStatus: string;
   timeSlots: TimeSlot[];
   formattedDateTime: FormattedDateTime;
+}
+
+interface AppointmentResponse {
+  message: string;
+  appointmentNumber: number;
+}
+
+interface BookingPayload {
+  sessionId: string;
+  timeSlot: number;
+  patientId: string;
+  patientName: string;
+  queueNumber: number;
+  aptCategories: string[];
+  doctorId: string;
+  doctorName: string;
+  medicalCenterId: string;
+  medicalCenterName: string;
+  paymentAmount: number;
 }
 
 export const formatSessionDateTime = (session: Session) => {
@@ -311,29 +303,21 @@ export class PatientService {
 
   static async bookAppointment(
     backendURL: string,
-    bookingPayload: {
-      sessionId: string;
-      timeSlot: number;
-      patientId: string;
-      patientName: string;
-      queueNumber: number;
-      aptCategories: string[];
-      doctorId: string;
-      doctorName: string;
-      medicalCenterId: string;
-      medicalCenterName: string;
-      paymentAmount: number;
-    },
+    bookingPayload: BookingPayload,
     config: any
-  ) {
+  ) :Promise<AppointmentResponse>{
     try {
-      const response = await axios.post(
+      const response = await axios.post<AppointmentResponse>(
         `${backendURL}/patient/appointment`,
         bookingPayload,
         config
       );
 
-      return response.data;
+      return {
+        message: response.data.message,
+        appointmentNumber: response.data.appointmentNumber
+      };
+      
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
         if (error.response) {
