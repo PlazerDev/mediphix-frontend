@@ -127,6 +127,28 @@ interface BookingPayload {
   paymentAmount: number;
 }
 
+interface UpcomingAppointment {
+  _id: string;
+  aptNumber: number;
+  sessionId: string;
+  timeSlot: number;
+  aptCategories: string[];
+  doctorId: string;
+  doctorName: string;
+  medicalCenterId: string;
+  medicalCenterName: string;
+  payment: {
+    isPaid: boolean;
+    amount: number;
+    handleBy: string;
+  };
+  aptCreatedTimestamp: Timestamp;
+  aptStatus: string;
+  patientId: string;
+  patientName: string;
+  queueNumber: number;
+}
+
 export const formatSessionDateTime = (session: Session) => {
   const padNumber = (num: number): string => num.toString().padStart(2, "0");
 
@@ -337,6 +359,34 @@ export class PatientService {
           "An unexpected error occurred while booking appointment."
         );
       }
+    }
+  }
+
+  static async getUpcomingAppointments(
+    backendURL: string,
+    config: AxiosRequestConfig
+  ): Promise<UpcomingAppointment | undefined> {
+    try {
+      const response: AxiosResponse<UpcomingAppointment> = await axios.get(
+        `${backendURL}/patient/getUpcomingAppointments`,
+        config
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        ErrorService.handleError(response);
+        return undefined;
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "An unexpected error occurred. Please try again later.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return undefined;
     }
   }
 }
