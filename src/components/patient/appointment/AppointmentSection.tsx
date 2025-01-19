@@ -7,6 +7,9 @@ import "../../../assets/css/page_loading_animation.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IconType } from "react-icons";
+import { PatientService } from "../../../services/PatientService";
+import { useQuery } from "@tanstack/react-query";
+import TokenService from "../../../services/TokenService";
 
 function AppointmentSection({
   name,
@@ -32,30 +35,50 @@ function AppointmentSection({
     return () => clearTimeout(timer);
   }, []);
 
-  const upcomingAppointments = [
-    {
-      key: "1",
-      date: "2024/08/18",
-      timeSlot: "10:00 AM - 10:30 AM",
-      refNumber: "REF_2705",
-      doctor: "Dr. Smith",
-      medicalCenter: "City Hospital",
-      category: "General",
-      queueNumber: "5",
-      status: "Active",
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${TokenService.getToken()}`,
     },
-    {
-      key: "2",
-      date: "2024/08/29",
-      timeSlot: "11:00 AM - 11:30 AM",
-      refNumber: "REF_2346",
-      doctor: "Dr. John",
-      medicalCenter: "Central Clinic",
-      category: "Pediatric",
-      queueNumber: "10",
-      status: "Active",
-    },
-  ];
+  };
+
+  const {
+    data: upcomingAppointments,
+    isError,
+    isLoading,
+  } = useQuery({
+    queryKey: ["upcomingAppointments", backendURL, config],
+    queryFn: () => PatientService.getUpcomingAppointments(backendURL, config),
+    staleTime: 200000,
+  });
+
+  console.log(upcomingAppointments);
+
+  // const upcomingAppointments = [
+  //   {
+  //     key: "1",
+  //     date: "2024/08/18",
+  //     timeSlot: "10:00 AM - 10:30 AM",
+  //     refNumber: "REF_2705",
+  //     doctor: "Dr. Smith",
+  //     medicalCenter: "City Hospital",
+  //     category: "General",
+  //     queueNumber: "5",
+  //     status: "Active",
+  //   },
+  //   {
+  //     key: "2",
+  //     date: "2024/08/29",
+  //     timeSlot: "11:00 AM - 11:30 AM",
+  //     refNumber: "REF_2346",
+  //     doctor: "Dr. John",
+  //     medicalCenter: "Central Clinic",
+  //     category: "Pediatric",
+  //     queueNumber: "10",
+  //     status: "Active",
+  //   },
+  // ];
 
   const previousAppointments = [
     {

@@ -372,6 +372,8 @@ export class PatientService {
         config
       );
 
+      console.log("Response from upcoming appointments:", response.data);
+
       if (response.status === 200) {
         return response.data;
       } else {
