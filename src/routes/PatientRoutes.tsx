@@ -4,7 +4,7 @@ import {
   HomeOutlined,
 } from "@ant-design/icons";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import { FaRegAddressBook } from "react-icons/fa";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
@@ -20,9 +20,33 @@ import Navigation from "../components/patient/navigation/Navigation.tsx";
 import CreateAppointment from "../components/patient/appointment/CreateAppointment";
 import DetailsBeforeAppointment from "../components/patient/appointment/DetailsBeforeAppointment";
 import BookAppointment from "../components/patient/appointment/BookAppointment";
-import AppointmentCalendar from "../components/patient/appointment/AppointmentCalendar.tsx";
+import { PatientService } from "../services/PatientService.tsx";
+import TokenService from "../services/TokenService.tsx";
+import { useQuery } from "@tanstack/react-query";
 
 function PatientRoutes() {
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${TokenService.getToken()}`,
+    },
+  };
+
+  const {
+    data: patientDetails,
+    isError,
+    isLoading,
+  } = useQuery({
+    queryKey: ["patient", backendURL, config],
+    queryFn: () => PatientService.getPatientData(backendURL, config),
+    staleTime: 200000,
+  });
+
+  if (isError) {
+    return <Navigate to="/" />;
+  }
+  
   return (
     <div>
       <Navigation
@@ -41,7 +65,7 @@ function PatientRoutes() {
           path="/appointment"
           element={
             <AppointmentSection
-              name={"Visal"}
+              name={patientDetails?.first_name ?? ''}
               title={"Manage your appointments here"}
               buttontitles={[
                 "Upcoming Appointments",
