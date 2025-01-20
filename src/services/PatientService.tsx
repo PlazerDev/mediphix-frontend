@@ -147,6 +147,74 @@ interface UpcomingAppointment {
   patientId: string;
   patientName: string;
   queueNumber: number;
+  medicalRecord:{
+
+  }
+}
+
+interface ReportDetails {
+  testStartedTimestamp: Timestamp;
+  testEndedTimestamp: Timestamp;
+  additionalNote?: string;
+  resultFiles?: string[];
+}
+
+interface LabReport {
+  requestedTimestamp: Timestamp;
+  isHighPrioritize: boolean;
+  testType: string;
+  testName: string;
+  noteToLabStaff: string;
+  status: number;
+  reportDetails?: ReportDetails;
+}
+
+interface Treatment {
+  medications: string[];
+  description: string[];
+}
+
+interface Diagnosis {
+  category: string[];
+  description: string[];
+}
+
+interface Payment {
+  isPaid: boolean;
+  amount: number;
+  handleBy: string;
+  paymentTimestamp?: Timestamp;
+}
+
+interface MedicalRecord {
+  aptNumber: number;
+  startedTimestamp: Timestamp;
+  endedTimestamp: Timestamp;
+  symptoms: string[];
+  diagnosis: Diagnosis;
+  treatments: Treatment;
+  noteToPatient?: string;
+  isLabReportRequired: boolean;
+  labReport?: LabReport;
+}
+
+interface Appointment {
+  _id?: string;
+  aptNumber: number;
+  sessionId: string;
+  timeSlot: number;
+  aptCategories: string[];
+  doctorId: string;
+  doctorName: string;
+  medicalCenterId: string;
+  medicalCenterName: string;
+  payment: Payment;
+  aptCreatedTimestamp: Timestamp;
+  aptStatus: string;
+  patientId: string;
+  patientName: string;
+  queueNumber: number;
+  medicalRecord?: MedicalRecord;
 }
 
 export const formatSessionDateTime = (session: Session) => {
@@ -373,6 +441,36 @@ export class PatientService {
       );
 
       console.log("Response from upcoming appointments:", response.data);
+
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        ErrorService.handleError(response);
+        return undefined;
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred:", error);
+      Swal.fire({
+        title: "Error!",
+        text: "An unexpected error occurred. Please try again later.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return undefined;
+    }
+  }
+
+  static async getPreviousAppointments(
+    backendURL: string,
+    config: AxiosRequestConfig
+  ): Promise<Appointment | undefined> {
+    try {
+      const response: AxiosResponse<Appointment> = await axios.get(
+        `${backendURL}/patient/getPreviousAppointments`,
+        config
+      );
+
+      console.log("Response from previous appointments:", response.data);
 
       if (response.status === 200) {
         return response.data;

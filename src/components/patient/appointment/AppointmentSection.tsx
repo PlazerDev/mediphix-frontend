@@ -45,8 +45,7 @@ function AppointmentSection({
 
   const {
     data: upcomingAppointments,
-    isError,
-    isLoading,
+    isLoading: upcomingAppointmentsLoading,
   } = useQuery({
     queryKey: ["upcomingAppointments", backendURL, config],
     queryFn: () => PatientService.getUpcomingAppointments(backendURL, config),
@@ -54,6 +53,17 @@ function AppointmentSection({
   });
 
   console.log(upcomingAppointments);
+
+  const {
+    data: previousAppointments,
+    isLoading: previousAppointmentsLoading,
+  } = useQuery({
+    queryKey: ["previousAppointments", backendURL, config],
+    queryFn: () => PatientService.getPreviousAppointments(backendURL, config),
+    staleTime: 200000,
+  });
+
+  console.log(previousAppointments);
 
   // const upcomingAppointments = [
   //   {
@@ -80,30 +90,30 @@ function AppointmentSection({
   //   },
   // ];
 
-  const previousAppointments = [
-    {
-      key: "1",
-      date: "2024/05/20",
-      timeSlot: "10:00 AM - 10:30 AM",
-      refNumber: "REF_1921",
-      doctor: "Dr. Adams",
-      medicalCenter: "City Hospital",
-      category: "General",
-      queueNumber: "2",
-      status: "Ended",
-    },
-    {
-      key: "2",
-      date: "2024/05/22",
-      timeSlot: "11:00 AM - 11:30 AM",
-      refNumber: "REF_1322",
-      doctor: "Dr. Brown",
-      medicalCenter: "Central Clinic",
-      category: "Pediatric",
-      queueNumber: "8",
-      status: "Ended",
-    },
-  ];
+  // const previousAppointments = [
+  //   {
+  //     key: "1",
+  //     date: "2024/05/20",
+  //     timeSlot: "10:00 AM - 10:30 AM",
+  //     refNumber: "REF_1921",
+  //     doctor: "Dr. Adams",
+  //     medicalCenter: "City Hospital",
+  //     category: "General",
+  //     queueNumber: "2",
+  //     status: "Ended",
+  //   },
+  //   {
+  //     key: "2",
+  //     date: "2024/05/22",
+  //     timeSlot: "11:00 AM - 11:30 AM",
+  //     refNumber: "REF_1322",
+  //     doctor: "Dr. Brown",
+  //     medicalCenter: "Central Clinic",
+  //     category: "Pediatric",
+  //     queueNumber: "8",
+  //     status: "Ended",
+  //   },
+  // ];
 
   const handleNavigation = (index: number) => {
     const navigationData = {
