@@ -92,8 +92,7 @@ const CreateAppointment = () => {
       ...doctor,
       medical_center_names: doctor.medical_centers.map(
         (centerId) =>
-          centerList?.find((center) => center._id === centerId)?.name ||
-          "Nawaloka Hospital" //used for dev purposes. Remove this
+          centerList?.find((center) => center._id === centerId)?.name || "N/A"
       ),
     })) || [];
 
@@ -110,7 +109,7 @@ const CreateAppointment = () => {
 
   const detailsList =
     detailType === "doctor" ? transformedDoctorList : centerList || [];
-
+  console.log("helooooooo", detailsList);
   return (
     <div
       className={`flex flex-col p-4 ${
@@ -191,6 +190,8 @@ const CreateAppointment = () => {
             <DetailCard
               detailType={detailType}
               name={list.name}
+              docImage={list.profileImage}
+              centerImage={list.profileImage}
               topic2Value={
                 detailType === "doctor"
                   ? `${(list as Doctor).education.join(", ")} ${

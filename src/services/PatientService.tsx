@@ -52,6 +52,7 @@ interface Center {
   noOfDoctors?: number;
   description?: string;
   mobile: string;
+  profileImage: string;
 }
 
 interface FormattedDateTime {
@@ -147,9 +148,7 @@ interface UpcomingAppointment {
   patientId: string;
   patientName: string;
   queueNumber: number;
-  medicalRecord:{
-
-  }
+  medicalRecord: {};
 }
 
 interface ReportDetails {
@@ -284,6 +283,7 @@ export class PatientService {
       );
 
       if (response.status === 200) {
+        console.log("Resulted Data : ", response.data);
         return response.data;
       } else {
         ErrorService.handleError(response);
@@ -389,13 +389,12 @@ export class PatientService {
       return undefined;
     }
   }
- 
 
   static async bookAppointment(
     backendURL: string,
     bookingPayload: BookingPayload,
     config: any
-  ) :Promise<AppointmentResponse>{
+  ): Promise<AppointmentResponse> {
     try {
       const response = await axios.post<AppointmentResponse>(
         `${backendURL}/patient/appointment`,
@@ -405,9 +404,8 @@ export class PatientService {
 
       return {
         message: response.data.message,
-        appointmentNumber: response.data.appointmentNumber
+        appointmentNumber: response.data.appointmentNumber,
       };
-      
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
         if (error.response) {

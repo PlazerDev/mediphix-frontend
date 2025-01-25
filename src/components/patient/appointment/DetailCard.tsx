@@ -1,12 +1,11 @@
-import profilepic from "./../../../assets/images/patient/appoinment/doctorImage.jpeg";
-import centerlogo from "./../../../assets/images/patient/appoinment/NawalokaHospitals.jpeg";
-
 interface DetailCardProps {
   detailType: "doctor" | "center";
   name: string;
   topic2Value: string;
   appointmentCategory: string[];
   topic4Value?: string;
+  docImage?: string;
+  centerImage?: string;
 }
 
 const DetailCard = ({
@@ -15,6 +14,8 @@ const DetailCard = ({
   topic2Value,
   appointmentCategory,
   topic4Value,
+  centerImage,
+  docImage,
 }: DetailCardProps) => {
   const topic2 = detailType === "doctor" ? "Education" : "Location";
   const topic4 = detailType === "doctor" ? "Available at" : "Number of Doctors";
@@ -62,13 +63,13 @@ const DetailCard = ({
             {detailType === "doctor" ? (
               <img
                 className="w-36 h-36 rounded-full object-cover"
-                src={profilepic}
+                src={docImage}
                 alt="Profile Pic"
               />
             ) : (
               <img
                 className="w-36 h-36  rounded-[16px] object-contain"
-                src={centerlogo}
+                src={centerImage}
                 alt="Center Logo"
               />
             )}
