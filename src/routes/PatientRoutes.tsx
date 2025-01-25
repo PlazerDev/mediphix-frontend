@@ -6,8 +6,8 @@ import {
 
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import { FaRegAddressBook } from "react-icons/fa";
-import { MdOutlineCreateNewFolder } from "react-icons/md";
+import { HiDocumentText } from "react-icons/hi2";
+import { HiDocumentPlus } from "react-icons/hi2";
 
 import AppointmentSection from "../components/patient/appointment/AppointmentSection";
 import PatientHome from "../components/patient/home/PatientHome";
@@ -74,9 +74,9 @@ function PatientRoutes() {
                 "Previous Appointments",
               ]}
               buttonimages={[
-                FaRegAddressBook,
-                MdOutlineCreateNewFolder,
-                FaRegAddressBook,
+                HiDocumentText,
+                HiDocumentPlus,
+                HiDocumentText,
               ]}
               // must be same order as buttontiles
               navigations={[

@@ -9,7 +9,7 @@ const transformAppointments = (appointments: any) => {
       date: apt.date,
       timeSlot: apt.timeSlot,
       refNumber: `REF_${apt.aptNumber}`,
-      doctor: `DR.${apt.doctorName}`,
+      doctor: `DR. ${apt.doctorName}`,
       medicalCenter: apt.medicalCenterName,
       category: apt.aptCategories.join(", "),
       queueNumber: String(apt.queueNumber),
