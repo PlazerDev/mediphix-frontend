@@ -1,4 +1,4 @@
-import { Calendar, theme } from "antd";
+import { Calendar, ConfigProvider, theme } from "antd";
 import type { CalendarProps } from "antd";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
@@ -57,6 +57,19 @@ const AppointmentCalendar = ({
   const { token } = theme.useToken();
   const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
 
+  const customTheme = {
+    components: {
+      Calendar: {
+        colorPrimary: "#FF7300", // Changes primary color to orange
+        colorPrimaryBg: "#FFE6D3", // Light background for selected/today
+        colorBorder: "#FF7300", // Border color
+        colorText: "#FF7300", // Text color
+        colorTextDisabled: "#CCCCCC", // Disabled text color
+        
+      },
+    },
+  };
+
   const backendURL = import.meta.env.VITE_BACKEND_URL;
   const config = {
     headers: {
@@ -74,8 +87,8 @@ const AppointmentCalendar = ({
     staleTime: 200000,
   });
 
-   // Fetch center data
-   const { data: centerData, isLoading: centerLoading } = useQuery({
+  // Fetch center data
+  const { data: centerData, isLoading: centerLoading } = useQuery({
     queryKey: ["centerData"],
     queryFn: () => PatientService.getCenterData(backendURL, config),
     staleTime: 200000,
@@ -84,31 +97,37 @@ const AppointmentCalendar = ({
   // Get unique dates from sessions for calendar highlighting
   const sessionDates = useMemo(() => {
     if (!sessionDetails) return [];
-    return [...new Set(sessionDetails.map(session => 
-      dayjs(session.formattedDateTime.sessionDate)
-    ))];
+    return [
+      ...new Set(
+        sessionDetails.map((session) =>
+          dayjs(session.formattedDateTime.sessionDate)
+        )
+      ),
+    ];
   }, [sessionDetails]);
 
-   // Filter sessions for selected date
-   const filteredSessions = useMemo(() => {
+  // Filter sessions for selected date
+  const filteredSessions = useMemo(() => {
     if (!sessionDetails || !selectedDate) return [];
-    
-    return sessionDetails.filter(session => 
-      session.formattedDateTime.sessionDate === selectedDate.format('YYYY-MM-DD')
+
+    return sessionDetails.filter(
+      (session) =>
+        session.formattedDateTime.sessionDate ===
+        selectedDate.format("YYYY-MM-DD")
     );
   }, [sessionDetails, selectedDate]);
 
-    // Combine filtered sessions with center details
-    const sessionsWithCenterDetails = useMemo(() => {
-      if (!filteredSessions || !centerData) return [];
-  
-      return filteredSessions.map(session => ({
-        session,
-        centerDetails: centerData.find(center => 
-          center._id === session.medicalCenterId
-        ) || ({} as Center)
-      }));
-    }, [filteredSessions, centerData]);
+  // Combine filtered sessions with center details
+  const sessionsWithCenterDetails = useMemo(() => {
+    if (!filteredSessions || !centerData) return [];
+
+    return filteredSessions.map((session) => ({
+      session,
+      centerDetails:
+        centerData.find((center) => center._id === session.medicalCenterId) ||
+        ({} as Center),
+    }));
+  }, [filteredSessions, centerData]);
 
   const wrapperStyle: React.CSSProperties = {
     width: "100%",
@@ -126,6 +145,10 @@ const AppointmentCalendar = ({
     }
   };
 
+  const disabledDate = (current: Dayjs) => {
+    return current.isBefore(dayjs(), "day"); // Disable past dates
+  };
+
   // Loading state
   if (sessionsLoading || centerLoading) {
     return (
@@ -140,30 +163,40 @@ const AppointmentCalendar = ({
       <div className="bg-[#ffffff] rounded-[16px] m-4 p-8">
         <h3 className="text-[#363636] font-semibold ml-4">Appointments</h3>
         <div className="m-4">
-          <div style={wrapperStyle}>
-            <Calendar
-              fullscreen={false}
-              onPanelChange={onPanelChange}
-              cellRender={cellRender}
-              onSelect={setSelectedDate}
-            />
+          <div>
+            <ConfigProvider
+              theme={{
+                token: {
+                  colorPrimary: "#FF7300",
+                },
+                components: customTheme.components,
+              }}
+            >
+              <Calendar
+                fullscreen={false}
+                onPanelChange={onPanelChange}
+                cellRender={cellRender}
+                onSelect={setSelectedDate}
+                disabledDate={disabledDate}
+              />
+            </ConfigProvider>
           </div>
         </div>
 
         {selectedDate && (
-        <div className="flex bg-[#363636] m-4 rounded-[8px] p-4 text-[#FFFFFF]">
-          <div className="bg-[#FF7300] p-3 rounded-[8px] text-2xl mr-4">
-            {selectedDate.format('D')}
+          <div className="flex bg-[#363636] m-4 rounded-[8px] p-4 text-[#FFFFFF]">
+            <div className="bg-[#FF7300] p-3 rounded-[8px] text-2xl mr-4">
+              {selectedDate.format("D")}
+            </div>
+            <div className="flex flex-col">
+              <p>{selectedDate.format("dddd")}</p>
+              <p className="text-sm">{selectedDate.format("MMMM YYYY")}</p>
+            </div>
+            <div className="flex-grow flex justify-end items-center">
+              <p>{filteredSessions.length} Appointments Found</p>
+            </div>
           </div>
-          <div className="flex flex-col">
-            <p>{selectedDate.format('dddd')}</p>
-            <p className="text-sm">{selectedDate.format('MMMM YYYY')}</p>
-          </div>
-          <div className="flex-grow flex justify-end items-center">
-            <p>{filteredSessions.length} Appointments Found</p>
-          </div>
-        </div>
-      )}
+        )}
         {sessionsWithCenterDetails.map(({ session, centerDetails }) => (
           <DateAppointmentDetails
             key={session._id}
