@@ -6,14 +6,13 @@ import {
 
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import { FaRegAddressBook } from "react-icons/fa";
-import { MdOutlineCreateNewFolder } from "react-icons/md";
+import { HiDocumentText } from "react-icons/hi2";
+import { HiDocumentPlus } from "react-icons/hi2";
 
 import AppointmentSection from "../components/patient/appointment/AppointmentSection";
 import PatientHome from "../components/patient/home/PatientHome";
 import AppointmentDetails from "../components/patient/appointment/AppointmentDetails";
 import AppointmentSuccessful from "../components/patient/appointment/AppointmentSuccessful";
-import AppointmentTable from "../components/patient/appointment/AppointmentTable";
 import BookingFailed from "../components/patient/appointment/BookingFailed";
 import RecordBookList from "../components/patient/recordbook/RecordBookList";
 import Navigation from "../components/patient/navigation/Navigation.tsx";
@@ -23,6 +22,8 @@ import BookAppointment from "../components/patient/appointment/BookAppointment";
 import { PatientService } from "../services/PatientService.tsx";
 import TokenService from "../services/TokenService.tsx";
 import { useQuery } from "@tanstack/react-query";
+import PreviousAppointmentTable from "../components/patient/appointment/PreviousAppointmentTable.tsx";
+import UpcomingAppointmentTable from "../components/patient/appointment/UpcomingAppointmentTable.tsx";
 
 function PatientRoutes() {
   const backendURL = import.meta.env.VITE_BACKEND_URL;
@@ -73,9 +74,9 @@ function PatientRoutes() {
                 "Previous Appointments",
               ]}
               buttonimages={[
-                FaRegAddressBook,
-                MdOutlineCreateNewFolder,
-                FaRegAddressBook,
+                HiDocumentText,
+                HiDocumentPlus,
+                HiDocumentText,
               ]}
               // must be same order as buttontiles
               navigations={[
@@ -111,12 +112,12 @@ function PatientRoutes() {
 
         <Route
           path="/appointment/previousappointments"
-          element={<AppointmentTable />}
+          element={<PreviousAppointmentTable />}
         />
 
         <Route
           path="/appointment/upcomingappointments"
-          element={<AppointmentTable />}
+          element={<UpcomingAppointmentTable />}
         />
 
         <Route
