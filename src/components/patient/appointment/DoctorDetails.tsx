@@ -11,6 +11,7 @@ interface Doctor {
   medical_centers: string[];
   medical_center_names: string[];
   description?: string;
+  profileImage: string;
 }
 
 const DoctorDetails = ({
@@ -19,6 +20,7 @@ const DoctorDetails = ({
   specialization = [],
   category,
   description,
+  profileImage,
 }: Doctor) => {
   return (
     <>
@@ -34,7 +36,7 @@ const DoctorDetails = ({
           <div className="min-w-max">
             <div className="z-[500]">
               <img
-                src={doctorImage}
+                src={profileImage}
                 className="w-36 h-36 rounded-full object-cover absolute top-[200px] z-2"
               />
             </div>

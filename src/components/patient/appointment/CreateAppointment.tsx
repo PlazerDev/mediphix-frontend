@@ -29,7 +29,7 @@ interface Center {
   email: string;
   appointmentCategories: string[];
   noOfDoctors?: number;
-  description?: string;
+  specialNotes?: string;
   mobile: string;
 }
 
@@ -88,13 +88,20 @@ const CreateAppointment = () => {
   }
 
   const transformedDoctorList =
-    doctorList?.map((doctor) => ({
+  doctorList?.map((doctor) => {
+    
+    const medical_center_names = doctor.medical_centers
+      .map((centerId) => {
+        const foundCenter = centerList?.find(center => center._id === centerId);
+        return foundCenter ? foundCenter.name : null;
+      })
+      .filter(name => name !== null);
+
+    return {
       ...doctor,
-      medical_center_names: doctor.medical_centers.map(
-        (centerId) =>
-          centerList?.find((center) => center._id === centerId)?.name || "N/A"
-      ),
-    })) || [];
+      medical_center_names: medical_center_names.length > 0 ? medical_center_names : ["N/A"]
+    };
+  }) || [];
 
   const handleItemClick = (list: Doctor | Center) => {
     navigate("/patient/appointment/createappoinmnets/details", {
@@ -109,7 +116,7 @@ const CreateAppointment = () => {
 
   const detailsList =
     detailType === "doctor" ? transformedDoctorList : centerList || [];
-  console.log("helooooooo", detailsList);
+  
   return (
     <div
       className={`flex flex-col p-4 ${
