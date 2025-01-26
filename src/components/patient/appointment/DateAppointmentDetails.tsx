@@ -1,6 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import profilepic from "./../../../assets/images/patient/appoinment/doctorImage.jpeg";
-import centerlogo from "./../../../assets/images/patient/appoinment/NawalokaHospitals.jpeg";
 
 interface Center {
   _id: string;
@@ -9,8 +7,9 @@ interface Center {
   email: string;
   appointmentCategories: string[];
   noOfDoctors?: number;
-  description?: string;
+  specialNotes?: string;
   mobile: string;
+  profileImage: string;
 }
 
 interface TimeSlot {
@@ -97,7 +96,7 @@ const DateAppointmentDetails = ({
         </div>
 
         {detailType === "doctor" && (
-          <div className="ml-4">
+          <div className="ml-8">
             <p className="text-[#868686] text-sm mt-3 ">
               Appointment Category{" "}
             </p>
@@ -107,7 +106,7 @@ const DateAppointmentDetails = ({
 
         <div>
           <div className="text-[#363636]">
-            <p className=" font-semibold ml-4 my-4">
+            <p className=" font-semibold ml-8 my-4">
               {detailType === "doctor"
                 ? "Medical Center Details"
                 : "Doctor Details"}
@@ -118,8 +117,8 @@ const DateAppointmentDetails = ({
             <div className="flex justify">
               <div className="flex items-center justify-center">
                 <img
-                  className="w-28 h-28 rounded bg-contain ml-4 mr-12 mb-4 object-cover"
-                  src={detailType == "center" ? profilepic : centerlogo}
+                  className="w-28 h-28 rounded bg-contain ml-8 mr-12 mb-4 object-cover"
+                  src={details.profileImage}
                   alt={
                     detailType === "doctor"
                       ? "Medical Center Details"
@@ -128,7 +127,7 @@ const DateAppointmentDetails = ({
                 />
               </div>
 
-              <div className="mr-10 w-1/4">
+              <div className="mx-10 w-1/4">
                 <p className="text-[#868686] text-sm">Name</p>
                 <a className="mb-2 text-[#FF7300] underline">
                 {details.name}
@@ -163,7 +162,7 @@ const DateAppointmentDetails = ({
                   <p className="mb-1">{details.email}</p>
                 </div>
               )}
-              <div>
+              <div className="ml-20">
                   <p className="text-[#868686] text-sm">Consultation Fee</p>
                   <p className="mb-1">
                     Rs. {sessionDetails.payment}
@@ -174,14 +173,14 @@ const DateAppointmentDetails = ({
             </div>
             
           </div>
-          <div className="ml-4">
+          <div className="ml-8">
             <div className="text-[#363636]">
               <p className=" font-semibold mb-2">Additional Details</p>
             </div>
             <p className="text-[#868686] text-sm">Special Note From Doctor</p>
             <p>{sessionDetails.noteFromDoctor || 'No special notes from doctor.'}</p>
           </div>
-          <div className="ml-4 pb-4">
+          <div className="ml-8 pb-8">
             <div className="text-[#363636]">
               <p className="text-[#868686] text-sm mt-2">
                 Special Note From Medical Center
