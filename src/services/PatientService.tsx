@@ -50,7 +50,7 @@ interface Center {
   email: string;
   appointmentCategories: string[];
   noOfDoctors?: number;
-  description?: string;
+  specialNotes?: string;
   mobile: string;
   profileImage: string;
 }
@@ -283,7 +283,6 @@ export class PatientService {
       );
 
       if (response.status === 200) {
-        console.log("Resulted Data : ", response.data);
         return response.data;
       } else {
         ErrorService.handleError(response);

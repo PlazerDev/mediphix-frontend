@@ -1,4 +1,3 @@
-import centerImage from "../../../assets/images/patient/appoinment/NawalokaHospitals.jpeg";
 import bgimage from "../../../assets/images/patient/appoinment/doctordetails.png";
 import { BiSolidBadgeCheck } from "react-icons/bi";
 
@@ -9,10 +8,11 @@ interface Center {
   email: string;
   appointmentCategories: string[];
   noOfDoctors?: number;
-  description?: string;
+  specialNotes?: string;
   mobile: string;
+  profileImage: string;
 }
-const CenterDetails = ({ name, address, description, mobile }: Center) => {
+const CenterDetails = ({ name, address, specialNotes, mobile,profileImage, }: Center) => {
   return (
     <>
       <div className="bg-[#ffffff] rounded-[16px] m-4 ">
@@ -28,7 +28,7 @@ const CenterDetails = ({ name, address, description, mobile }: Center) => {
             <div className="min-w-max">
               <div className="z-[500]">
                 <img
-                  src={centerImage}
+                  src={profileImage}
                   className="w-36 h-36 rounded-[16px] object-scale-down absolute top-[200px] z-2"
                 />
               </div>
@@ -54,7 +54,7 @@ const CenterDetails = ({ name, address, description, mobile }: Center) => {
           </div>
           <div className="text-justify mt-4">
             <h6 className="text-sm text-[#868686]">Description</h6>
-            <p>{description}</p>
+            <p>{specialNotes}</p>
           </div>
         </div>
       </div>
