@@ -25,24 +25,7 @@ interface Center {
   noOfDoctors?: number;
   description?: string;
   mobile: string;
-}
-
-interface TimeSlot {
-  slotId: number;
-  startTime: string;
-  maxNoOfPatients: number;
-  status: string;
-  queue?: {
-    appointments: number[];
-    queueOperations?: {
-      defaultIncrementQueueNumber: number;
-      ongoing: number;
-      nextPatient1: number;
-      nextPatient2: number;
-      finished: number[];
-      absent: number[];
-    };
-  };
+  profileImage: string;
 }
 
 const onPanelChange = (value: Dayjs, mode: CalendarProps<Dayjs>["mode"]) => {

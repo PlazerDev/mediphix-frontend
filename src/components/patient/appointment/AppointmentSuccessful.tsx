@@ -22,16 +22,6 @@ const AppointmentSuccessful = () => {
     message: "",
   };
 
-  const formatTime = (time: string) => {
-    if (time === "N/A") return "N/A";
-    const timeObj = new Date(`2000-01-01T${time}`);
-    return timeObj.toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    });
-  };
-
   const formatPayment = (amount: number) => {
     return amount.toLocaleString("en-US", {
       style: "currency",
@@ -79,7 +69,7 @@ const AppointmentSuccessful = () => {
         <div className="flex justify-center gap-12 mt-4">
           <div>
             <p className="text-[#868686]">Appointment Time</p>
-            <p>{formatTime(appointmentDetails.startTime)}</p>
+            <p>{appointmentDetails.startTime}</p>
           </div>
 
           <div></div>
@@ -104,7 +94,7 @@ const AppointmentSuccessful = () => {
         </div>
         <div className="flex justify-center items-center mr-4">
           <div className="flex justify-center items-center mt-4 mr-4">
-            <Link to="/patienthome">
+            <Link to="/patient/home">
               <div className="bg-[#FFFFFF] text-[black] border-2 border-black rounded-md p-2 w-40 flex justify-center items-center">
                 <p className="font-Roboto font-[700] text-sm">HOME</p>
               </div>
