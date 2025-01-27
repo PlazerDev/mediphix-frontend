@@ -14,7 +14,7 @@ import TokenService from "../../../services/TokenService.tsx";
 import { PatientService } from "../../../services/PatientService.tsx";
 
 const PatientHome = () => {
-  const [isOngoingAppointment, setIsOngoingAppointment] = useState(true);
+  const [isOngoingAppointment, setIsOngoingAppointment] = useState(false);
   // const [loaded, setLoaded] = useState(false);
   // 0-start
   // 1-in the queue
@@ -43,18 +43,18 @@ const PatientHome = () => {
 
   const [upcommingAppointments, setUpcommingAppointments] = useState([
     {
-      date: "JUN 17",
+      date: "MAR 17",
       time: "05.00 PM - 06.00 PM",
       number: "07",
       doctor: "B.KARUNARATNE",
-      location: "Aloka Clinic & Laboratory",
+      location: "MediHelp Healthcare",
     },
     {
-      date: "JUN 29",
+      date: "MAR 29",
       time: "10.00 AM - 11.00 AM",
       number: "01",
       doctor: "B.KARUNARATNE",
-      location: "Aloka Clinic & Laboratory",
+      location: "MediHelp Healthcare",
     },
   ]);
 
@@ -85,16 +85,16 @@ const PatientHome = () => {
       <div className="flex flex-col">
         {isLoading && <Loading footer={true} />}
         {!isLoading && (
-          <div className={`flex flex-col p-4 ${!isLoading ? "fade-in" : ""}`}>
-            <div className="">
+          <div className={`flex flex-col p-2 ${!isLoading ? "fade-in" : ""}`}>
+            <div className="ml-2">
               <p className="  text-xl font-bold">
                 Good Evening, {patientDetails?.first_name}
               </p>
-              <p className="text-sm mb-2">We hope you're having a great day.</p>
+              <p className="text-sm">We hope you're having a great day.</p>
             </div>
             <div className="flex flex-grow my-4">
-              <div className="w-2/3 flex-grow">
-                <div className="flex justify-center  p-4 bg-mediphix_card_background h-full rounded-[16px]">
+              <div className="w-2/3 flex-grow ml-2">
+                <div className="flex justify-center p-4 bg-mediphix_card_background h-full rounded-[16px]">
                   {isOngoingAppointment ? (
                     <>
                       <div className="flex flex-col  w-full">
@@ -114,7 +114,7 @@ const PatientHome = () => {
                 </div>
               </div>
 
-              <div className="w-1/3  flex flex-col mx-4">
+              <div className="w-1/3  flex flex-col ml-4 mr-2">
                 {isUpcomingAppointment ? (
                   <UpcomingAppointment
                     upcomingAppointments={upcommingAppointments}
@@ -126,7 +126,9 @@ const PatientHome = () => {
                 <ProfileOverview {...patientDetails} />
               </div>
             </div>
-            <Footer />
+            <div className="fixed bottom-0 w-full">
+              <Footer />
+            </div>
           </div>
         )}
       </div>

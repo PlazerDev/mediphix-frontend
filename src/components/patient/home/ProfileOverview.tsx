@@ -42,8 +42,8 @@ const ProfileOverview = ({
 }: ProfileProps) => {
   return (
     <>
-      <div className="bg-[#ffffff] h-full rounded-[16px]  p-4 mt-3">
-        <div className=" flex justify-between mb-1">
+      <div className="bg-[#ffffff] h-full rounded-[16px]  p-4 mt-2">
+        <div className=" flex justify-between">
           <div>
             <h1 className="text-lg font-bold">Profile Overview</h1>
           </div>
@@ -53,45 +53,45 @@ const ProfileOverview = ({
           </div>
         </div>
         <div>
-          <div className="flex justify-start gap-8">
+          <div className="flex justify-start gap-10">
             <div className="flex items-center justify-center ">
               <img
-                className="w-24 h-24 rounded-full bg-contain"
+                className="ml-4 w-24 h-24 rounded-full bg-contain"
                 src={profilepic}
                 alt="Profile Pic"
               />
             </div>
-            <div>
+            <div >
               <div>
-                <p className="text-[#868686] text-sm">Name</p>
+                <p className="text-[#868686] text-xs">Name</p>
                 <p className="mb-1">{first_name + " " + last_name}</p>
-                <div className="flex gap-4 mb-1">
+                <div className="flex gap-16 mb-1">
                   <div>
-                    <p className="text-[#868686] text-sm">Age</p>
+                    <p className="text-[#868686] text-xs">Age</p>
                     <p>{birthday ? calculateAge(birthday) : "N/A"}</p>
                   </div>
                   <div>
-                    <p className="text-[rgb(134,134,134)] text-sm">Gender</p>
+                    <p className="text-[rgb(134,134,134)] text-xs">Gender</p>
                     <p>{gender}</p>
                   </div>
                   <div>
-                    <p className="text-[#868686] text-sm">NIC</p>
+                    <p className="text-[#868686] text-xs">NIC</p>
                     <p className="mb-1">{nic}</p>
                   </div>
                 </div>
-                <p className="text-[#868686] text-sm">Address</p>
+                <p className="text-[#868686] text-xs">Address</p>
                 <p>{address}</p>
               </div>
               <div>
-                <p className="text-[#868686] text-sm">Email</p>
+                <p className="text-[#868686] text-xs">Email</p>
                 <p className="mb-1"> {email}</p>
-                <div className="flex gap-4">
+                <div className="flex gap-16">
                   <div>
-                    <p className="text-[#868686] text-sm">Mobile Number</p>
+                    <p className="text-[#868686] text-xs">Mobile Number</p>
                     <p className="mb-1">{mobile_number}</p>
                   </div>
                   <div>
-                    <p className="text-[#868686] text-sm">Nationality</p>
+                    <p className="text-[#868686] text-xs">Nationality</p>
                     <p>{nationality}</p>
                   </div>
                 </div>
