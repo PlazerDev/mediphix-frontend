@@ -9,8 +9,8 @@ interface UpcomingAppointmentProps {
 const AppointmentCard = ({ date, time, number, doctor, location } : UpcomingAppointmentProps) => {
   return (
     <>
-      <div className="bg-[#DCDCDC] w-full rounded-[16px] mt-1 flex  p-4 items-center gap-4">
-        <div className=" text-[#FFFFFF]  bg-[#363636] rounded-[16px] mr-2 h-16 w-16 flex flex-col items-center justify-center">
+      <div className="bg-[#DCDCDC] w-full rounded-[16px] flex p-3 mb-3 items-center gap-4">
+        <div className=" text-[#FFFFFF]  bg-[#363636] rounded-[16px] ml-3 h-14 w-14 flex flex-col items-center justify-center">
           <p>{date.split(' ')[0]}</p>
           <p>{date.split(' ')[1]}</p>
         </div>
@@ -18,10 +18,10 @@ const AppointmentCard = ({ date, time, number, doctor, location } : UpcomingAppo
 
 
           <p className="text-base font-semibold">
-          {time} | Number {number}
+          {time}   |   Number {number}
           </p>
           <p className="text-sm">Dr. {doctor}</p>
-          <p className="text-sm">{location}</p>
+          <p className="text-xs">{location}</p>
        </div>
 
       </div>

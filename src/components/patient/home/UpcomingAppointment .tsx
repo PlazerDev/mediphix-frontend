@@ -15,8 +15,8 @@ const UpcomingAppointment = ({upcomingAppointments}:UpcomingAppointmentProps) =>
   
 
   return (
-    <div className="bg-[#fff] rounded-[16px] h-1/2 p-4">
-      <div className=" flex justify-between">
+    <div className="bg-[#fff] rounded-[16px] h-1/2 px-4 pt-4 pb-1">
+      <div className=" flex justify-between mb-1">
         <div>
           <h1 className="text-lg font-bold">Upcoming Appointments</h1>
         </div>

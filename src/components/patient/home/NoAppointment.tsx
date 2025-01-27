@@ -14,14 +14,13 @@ const NoAppointment = () => {
             src={ongoingAppointment}
             alt="Ongoing-appointment-image"
           />
-          <div className=" flex text-center justify-center">
-            <div className="w-96 ">
+          <div className=" flex text-center w-[70%]  justify-center">
+            <div>
               <p className="text-[#151515] mb-6">
                 You have no ongoing appointments at the moment
               </p>
               <p className="text-[#868686]">
-                Once the receptionist accepts and confirms your payment, the
-                appointment details will be displayed here.
+                Once the receptionist accepts and confirms your payment, the appointment details will be displayed here.
               </p>
             </div>
           </div>
