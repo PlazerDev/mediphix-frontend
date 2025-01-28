@@ -26,7 +26,7 @@ function MobileNumberForm({
   const props: UploadProps = {
     name: "file",
     multiple: false,
-    action: "https://justExample/" + { email },
+    action: `http://localhost:9000/media/upload?email=${email}&userType=patient&uploadType=profileImage`,
     onChange(info) {
       const { status } = info.file;
       if (status !== "uploading") {

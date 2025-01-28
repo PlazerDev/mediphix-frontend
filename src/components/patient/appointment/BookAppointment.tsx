@@ -75,12 +75,17 @@ const BookAppointment = () => {
   const bookAppointmentMutation = useMutation({
     mutationFn: async () => {
       try {
-       
-        if (!selectedTimeSlot || !patientData || !doctorData || !sessionDetails || !centerDetails) {
+        if (
+          !selectedTimeSlot ||
+          !patientData ||
+          !doctorData ||
+          !sessionDetails ||
+          !centerDetails
+        ) {
           throw new Error("Error Occured, Please Try again later.");
         }
 
-        const bookingPayload = {
+        let bookingPayload = {
           sessionId: sessionDetails._id,
           timeSlot: selectedTimeSlot.slotId,
           patientId: patientData._id,
@@ -94,6 +99,10 @@ const BookAppointment = () => {
           medicalCenterId: sessionDetails.medicalCenterId,
           medicalCenterName: centerDetails.name,
           paymentAmount: Number(sessionDetails.payment),
+          aptStatus:
+            sessionDetails.overallSessionStatus === "ONGOING"
+              ? "INQUEUE"
+              : "ACTIVE",
         };
 
         return await PatientService.bookAppointment(
