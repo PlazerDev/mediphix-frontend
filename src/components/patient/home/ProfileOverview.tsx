@@ -10,6 +10,7 @@ interface ProfileProps {
   address?: string | undefined;
   nationality?: string | undefined;
   gender?: string | undefined;
+  profileImage?: string | undefined;
 }
 
 function calculateAge(birthday: string) {
@@ -39,6 +40,7 @@ const ProfileOverview = ({
   address,
   nationality,
   gender,
+  profileImage,
 }: ProfileProps) => {
   return (
     <>
@@ -57,11 +59,11 @@ const ProfileOverview = ({
             <div className="flex items-center justify-center ">
               <img
                 className="ml-4 w-24 h-24 rounded-full bg-contain"
-                src={profilepic}
+                src={profileImage ? profileImage : profilepic}
                 alt="Profile Pic"
               />
             </div>
-            <div >
+            <div>
               <div>
                 <p className="text-[#868686] text-xs">Name</p>
                 <p className="mb-1">{first_name + " " + last_name}</p>
