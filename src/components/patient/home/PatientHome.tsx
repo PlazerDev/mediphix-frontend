@@ -39,23 +39,23 @@ const PatientHome = () => {
     hallReference: "HALL-A",
   });
 
-  const [isUpcomingAppointment, setIsUpcomingAppointment] = useState(true);
+  const [isUpcomingAppointment, setIsUpcomingAppointment] = useState(false);
 
   const [upcommingAppointments, setUpcommingAppointments] = useState([
-    {
-      date: "MAR 17",
-      time: "05.00 PM - 06.00 PM",
-      number: "07",
-      doctor: "B.KARUNARATNE",
-      location: "MediHelp Healthcare",
-    },
-    {
-      date: "MAR 29",
-      time: "10.00 AM - 11.00 AM",
-      number: "01",
-      doctor: "B.KARUNARATNE",
-      location: "MediHelp Healthcare",
-    },
+    // {
+    //   date: "MAR 17",
+    //   time: "05.00 PM - 06.00 PM",
+    //   number: "07",
+    //   doctor: "B.KARUNARATNE",
+    //   location: "MediHelp Healthcare",
+    // },
+    // {
+    //   date: "MAR 29",
+    //   time: "10.00 AM - 11.00 AM",
+    //   number: "01",
+    //   doctor: "B.KARUNARATNE",
+    //   location: "MediHelp Healthcare",
+    // },
   ]);
 
   const backendURL = import.meta.env.VITE_BACKEND_URL;
